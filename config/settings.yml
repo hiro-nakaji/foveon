@@ -1,0 +1,5 @@
+photo_bbs:
+  top_directory: '/Users/hiro/Documents/foveon/photo'
+  data_path: '/Users/hiro/Documents/foveon/photo/bbs-utf8.txt'
+  separator: '<>'
+  photos: 4
