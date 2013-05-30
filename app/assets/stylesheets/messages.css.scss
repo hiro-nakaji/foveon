@@ -5,8 +5,8 @@
 .tree {
   background-color: #FBFBFB;
   border-radius: 5px;
-  margin: 5px;
-  display: block
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .tree_root {
@@ -15,23 +15,23 @@
   display: block;
 }
 
-.tree_root_with_any_branch {
+.message_headline_base_with_any_branch {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   @extend .tree_root;
 }
 
-.tree_root_with_no_branch {
+.message_headline_base_with_no_branch {
   border-radius: 5px;
   @extend .tree_root;
 }
 
-.tree_text {
+.entry_headline {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.branches {
+.comment_base {
   margin-top: 5px;
 }
 
@@ -42,8 +42,8 @@
 .thread {
   background-color: #FBFBFB;
   border-radius: 5px;
-  margin: 5px;
-  display: block
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .thread_header {
@@ -67,6 +67,8 @@ nav.pagination {
 }
 
 .button_group {
+  padding-left: 10px;
+  padding-right: 10px;
   form {
     margin: 0px;
     display: inline;

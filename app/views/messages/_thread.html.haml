@@ -1,10 +1,10 @@
 .row-fluid.thread
   .row-fluid.thread_header
-    .row-fluid.tree_text
-      .span6
+    .row-fluid
+      .span6.entry_headline
         = entry.title
         %a(name="#{entry.id}")
-      .span3
+      .span3.entry_headline
         = entry.author
         - if entry.homepage.present?
           = link_to('', entry.url, class: 'icon-home', target: '_blank')

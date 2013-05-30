@@ -1,6 +1,6 @@
-.row-fluid.tree_text
-  .span8= link_to(entry.title, thread_message_path(entry))
-  .span4
+.row-fluid
+  .span8.entry_headline= link_to(entry.title, thread_message_path(entry))
+  .span4.entry_headline
     = entry.author
     - if entry.homepage.present?
       = link_to('', entry.url, class: 'icon-home', target: '_blank')
