@@ -30,13 +30,12 @@ class MessagesController < ApplicationController
 
   # get
   def trees
-    @messages = Message.roots.desc.page(params[:page])
+    @messages = Message.desc.page(params[:page])
   end
 
   # get
   def thread
     @message = Message.find(params[:id])
-    @root = @message.parent_id.present? ? @message.parent : @message
   end
 
   # get

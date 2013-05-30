@@ -5,11 +5,11 @@
   .row-fluid
     - @messages.each do |message|
       .row-fluid.tree
-        - style = message.children.present? ? 'tree_root_with_any_branch' : 'tree_root_with_no_branch'
+        - style = message.comments.present? ? 'tree_root_with_any_branch' : 'tree_root_with_no_branch'
         .row-fluid(class=style)
-          = render(partial: 'root_headline',  object: message, as: :message)
+          = render(partial: 'root_headline',  object: message, as: :entry)
         .row-fluid.branches
-          = render(partial: 'branch_headline', collection: message.children, as: :message)
+          = render(partial: 'branch_headline', collection: message.comments, as: :entry)
 
   = link_to(t('buttons.new'), new_message_path, class: 'header')
   = paginate @messages, :window => 2, :outer_window => 2, :params => { words: 'hiro' }

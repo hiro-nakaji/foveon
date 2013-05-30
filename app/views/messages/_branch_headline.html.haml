@@ -1,8 +1,8 @@
 .row-fluid.branch.tree_text
-  .span8= link_to(message.title, thread_message_path(message, anchor: message))
+  .span8= link_to(entry.title, thread_message_path(entry, anchor: entry))
   .span4
-    = message.author
-    - if message.homepage.present?
-      = link_to('', message.url, class: 'icon-home', target: '_blank')
-    - if message.mail.present?
-      = mail_to(message.mail, '', class: 'icon-envelope')
+    = entry.author
+    - if entry.homepage.present?
+      = link_to('', entry.url, class: 'icon-home', target: '_blank')
+    - if entry.mail.present?
+      = mail_to(entry.mail, '', class: 'icon-envelope')
