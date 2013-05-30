@@ -1,3 +1,3 @@
 class Photo < ActiveRecord::Base
-  belongs_to :message
+  belongs_to :entry, polymorphic: true
 end
