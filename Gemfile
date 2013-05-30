@@ -9,7 +9,14 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0.rc1'
 
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+
 gem 'haml-rails'
+group :development do
+  gem 'erb2haml'
+end
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -44,6 +51,8 @@ gem 'exifr'
 gem 'rmagick'
 # for pagination
 gem 'kaminari'
+# for auto link
+gem 'rinku'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -56,7 +65,3 @@ gem 'kaminari'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
-group :development do
-  gem 'erb2haml'
-end

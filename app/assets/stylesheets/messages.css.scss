@@ -1,0 +1,77 @@
+// Place all the styles related to the messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.tree {
+  background-color: #FBFBFB;
+  border-radius: 5px;
+  margin: 5px;
+  display: block
+}
+
+.tree_root {
+  background-color: #DBDBDB;
+  line-height: 40px;
+  display: block;
+}
+
+.tree_root_with_any_branch {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  @extend .tree_root;
+}
+
+.tree_root_with_no_branch {
+  border-radius: 5px;
+  @extend .tree_root;
+}
+
+.tree_text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.branches {
+  margin-top: 5px;
+}
+
+.branch {
+
+}
+
+.thread {
+  background-color: #FBFBFB;
+  border-radius: 5px;
+  margin: 5px;
+  display: block
+}
+
+.thread_header {
+  background-color: #DBDBDB;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  line-height: 40px;
+  display: block;
+}
+
+.thread_body {
+  padding: 10px;
+}
+
+.thread_photo {
+
+}
+
+nav.pagination {
+  display: inline;
+}
+
+.button_group {
+  form {
+    margin: 0px;
+    display: inline;
+    div {
+      display: inline;
+    }
+  }
+}

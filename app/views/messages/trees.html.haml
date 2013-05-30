@@ -1,0 +1,15 @@
+.container-fluid
+  = link_to(t('buttons.new'), new_message_path, class: 'header')
+  = paginate @messages, :window => 2, :outer_window => 2, :params => { words: 'hiro' }
+
+  .row-fluid
+    - @messages.each do |message|
+      .row-fluid.tree
+        - style = message.children.present? ? 'tree_root_with_any_branch' : 'tree_root_with_no_branch'
+        .row-fluid(class=style)
+          = render(partial: 'root_headline',  object: message, as: :message)
+        .row-fluid.branches
+          = render(partial: 'branch_headline', collection: message.children, as: :message)
+
+  = link_to(t('buttons.new'), new_message_path, class: 'header')
+  = paginate @messages, :window => 2, :outer_window => 2, :params => { words: 'hiro' }

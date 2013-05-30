@@ -1,0 +1,19 @@
+.row-fluid.thread
+  .row-fluid.thread_header
+    .row-fluid.tree_text
+      .span6
+        = message.title
+        %a(name="#{message.id}")
+      .span3
+        = message.author
+        - if message.homepage.present?
+          = link_to('', message.url, class: 'icon-home', target: '_blank')
+        - if message.mail.present?
+          = mail_to(message.mail, '', class: 'icon-envelope')
+      .span3.button_group
+        = button_to(t('buttons.respond'), respond_message_path(message), method: 'get', class: 'btn btn-mini btn-link')
+        = button_to(t('buttons.edit'), edit_message_path(message), method: 'get', class: 'btn btn-mini btn-link')
+        = button_to(t('buttons.delete'), message_path(message), method: 'get', class: 'btn btn-mini btn-link')
+  .row-fluid
+    .span12.thread_body
+      = raw Rinku.auto_link(simple_format(message.content), mode=:all, 'target="_blank"')

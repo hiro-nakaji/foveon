@@ -46,4 +46,17 @@ TheFoveonBbs::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  resources :messages do
+    collection do
+      get 'trees'
+    end
+    member do
+      get 'thread'
+      get 'respond'
+      post 'respond_post'
+    end
+  end
+
+  root to: 'messages#trees'
 end
