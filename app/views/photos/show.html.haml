@@ -1,12 +1,12 @@
 .container-fluid.photo_vga_base
   .row-fluid
-    .span8
-      = image_tag(@photo.photo_data.vga.to_s, class: 'img-polaroid')
+    = link_to(image_tag(@photo.photo_data.vga.to_s, class: 'img-polaroid photo_vga'), @photo.photo_data.url.to_s)
     .span4
       .row-fluid
         .span12= @photo.title
-      .row-fluid
-        .span12
-  .row-fluid
-    .span12
-      = link_to('full size', @photo.photo_data.url.to_s)
+        - @photo.formatted_exif.each do |key, value|
+          .row-fluid
+            .span6
+              = t('exif.attributes')[key]
+            .span6
+              = value

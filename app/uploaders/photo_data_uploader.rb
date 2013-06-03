@@ -56,4 +56,10 @@ class PhotoDataUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
+  def get_exif( name )
+    manipulate! do |img|
+      return img["EXIF:" + name]
+    end
+  end
+
 end

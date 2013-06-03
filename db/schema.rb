@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20130530093430) do
     t.string   "title"
     t.integer  "no"
     t.string   "photo_data"
+    t.hstore   "exif"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
