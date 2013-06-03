@@ -72,17 +72,9 @@ namespace :convert do
           photo.convert_to_jpg!
         end
 
-        photo = Photo.new(photo.photo_hash)
-        entry.photos << photo
-
-        #begin
-        #  exif_data = EXIFR::JPEG.new("#{Settings.photo_bbs.top_directory}/#{photo_message.id}-#{photo.index}.#{photo.extension}")
-        #rescue EXIFR::MalformedJPEG => e
-        #
-        #rescue Errno::ENOENT => e
-        #
-        #ensure
-        #end
+        new_photo = Photo.new(photo.photo_hash)
+        new_photo.photo_data  = File.open("#{Settings.photo_bbs.top_directory}/#{photo_message.id}-#{photo.no}.#{photo.extension}")
+        entry.photos << new_photo
       end
     end
   end

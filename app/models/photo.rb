@@ -22,8 +22,18 @@ class Photo < ActiveRecord::Base
   end
 
   def extract_exif
-    image = Magick::Image.read(photo_data.current_path).first
-    self.exif = Hash[*image.get_exif_by_entry.flatten]
+    tmp_exif = Hash.new
+    begin
+      image = Magick::Image.read(photo_data.current_path).first
+      image.get_exif_by_entry.each do |datas|
+        key = datas.shift
+        tmp_exif[key] = datas.present? ? datas.first : nil
+      end
+      self.exif = tmp_exif
+    rescue => e
+      Rails.logger.error(e.message)
+      raise e
+    end
   end
 
 
