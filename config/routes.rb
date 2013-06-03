@@ -58,5 +58,7 @@ TheFoveonBbs::Application.routes.draw do
     end
   end
 
+  resources :photos
+
   root to: 'messages#trees'
 end
