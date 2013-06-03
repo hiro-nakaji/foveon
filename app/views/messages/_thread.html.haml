@@ -17,6 +17,6 @@
   .row-fluid
     .span12.thread_body
       = raw Rinku.auto_link(simple_format(entry.content), mode=:all, 'target="_blank"')
-  .row-fluid
+  .row-fluid.thread_photo
     - entry.photos.each do |photo|
       = link_to(image_tag(photo.photo_data.thumb.to_s, class: 'img-polaroid'), photo.photo_data.url.to_s)

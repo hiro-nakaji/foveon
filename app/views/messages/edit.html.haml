@@ -1,7 +1,8 @@
 .container-fluid
-  = form_for(@message, multipart: true) do |f|
-    = render partial: 'form', object:f, as: :form, locals: {message: @message}
-    .row_fluid
-      .span2.offset2
-        = link_to(t('buttons.back'), trees_messages_path, class: 'btn')
-        = f.submit t('buttons.update'), class: 'btn btn-primary'
+  .row-fluid.entry_form
+    = form_for(@message, multipart: true) do |f|
+      = render partial: 'form', object:f, as: :form, locals: {message: @message}
+      .row_fluid
+        .span2.offset2
+          = link_to(t('buttons.back'), trees_messages_path, class: 'btn')
+          = f.submit t('buttons.update'), class: 'btn btn-primary'

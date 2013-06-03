@@ -32,6 +32,8 @@ ja:
         browser: 'ブラウザ'
         created_at: '投稿日時'
         updated_at: '更新日時'
+      photo:
+        photo_data: '画像ファイル'
     errors:
       models:
         message:
@@ -44,5 +46,5 @@ ja:
               invalid: "パスワードが一致してないよん"
         photo:
           attributes:
-            image:
+            photo_data:
               invalid: "このファイルはアップロード不可です: %{content_type}."

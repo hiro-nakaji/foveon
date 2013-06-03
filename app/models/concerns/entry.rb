@@ -3,8 +3,10 @@ module Entry
     base.has_many :photos, -> { order "no" }, as: :entry, dependent: :destroy
 
     base.accepts_nested_attributes_for :photos,
-                                       reject_if: :all_blank,
-                                       allow_destroy: true
+                                       allow_destroy: true,
+                                       reject_if: ->(attr) {
+                                         attr[:photo_data].blank? && attr[:photo_data_cache].blank? && attr[:_destroy].blank?
+                                       }
 
     base.validates :title, presence: true
     base.validates :author, presence: true
@@ -30,10 +32,12 @@ module Entry
   end
 
   def build_photos_up_to_max
-    if self.photos.count < Settings.foveon_bbs.max_photo_count
-      (Settings.foveon_bbs.max_photo_count - self.photos.count).
+    if self.photos.size < Settings.foveon_bbs.max_photo_count
+      (Settings.foveon_bbs.max_photo_count - self.photos.size).
         times do |index|
-        self.photos.build
+        photo = self.photos.max{|a,b| a.no <=> b.no}
+        no = photo ? photo.no + 1 : 0
+        self.photos.build(no: no)
       end
     end
   end

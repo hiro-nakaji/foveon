@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
 
   def create
     permitted = [:title, :author, :password, :mail, :homepage, :content,
-                photos_attributes: [:title, :photo_data, :photo_data_cache, :_destroy]]
+                photos_attributes: [:title, :photo_data, :no, :photo_data_cache, :_destroy]]
     message_params = params.require(:message).permit(permitted)
     @message = Message.new(message_params)
 
@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
 
   def update
     permitted = [:title, :author, :password, :mail, :homepage, :content,
-                 photos_attributes: [:id, :title, :photo_data, :photo_data_cache, :_destroy]]
+                 photos_attributes: [:id, :title, :photo_data, :no, :photo_data_cache, :_destroy]]
     message_params = params.require(:message).permit(permitted)
 
     if @message.update_attributes(message_params)

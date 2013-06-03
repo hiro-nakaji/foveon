@@ -32,6 +32,8 @@ en:
         browser: 'User Agent'
         created_at: 'Post time'
         updated_at: 'Updated time'
+      photo:
+        photo_data: 'Image file'
     errors:
       models:
         message:
@@ -44,5 +46,5 @@ en:
               invalid: "not matched."
         photo:
           attributes:
-            image:
+            photo_data:
               invalid: "This content_type is not acceptable: %{content_type}."
