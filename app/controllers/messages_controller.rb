@@ -1,11 +1,19 @@
 class MessagesController < ApplicationController
 
+  before_action :find_message, only: [:show, :edit, :update, :thread]
+
   def new
     @message = Message.new()
+    4.times do |index|
+      @message.photos << Photo.new
+    end
   end
 
   def create
-    @message = Message.new(params[:message])
+    permitted = [:title, :author, :password, :mail, :homepage, :content,
+                photos_attributes: [:title, :image]]
+    message_params = params.require(:message).permit(permitted)
+    @message = Message.new(message_params)
 
     if @message.save
       redirect_to action: :trees
@@ -15,7 +23,6 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.find(params[:id])
   end
 
 
@@ -23,6 +30,15 @@ class MessagesController < ApplicationController
   end
 
   def update
+    permitted = [:title, :author, :password, :mail, :homepage, :content,
+                 photos_attributes: [:id, :title, :image]]
+    message_params = params.require(:message).permit(permitted)
+
+    if @message.update_attributes(message_params)
+      redirect_to action: :trees
+    else
+      render action: :edit
+    end
   end
 
   def destroy
@@ -35,7 +51,6 @@ class MessagesController < ApplicationController
 
   # get
   def thread
-    @message = Message.find(params[:id])
   end
 
   # get
@@ -49,5 +64,9 @@ class MessagesController < ApplicationController
   # post
   def respond_post
     @parent = Message.find(params[:id])
+  end
+
+  def find_message
+    @message = Message.find(params[:id])
   end
 end

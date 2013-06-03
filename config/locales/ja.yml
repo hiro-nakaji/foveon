@@ -1,6 +1,48 @@
 ja:
   buttons:
     new: '新規'
+    create: '作成'
     respond: '返信'
     edit: '編集'
+    update: '更新'
     delete: '削除'
+    back: '戻る'
+
+  activerecord:
+    attributes:
+      message:
+        title: '件名'
+        author: '投稿者'
+        password: 'パスワード'
+        mail: 'メールアドレス'
+        homepage: 'ホームページ'
+        content: '記事'
+        remote_address: 'アクセス元'
+        browser: 'ブラウザ'
+        created_at: '投稿日時'
+        updated_at: '更新日時'
+      comment:
+        title: '件名'
+        author: '投稿者'
+        password: 'パスワード'
+        mail: 'メールアドレス'
+        homepage: 'ホームページ'
+        content: '記事'
+        remote_address: 'アクセス元'
+        browser: 'ブラウザ'
+        created_at: '投稿日時'
+        updated_at: '更新日時'
+    errors:
+      models:
+        message:
+          attributes:
+            password:
+              invalid: "パスワードが一致してないぜ"
+        comment:
+          attributes:
+            password:
+              invalid: "パスワードが一致してないよん"
+        photo:
+          attributes:
+            image:
+              invalid: "このファイルはアップロード不可です: %{content_type}."

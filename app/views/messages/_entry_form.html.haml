@@ -1,0 +1,33 @@
+.row-fluid.entry_form
+  .row-fluid
+    .span2= form.label :title, class: 'required'
+    .span9= form.text_field :title
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :title}
+  .row-fluid
+    .span2= form.label :author, class: 'required'
+    .span9= form.text_field :author
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :author}
+  .row-fluid
+    .span2= form.label :password, class: 'required'
+    .span9= form.password_field :password
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :password}
+  .row-fluid
+    .span2= form.label :content, class: 'required'
+    .span9= form.text_area :content, size: '300x10'
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :content}
+  .row-fluid
+    .span2= form.label :mail
+    .span9= form.text_field :mail
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :mail}
+  .row-fluid
+    .span2= form.label :homepage
+    .span9= form.text_field :homepage
+  = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :homepage}
+
+  = form.fields_for :photos do |photo_form|
+    = photo_form.text_field :title
+    = photo_form.file_field :image
+    - if photo_form.object.errors.present?
+      - photo_form.object.errors.full_messages.each do |msg|
+        = msg
+

@@ -77,3 +77,19 @@ nav.pagination {
     }
   }
 }
+
+.entry_form {
+  margin: 10px;
+  label {
+    text-align: right;
+  }
+  label.required {
+    font-weight: bold;
+  }
+  input {
+    width: 98%;
+  }
+  textarea {
+    width: 98%;
+  }
+}

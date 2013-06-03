@@ -1,6 +1,48 @@
 en:
   buttons:
     new: 'New'
+    create: 'Create'
     respond: 'Repond'
     edit: 'Edit'
+    update: 'Update'
     delete: 'Delete'
+    back: 'Back'
+
+  activerecord:
+    attributes:
+      message:
+        title: 'Title'
+        author: 'Name'
+        password: 'Password'
+        mail: 'E-Mail'
+        homepage: 'Homepage'
+        content: 'Content'
+        remote_address: 'Remote Address'
+        browser: 'User Agent'
+        created_at: 'Post time'
+        updated_at: 'Updated time'
+      comment:
+        title: 'Title'
+        author: 'Name'
+        password: 'Password'
+        mail: 'E-Mail'
+        homepage: 'Homepage'
+        content: 'Content'
+        remote_address: 'Remote Address'
+        browser: 'User Agent'
+        created_at: 'Post time'
+        updated_at: 'Updated time'
+    errors:
+      models:
+        message:
+          attributes:
+            password:
+              invalid: "not matched."
+        comment:
+          attributes:
+            password:
+              invalid: "not matched."
+        photo:
+          attributes:
+            image:
+              invalid: "This content_type is not acceptable: %{content_type}."
