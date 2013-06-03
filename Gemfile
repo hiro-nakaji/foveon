@@ -47,6 +47,8 @@ gem 'acts_as_tree'
 gem 'jpmobile'
 gem 'rails_config'
 
+# for file upload
+gem 'carrierwave'
 # For exif analyze
 gem 'exifr'
 # for image edit

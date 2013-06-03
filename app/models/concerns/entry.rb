@@ -2,7 +2,9 @@ module Entry
   def self.included(base)
     base.has_many :photos, -> { order "no" }, as: :entry, dependent: :destroy
 
-    base.accepts_nested_attributes_for :photos
+    base.accepts_nested_attributes_for :photos,
+                                       reject_if: :all_blank,
+                                       allow_destroy: true
 
     base.validates :title, presence: true
     base.validates :author, presence: true
@@ -13,7 +15,7 @@ module Entry
 
     base.validate :check_passwords, if: :persisted?
 
-    base.before_save :remove_unavailable_photos, :crypt_password
+    base.before_save :crypt_password
 
   end
 
@@ -27,13 +29,16 @@ module Entry
     end
   end
 
-  private
-
-  def remove_unavailable_photos
-    self.photos.each do |photo|
-      self.photos.delete(photo) if photo.new_record? && photo.image.nil?
+  def build_photos_up_to_max
+    if self.photos.count < Settings.foveon_bbs.max_photo_count
+      (Settings.foveon_bbs.max_photo_count - self.photos.count).
+        times do |index|
+        self.photos.build
+      end
     end
   end
+
+  private
 
   def check_passwords
     unless self.password.crypt(self.password_was) == self.password_was

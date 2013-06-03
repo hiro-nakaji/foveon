@@ -25,8 +25,11 @@
   = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :homepage}
 
   = form.fields_for :photos do |photo_form|
+    - if photo_form.object.persisted?
+      = photo_form.check_box :_destroy
     = photo_form.text_field :title
-    = photo_form.file_field :image
+    = photo_form.file_field :photo_data
+    = photo_form.hidden_field :photo_data_cache
     - if photo_form.object.errors.present?
       - photo_form.object.errors.full_messages.each do |msg|
         = msg

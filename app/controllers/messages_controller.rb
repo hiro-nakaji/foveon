@@ -4,20 +4,19 @@ class MessagesController < ApplicationController
 
   def new
     @message = Message.new()
-    4.times do |index|
-      @message.photos << Photo.new
-    end
+    @message.build_photos_up_to_max
   end
 
   def create
     permitted = [:title, :author, :password, :mail, :homepage, :content,
-                photos_attributes: [:title, :image]]
+                photos_attributes: [:title, :photo_data, :photo_data_cache, :_destroy]]
     message_params = params.require(:message).permit(permitted)
     @message = Message.new(message_params)
 
     if @message.save
       redirect_to action: :trees
     else
+      @message.build_photos_up_to_max
       render action: :new
     end
   end
@@ -27,16 +26,18 @@ class MessagesController < ApplicationController
 
 
   def edit
+    @message.build_photos_up_to_max
   end
 
   def update
     permitted = [:title, :author, :password, :mail, :homepage, :content,
-                 photos_attributes: [:id, :title, :image]]
+                 photos_attributes: [:id, :title, :photo_data, :photo_data_cache, :_destroy]]
     message_params = params.require(:message).permit(permitted)
 
     if @message.update_attributes(message_params)
       redirect_to action: :trees
     else
+      @message.build_photos_up_to_max
       render action: :edit
     end
   end

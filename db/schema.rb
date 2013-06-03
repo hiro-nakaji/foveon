@@ -49,13 +49,9 @@ ActiveRecord::Schema.define(version: 20130530093430) do
   create_table "photos", force: true do |t|
     t.integer  "entry_id"
     t.string   "entry_type"
-    t.string   "storage_type"
     t.string   "title"
     t.integer  "no"
-    t.string   "url"
-    t.string   "thumbnail_url"
-    t.integer  "thumbnail_width"
-    t.integer  "thumbnail_height"
+    t.string   "photo_data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
