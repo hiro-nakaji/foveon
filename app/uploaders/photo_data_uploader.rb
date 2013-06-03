@@ -36,6 +36,10 @@ class PhotoDataUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
+  version :vga do
+    process :resize_to_limit => [640, 480]
+  end
+
   version :thumb do
     process :resize_to_limit => [150, 150]
   end
