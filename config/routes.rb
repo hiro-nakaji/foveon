@@ -53,14 +53,13 @@ TheFoveonBbs::Application.routes.draw do
     end
     member do
       get 'thread'
-      get 'respond'
-      post 'respond_post'
       get 'delete_confirm'
     end
-  end
-  resources :comments do
-    member do
-      get 'delete_confirm'
+    resources :comments do
+      member do
+        get 'delete_confirm'
+        post 'respond_post'
+      end
     end
   end
   resources :photos
