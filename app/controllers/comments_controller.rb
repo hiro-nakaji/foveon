@@ -4,13 +4,15 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:show, :edit, :update, :delete_confirm, :destroy]
 
   def new
-    @comment = @message.comments.build(content: @message.reply_content)
+    @comment = @message.comments.build
+    @message.reply(@comment)
     @comment.build_photos_up_to_max
   end
 
   def reply
     target = @message.comments.find(params[:id])
-    @comment = @message.comments.build(content: target.reply_content)
+    @comment = @message.comments.build
+    target.reply(@comment)
     @comment.build_photos_up_to_max
 
     render action: :new

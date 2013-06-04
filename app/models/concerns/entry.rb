@@ -42,8 +42,9 @@ module Entry
     end
   end
 
-  def reply_content
-    self.content.gsub(/^/, ">")
+  def reply(entry)
+    entry.title = self.title.gsub(/^/, "Re: ")
+    entry.content = self.content.gsub(/^/, "> ")
   end
 
   private
