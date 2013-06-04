@@ -42,6 +42,7 @@ class MessagesController < ApplicationController
     end
   end
 
+  # get
   def delete_confirm
   end
 
@@ -49,6 +50,12 @@ class MessagesController < ApplicationController
     message_params = params.require(:message).permit(:password)
     @message.assign_attributes(message_params)
     if @message.valid?
+      if @message.comments.empty?
+        @message.destroy
+      else
+        @message.update_attributes(content: 'Deleted.')
+        @message.photos.destroy_all
+      end
       redirect_to action: :trees
     else
       render action: :delete_confirm
