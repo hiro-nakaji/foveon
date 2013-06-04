@@ -1,0 +1,17 @@
+.container-fluid
+  = render partial: 'thread', object: @message, as: :entry, locals: {button_display: false}
+  .row_fluid.delete_form
+    = form_for(@message, method: :delete) do |f|
+      .row_fluid
+        .span12
+          = f.label :password
+          = f.password_field :password
+      - if @message.errors[:password].present?
+        .row-fluid
+          .span12.alert.alert-error
+            - @message.errors.full_messages_for(:password).each do |error|
+              .row-fluid= error
+      .row_fluid
+        .span12
+          = link_to(t('buttons.back'), thread_message_path(@message), class: 'btn')
+          = f.submit t('buttons.delete'), class: 'btn btn-primary'

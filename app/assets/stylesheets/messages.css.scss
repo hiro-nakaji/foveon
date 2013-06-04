@@ -76,6 +76,12 @@ nav.pagination {
       display: inline;
     }
   }
+  input[type = 'password'] {
+    display: inline;
+    width: 35%;
+    margin: 0px;
+
+  }
 }
 
 .entry_form {
@@ -97,4 +103,8 @@ nav.pagination {
   input[type = 'checkbox'] {
     display: inline;
   }
+}
+
+.delete_form {
+  text-align: center;
 }

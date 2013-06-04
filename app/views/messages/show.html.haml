@@ -1,1 +1,2 @@
-= @message.title
+.container-fluid
+  = render partial: 'thread', object: @message, as: :entry, locals: {button_display: false}

@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  before_action :find_message, only: [:show, :edit, :update, :thread]
+  before_action :find_message, only: [:show, :edit, :update, :thread, :delete_confirm, :destroy]
 
   def new
     @message = Message.new()
@@ -42,7 +42,17 @@ class MessagesController < ApplicationController
     end
   end
 
+  def delete_confirm
+  end
+
   def destroy
+    message_params = params.require(:message).permit(:password)
+    @message.assign_attributes(message_params)
+    if @message.valid?
+      redirect_to action: :trees
+    else
+      render action: :delete_confirm
+    end
   end
 
   # get

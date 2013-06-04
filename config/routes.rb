@@ -55,9 +55,14 @@ TheFoveonBbs::Application.routes.draw do
       get 'thread'
       get 'respond'
       post 'respond_post'
+      get 'delete_confirm'
     end
   end
-
+  resources :comments do
+    member do
+      get 'delete_confirm'
+    end
+  end
   resources :photos
 
   root to: 'messages#trees'
