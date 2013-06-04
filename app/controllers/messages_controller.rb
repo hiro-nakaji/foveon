@@ -45,7 +45,7 @@ class MessagesController < ApplicationController
   def destroy
     message_params = params.require(:message).permit(Message.permitted_destroy_params)
     @message.assign_attributes(message_params)
-    
+
     if @message.valid?
       if @message.comments.empty?
         @message.destroy
