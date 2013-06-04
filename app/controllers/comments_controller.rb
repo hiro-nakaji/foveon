@@ -55,6 +55,7 @@ class CommentsController < ApplicationController
   def destroy
     comment_params = params.require(:comment).permit(Comment.permitted_destroy_params)
     @comment.assign_attributes(comment_params)
+
     if @comment.valid?
       @comment.destroy
       redirect_to thread_message_path(@message)
