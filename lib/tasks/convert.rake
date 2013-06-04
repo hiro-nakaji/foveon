@@ -29,13 +29,23 @@ namespace :convert do
       puts old_parent_message.message_hash
 
       message = Message.new(old_parent_message.message_hash)
+      remove_errors_from_entry(message)
+      message.save!
 
       old_parent_message.children.each do | old_child_message |
         comment = Comment.new(old_child_message.message_hash)
+        remove_errors_from_entry(comment)
         message.comments << comment
       end
 
-      message.save!
+    end
+  end
+
+  # @param entry Entry
+  def remove_errors_from_entry(entry)
+    if entry.invalid?
+      entry.mail = nil if entry.errors.has_key?(:mail)
+      entry.homepage = nil if entry.errors.has_key?(:homepage)
     end
   end
 

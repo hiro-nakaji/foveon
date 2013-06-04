@@ -15,7 +15,7 @@ module Entry
     base.validates :mail, email_format: {allow_blank: true}
     base.validates :homepage, url: {allow_blank: true}
 
-    base.validate :check_passwords, if: :persisted?
+    base.validate :check_passwords, on: :update, if: :password_changed?
 
     base.before_save :crypt_password
 
