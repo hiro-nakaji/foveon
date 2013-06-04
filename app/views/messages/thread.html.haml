@@ -1,5 +1,5 @@
 .container-fluid
-  = link_to(t('buttons.back'), trees_messages_path, class: 'header')
+  = link_to(t('buttons.back'), trees_messages_path(page: @message.current_page), class: 'header')
   = render(partial: 'thread', object: @message, as: :entry, locals: {button_display: true})
   = render(partial: 'comments/thread', collection: @message.comments, as: :entry, locals: {button_display: true})
-  = link_to(t('buttons.back'), trees_messages_path, class: 'header')
+  = link_to(t('buttons.back'), trees_messages_path(page: @message.current_page), class: 'header')
