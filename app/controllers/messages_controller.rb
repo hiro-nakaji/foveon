@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
-      redirect_to action: :trees
+      redirect_to thread_message_path(@message)
     else
       @message.build_photos_up_to_max
       render action: :new
@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
     message_params = params.require(:message).permit(Message.permitted_update_params)
 
     if @message.update_attributes(message_params)
-      redirect_to action: :trees
+      redirect_to thread_message_path(@message)
     else
       @message.build_photos_up_to_max
       render action: :edit
