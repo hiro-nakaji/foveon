@@ -1,0 +1,9 @@
+.row_fluid
+  .span12
+    = form.label :password
+    = form.password_field :password
+- if form.object.errors[:password].present?
+  .row-fluid
+    .span12.alert.alert-error
+      - form.object.errors.full_messages_for(:password).each do |error|
+        .row-fluid= error

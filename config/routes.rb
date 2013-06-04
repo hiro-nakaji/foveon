@@ -58,7 +58,7 @@ TheFoveonBbs::Application.routes.draw do
     resources :comments do
       member do
         get 'delete_confirm'
-        post 'respond_post'
+        get 'reply'
       end
     end
   end

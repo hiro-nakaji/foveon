@@ -8,9 +8,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    permitted = [:title, :author, :password, :mail, :homepage, :content,
-                photos_attributes: [:title, :photo_data, :no, :photo_data_cache, :_destroy]]
-    message_params = params.require(:message).permit(permitted)
+    message_params = params.require(:message).permit(Message.permitted_create_params)
     @message = Message.new(message_params)
 
     if @message.save
@@ -30,9 +28,7 @@ class MessagesController < ApplicationController
   end
 
   def update
-    permitted = [:title, :author, :password, :mail, :homepage, :content,
-                 photos_attributes: [:id, :title, :photo_data, :no, :photo_data_cache, :_destroy]]
-    message_params = params.require(:message).permit(permitted)
+    message_params = params.require(:message).permit(Message.permitted_update_params)
 
     if @message.update_attributes(message_params)
       redirect_to action: :trees
@@ -47,7 +43,7 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    message_params = params.require(:message).permit(:password)
+    message_params = params.require(:message).permit(Message.permitted_destroy_params)
     @message.assign_attributes(message_params)
     if @message.valid?
       if @message.comments.empty?
@@ -69,19 +65,6 @@ class MessagesController < ApplicationController
 
   # get
   def thread
-  end
-
-  # get
-  def respond
-    parent = Message.find(params[:id])
-    @root = parent.root
-    @message = Message.new(parent: @root)
-    @message.title = "Re #{parent.title}"
-  end
-
-  # post
-  def respond_post
-    @parent = Message.find(params[:id])
   end
 
   def find_message

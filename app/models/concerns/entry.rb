@@ -42,6 +42,10 @@ module Entry
     end
   end
 
+  def reply_content
+    self.content.gsub(/^/, ">")
+  end
+
   private
 
   def check_passwords

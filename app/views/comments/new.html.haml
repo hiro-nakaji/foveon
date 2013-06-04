@@ -1,0 +1,8 @@
+.container-fluid
+  .row-fluid.entry_form
+    = form_for([@message, @comment], multipart: true) do |f|
+      = render partial: 'form', object:f, as: :form, locals: {comment: @comment}
+      .row_fluid
+        .span2.offset2
+          = link_to(t('buttons.back'), thread_message_path(@message), class: 'btn')
+          = f.submit t('buttons.create'), class: 'btn btn-primary'

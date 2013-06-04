@@ -1,7 +1,7 @@
 .container-fluid
-  = render partial: 'thread', object: @message, as: :entry, locals: {button_display: false}
+  = render partial: 'thread', object: @comment, as: :entry, locals: {button_display: false}
   .row_fluid.delete_form
-    = form_for(@message, method: :delete) do |f|
+    = form_for([@message, @comment], method: :delete) do |f|
       = render partial: 'delete_form', object: f, as: :form
       .row_fluid
         .span12
