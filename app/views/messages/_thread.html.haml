@@ -1,15 +1,17 @@
 .row-fluid.thread
   .row-fluid.thread_header
     .row-fluid
-      .span6.entry_headline
+      .span5.entry_headline
         = entry.title
         %a(name="#{entry.id}")
-      .span3.entry_headline
+      .span2.entry_headline
         = entry.author
         - if entry.homepage.present?
           = link_to('', entry.url, class: 'icon-home', target: '_blank')
         - if entry.mail.present?
           = mail_to(entry.mail, '', class: 'icon-envelope')
+      .span2
+        = I18n.localize(entry.created_at, :format => :short)
       .span3.button_group
         = button_to(t('buttons.respond'), respond_message_path(entry), method: 'get', class: 'btn btn-mini btn-link')
         = button_to(t('buttons.edit'), edit_message_path(entry), method: 'get', class: 'btn btn-mini btn-link')
