@@ -90,12 +90,12 @@ ja:
         message:
           attributes:
             password:
-              invalid: "パスワードが一致しません。"
+              invalid: "が一致しません"
         comment:
           attributes:
             password:
-              invalid: "パスワードが一致しません。"
+              invalid: "が一致しません"
         photo:
           attributes:
             photo_data:
-              invalid: "このファイルはアップロード不可です: %{content_type}."
+              invalid: "このファイルはアップロード不可です: %{content_type}"

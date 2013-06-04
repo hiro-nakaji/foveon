@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0.rc1'
+gem 'rails-i18n'
 gem 'validates_email_format_of'
 gem "validate_url"
 

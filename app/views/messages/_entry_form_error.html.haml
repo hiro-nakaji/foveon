@@ -2,4 +2,4 @@
   .row-fluid
     .span9.offset2.alert.alert-error
       - entry.errors.full_messages_for(attribute).each do |error|
-        = error
+        .row-fluid= error

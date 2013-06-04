@@ -90,11 +90,11 @@ en:
         message:
           attributes:
             password:
-              invalid: "not matched."
+              invalid: "not matched"
         comment:
           attributes:
             password:
-              invalid: "not matched."
+              invalid: "not matched"
         photo:
           attributes:
             photo_data:
