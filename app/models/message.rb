@@ -3,5 +3,5 @@ class Message < ActiveRecord::Base
 
   include Entry
 
-  has_many :comments, dependent: :destroy
+  has_many :comments, dependent: :destroy, order: :created_at
 end
