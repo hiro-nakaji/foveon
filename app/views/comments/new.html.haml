@@ -5,4 +5,4 @@
       .row_fluid
         .span2.offset2
           = link_to(t('buttons.back'), thread_message_path(@message), class: 'btn')
-          = f.submit t('buttons.create'), class: 'btn btn-primary'
+          = f.submit t('buttons.create'), disable_with: t('buttons.create'), class: 'btn btn-primary'
