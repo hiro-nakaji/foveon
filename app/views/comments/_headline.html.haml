@@ -1,6 +1,8 @@
 .row-fluid.comment_base
   .span8.entry_headline
     = link_to(entry.title, thread_message_path(entry.message, anchor: entry))
+    - if entry.photos.present?
+      = link_to('', message_comment_path(entry.message, entry), class: 'icon-camera')
   .span4.entry_headline
     = entry.author
     - if entry.homepage.present?
