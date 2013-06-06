@@ -4,6 +4,8 @@
       .span8.entry_headline
         = entry.title
         %a(name="#{entry.id}")
+        - if entry.photos.present?
+          = link_to('', message_comment_path(entry.message, entry), class: 'icon-camera')
         .button_group.entry_headline_button
           - if button_display
             = button_to(t('buttons.respond'), reply_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
