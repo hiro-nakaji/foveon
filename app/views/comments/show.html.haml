@@ -1,5 +1,6 @@
 .container-fluid
   = render partial: 'thread', object: @comment, as: :entry,
     locals: {button_display: false, thumbnail_display: false}
-  - @comment.photos.each do |photo|
-    = render(partial: 'photos/photo', object: photo)
+  .row-fluid.photo_base
+    - @comment.photos.each do |photo|
+      = render(partial: 'photos/photo', object: photo)
