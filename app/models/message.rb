@@ -16,4 +16,13 @@ class Message < ActiveRecord::Base
     count = Message.newer(self.created_at).count
     (count.to_f / Kaminari.config.default_per_page).ceil
   end
+
+  def self.search_from_input(input)
+    comment_where = Comment.where_from_input(input)
+    comment_select =  Comment.select(:message_id).where(comment_where)
+
+    message_where = Message.where_from_input(input)
+    
+    Message.where(Message.where(message_where).where(id: comment_select).where_values.reduce(:or))
+  end
 end
