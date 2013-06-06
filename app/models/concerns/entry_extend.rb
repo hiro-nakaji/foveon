@@ -1,4 +1,30 @@
 module EntryExtend
+  def self.extended(base)
+    base.has_many :photos, -> { order "no" }, as: :entry, dependent: :destroy
+
+    base.accepts_nested_attributes_for :photos,
+                                       allow_destroy: true,
+                                       reject_if: ->(attr) {
+                                         attr[:photo_data].blank? && attr[:photo_data_cache].blank? && attr[:_destroy].blank?
+                                       }
+
+    base.validates :title, presence: true
+    base.validates :author, presence: true
+    base.validates :password, presence: true
+    base.validates :content, presence: true
+    base.validates :mail, email_format: {allow_blank: true}
+    base.validates :homepage, url: {allow_blank: true}
+
+    base.validate :check_passwords, on: :update, if: :password_changed?
+
+    base.before_save :crypt_password
+
+    base.scope :search_title, ->(word) { base.where(base.arel_table[:title].matches word) }
+    base.scope :search_author, ->(word) { base.where(base.arel_table[:author].matches word) }
+    base.scope :search_content, ->(word) { base.where(base.arel_table[:content].matches word) }
+    base.scope :search, ->(word){base.search_title(word).search_author(word).search_content(word)}
+  end
+
   def permitted_create_params
     [:title, :author, :password, :mail, :homepage, :content,
      photos_attributes: [:id, :title, :photo_data, :no, :photo_data_cache, :_destroy]]
