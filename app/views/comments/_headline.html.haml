@@ -1,9 +1,11 @@
 .row-fluid.comment_base
-  .span8.entry_headline= link_to(entry.title, thread_message_path(entry.message, anchor: entry))
-  .span2.entry_headline
+  .span8.entry_headline
+    = link_to(entry.title, thread_message_path(entry.message, anchor: entry))
+  .span4.entry_headline
     = entry.author
     - if entry.homepage.present?
       = link_to('', entry.url, class: 'icon-home', target: '_blank')
     - if entry.mail.present?
       = mail_to(entry.mail, '', class: 'icon-envelope')
-  .span2.entry_headline= I18n.localize(entry.created_at, :format => :short)
+    .entry_headline_date
+      = I18n.localize(entry.created_at, :format => :short)

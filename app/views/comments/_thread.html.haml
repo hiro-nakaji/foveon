@@ -1,22 +1,22 @@
 .row-fluid.thread
   .row-fluid.thread_header
     .row-fluid
-      .span6.entry_headline
+      .span8.entry_headline
         = entry.title
         %a(name="#{entry.id}")
-      .span2.button_group
-        - if button_display
-          = button_to(t('buttons.respond'), reply_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-          = button_to(t('buttons.edit'), edit_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-          = button_to(t('buttons.delete'), delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-      .span2.entry_headline
+        .button_group.entry_headline_button
+          - if button_display
+            = button_to(t('buttons.respond'), reply_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
+            = button_to(t('buttons.edit'), edit_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
+            = button_to(t('buttons.delete'), delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
+      .span4.entry_headline
         = entry.author
         - if entry.homepage.present?
           = link_to('', entry.url, class: 'icon-home', target: '_blank')
         - if entry.mail.present?
           = mail_to(entry.mail, '', class: 'icon-envelope')
-      .span2.entry_headline
-        = I18n.localize(entry.created_at, :format => :short)
+        .entry_headline_date
+          = I18n.localize(entry.created_at, :format => :short)
   .row-fluid
     .span12.thread_body
       = raw Rinku.auto_link(simple_format(entry.content), mode=:all, 'target="_blank"')
