@@ -12,4 +12,8 @@ module EntryExtend
   def permitted_destroy_params
     [:password]
   end
+
+  def split_to_words(input)
+    input.split(/[#{Settings.foveon_bbs.spaces}]+/)
+  end
 end

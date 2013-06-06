@@ -3,6 +3,7 @@ foveon_bbs:
   photo_local_directory: '/Users/hiro/Documents/foveon/storage'
   photo_top: 'foveon/storage'
   max_photo_count: 4
+  spaces: " 　"
 photo_bbs:
   top_directory: '/Users/hiro/Documents/foveon/photo'
   data_path: '/Users/hiro/Documents/foveon/photo/bbs-utf8.txt'
