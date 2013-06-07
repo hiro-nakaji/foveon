@@ -1,6 +1,5 @@
 .container-fluid
-  = link_to(t('buttons.new'), new_message_path, class: 'header')
-  = paginate @messages, :window => 2, :outer_window => 2, :params => { words: 'hiro' }
+  = render(partial: 'page_header', object: @messages, as: :messages, locals:{params: params})
 
   - @messages.each do |message|
     .row-fluid.tree
@@ -10,5 +9,4 @@
       .row-fluid.branches
         = render(partial: 'comments/headline', collection: message.comments, as: :entry)
 
-  = link_to(t('buttons.new'), new_message_path, class: 'header')
-  = paginate @messages, :window => 2, :outer_window => 2, :params => { words: 'hiro' }
+  = render(partial: 'page_header', object: @messages, as: :messages, locals:{params: params})

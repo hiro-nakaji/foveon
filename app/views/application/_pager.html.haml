@@ -1,0 +1,8 @@
+.row-fluid
+  %span.pager_base
+    = link_to(t('buttons.new'), new_message_path, class: 'header')
+    = paginate messages, :window => 2, :outer_window => 2
+  %span.search_base
+    = form_tag(trees_messages_path, method: :get, class: 'search_form') do
+      = text_field_tag :words, params['words'], class: 'search-query'
+      = submit_tag(t('buttons.search'), name: nil, class: 'btn btn-link')

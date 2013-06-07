@@ -58,6 +58,7 @@ en:
     update: 'Update'
     delete: 'Delete'
     back: 'Back'
+    search: 'Search'
 
   activerecord:
     attributes:

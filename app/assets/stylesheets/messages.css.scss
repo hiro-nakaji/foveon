@@ -88,12 +88,6 @@ nav.pagination {
       display: inline;
     }
   }
-  input[type = 'password'] {
-    display: inline;
-    width: 35%;
-    margin: 0px;
-
-  }
 }
 
 .entry_form {
@@ -119,4 +113,19 @@ nav.pagination {
 
 .delete_form {
   text-align: center;
+}
+
+.pager_base {
+  float: left;
+  margin:10px;
+}
+
+.search_base {
+  float: right;
+  form {
+    display: inline;
+    input[type = 'text'] {
+      margin: 5px;
+    }
+  }
 }
