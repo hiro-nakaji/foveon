@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   # Set locale in response to client's browser setting.
   def set_locale
     accept_language = request.headers['Accept-Language']
-    return if accept_language.empty?
+    return if accept_language.blank?
 
     available = %w{en ja}
     accept_language.split(',').each do |locale_set|
