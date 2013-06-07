@@ -1,5 +1,5 @@
 .container-fluid
-  = render(partial: 'page_header', object: @messages, as: :messages, locals:{params: params})
+  = render(partial: 'pager', object: @messages, as: :messages, locals:{params: params})
 
   - @messages.each do |message|
     .row-fluid.tree
@@ -9,4 +9,4 @@
       .row-fluid.branches
         = render(partial: 'comments/headline', collection: message.comments, as: :entry, locals:{params: params})
 
-  = render(partial: 'page_footer', object: @messages, as: :messages, locals:{params: params})
+  = render(partial: 'pager', object: @messages, as: :messages, locals:{params: params})
