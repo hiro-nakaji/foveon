@@ -6,7 +6,7 @@
   .span4.entry_headline
     = entry.author
     - if entry.homepage.present?
-      = link_to('', entry.url, class: 'icon-home', target: '_blank')
+      = link_to('', entry.homepage, class: 'icon-home', target: '_blank')
     - if entry.mail.present?
       = mail_to(entry.mail, '', class: 'icon-envelope')
     .entry_headline_date

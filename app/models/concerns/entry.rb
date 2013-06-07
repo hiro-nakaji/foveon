@@ -1,14 +1,4 @@
 module Entry
-  def url
-    return nil if self.homepage.empty?
-
-    if /^http\:\/\// =~ self.homepage
-      self.homepage
-    else
-      "http://" + self.homepage
-    end
-  end
-
   def build_photos_up_to_max
     if self.photos.size < Settings.foveon_bbs.max_photo_count
       (Settings.foveon_bbs.max_photo_count - self.photos.size).
