@@ -122,11 +122,9 @@ nav.pagination {
 
 .search_base {
   float: right;
+  margin: 5px;
   form {
     display: inline;
-    input[type = 'text'] {
-      margin: 5px;
-    }
   }
 }
 
