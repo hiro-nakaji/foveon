@@ -19,9 +19,9 @@ module EntryExtend
 
     base.before_save :crypt_password
 
-    base.scope :search_title, ->(word) { base.where(base.arel_table[:title].matches word) }
-    base.scope :search_author, ->(word) { base.where(base.arel_table[:author].matches word) }
-    base.scope :search_content, ->(word) { base.where(base.arel_table[:content].matches word) }
+    base.scope :search_title, ->(word) { base.where(base.arel_table[:title].matches "%#{word}%") }
+    base.scope :search_author, ->(word) { base.where(base.arel_table[:author].matches "%#{word}%") }
+    base.scope :search_content, ->(word) { base.where(base.arel_table[:content].matches "%#{word}%") }
     base.scope :search, ->(word){base.search_title(word).search_author(word).search_content(word)}
   end
 
