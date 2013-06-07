@@ -6,3 +6,4 @@
     = form_tag(trees_messages_path, method: :get, class: 'search_form') do
       = text_field_tag :words, params['words'], class: 'search-query'
       = submit_tag(t('buttons.search'), name: nil, class: 'btn btn-link')
+    = link_to(t('buttons.search_cancel'), trees_messages_path, class: 'btn btn-link')

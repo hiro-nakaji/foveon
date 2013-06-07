@@ -59,6 +59,7 @@ ja:
     delete: '削除'
     back: '戻る'
     search: '検索'
+    search_cancel: '解除'
 
   activerecord:
     attributes:

@@ -61,7 +61,11 @@ class MessagesController < ApplicationController
 
   # get
   def trees
-    @messages = Message.desc.page(params[:page])
+    if params[:words].present?
+      @messages = Message.search_from_input(params[:words]).desc.page(params[:page])
+    else
+      @messages = Message.desc.page(params[:page])
+    end
   end
 
   # get
