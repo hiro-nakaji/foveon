@@ -117,12 +117,12 @@ nav.pagination {
 
 .pager_base {
   float: left;
-  margin:10px;
 }
 
 .search_base {
-  float: right;
-  margin: 5px;
+  float: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
   form {
     display: inline;
   }

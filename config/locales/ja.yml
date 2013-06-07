@@ -100,3 +100,9 @@ ja:
           attributes:
             photo_data:
               invalid: "このファイルはアップロード不可です: %{content_type}"
+
+  views:
+    pagination:
+      previous: "<"
+      next: ">"
+      truncate: "..."
