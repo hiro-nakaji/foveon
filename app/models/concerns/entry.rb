@@ -15,6 +15,10 @@ module Entry
     entry.content = self.content.gsub(/^/, "> ")
   end
 
+  def new_entry?(current_time = Time.now)
+    self.updated_at > current_time - 24.hours
+  end
+
   def search_hit?(input)
     self.class.split_to_words(input).each do |word|
       return true if self.title =~ /#{word}/ || self.author =~ /#{word}/ || self.content =~ /#{word}/

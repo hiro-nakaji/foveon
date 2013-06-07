@@ -3,6 +3,8 @@
     = link_to(entry.title, thread_message_path(entry.message, anchor: entry))
     - if entry.photos.present?
       = link_to('', message_comment_path(entry.message, entry), class: 'icon-camera')
+    - if entry.new_entry?
+      %i.icon-gift.new-entry
     - if params[:words].present? && entry.search_hit?(params[:words])
       %i.icon-star.search-hit
   .span4.entry_headline
