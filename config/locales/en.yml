@@ -59,7 +59,6 @@ en:
     delete: 'Delete'
     back: 'Back'
     search: 'Search'
-    search_cancel: 'Cancel'
 
   activerecord:
     attributes:
