@@ -1,0 +1,5 @@
+.row-fluid.page_header
+  .pagination.pagination_base
+    %ul
+      %li= link_to('', trees_messages_path, class: 'icon-home')
+      %li= link_to('', trees_messages_path(page: current_page), class: 'icon-th-list')
