@@ -10,5 +10,4 @@
       = render partial: 'delete_form', object: f, as: :form
       .row_fluid
         .span12
-          = link_to(t('buttons.back'), thread_message_path(@message), class: 'btn')
           = f.submit t('buttons.delete'), disable_with: t('buttons.delete'), class: 'btn btn-danger'
