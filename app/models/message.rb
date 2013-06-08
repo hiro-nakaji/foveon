@@ -4,13 +4,7 @@ class Message < ActiveRecord::Base
 
   has_many :comments, ->{order(:created_at)}, dependent: :destroy
 
-  scope :desc, -> { order(created_at: :desc) }
   scope :newer, ->(created_at) { where('created_at >= ?', created_at) }
-
-  def current_page
-    count = Message.newer(self.created_at).count
-    (count.to_f / Kaminari.config.default_per_page).ceil
-  end
 
   def self.search_from_input(input)
     comment_where = Comment.where_from_input(input)
@@ -19,5 +13,10 @@ class Message < ActiveRecord::Base
     message_where = Message.where_from_input(input)
 
     Message.where(Message.where(message_where).where(id: comment_select).where_values.reduce(:or))
+  end
+
+  def current_page
+    count = Message.newer(self.created_at).count
+    (count.to_f / Kaminari.config.default_per_page).ceil
   end
 end

@@ -50,6 +50,7 @@ TheFoveonBbs::Application.routes.draw do
   resources :messages do
     collection do
       get 'trees'
+      get 'feed'
     end
     member do
       get 'thread'

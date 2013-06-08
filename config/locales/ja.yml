@@ -1,4 +1,8 @@
 ja:
+  site:
+    title: 'The Foveon BBS'
+    description: 'シグマ製カメラ、レンズを話題にした掲示板'
+
   exif:
     attributes:
       Make: 'メーカー'

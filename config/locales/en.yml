@@ -1,4 +1,8 @@
 en:
+  site:
+    title: 'The Foveon BBS'
+    description: "BBS about Sigma cameras and lenses."
+
   exif:
     attributes:
       Make: 'Maker'

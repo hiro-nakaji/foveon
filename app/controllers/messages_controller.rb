@@ -69,6 +69,20 @@ class MessagesController < ApplicationController
   end
 
   # get
+  def feed
+    messages = Message.desc.limit(10)
+    comments = Comment.desc.limit(10)
+    entries = messages.concat(comments).sort do |a, b|
+      a.created_at <=> b.created_at
+    end
+    @entries = entries.reverse.slice(0, 10)
+
+    respond_to do |format|
+      format.rss { render :layout => false }
+    end
+  end
+
+  # get
   def thread
   end
 
