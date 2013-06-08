@@ -2,16 +2,17 @@ class CommentsController < ApplicationController
 
   before_action :find_message
   before_action :find_comment, only: [:show, :edit, :update, :delete_confirm, :destroy]
+  after_action :save_cookies, only: [:create, :update]
 
   def new
-    @comment = @message.comments.build
-    @message.reply(@comment)
+    @comment = @message.comments.build(load_cookies)
     @comment.build_photos_up_to_max
+    @message.reply(@comment)
   end
 
   def reply
     target = @message.comments.find(params[:id])
-    @comment = @message.comments.build
+    @comment = @message.comments.build(load_cookies)
     target.reply(@comment)
     @comment.build_photos_up_to_max
 
@@ -74,5 +75,20 @@ class CommentsController < ApplicationController
 
   def find_comment
     @comment =  @message.comments.find(params[:id])
+  end
+
+  def load_cookies
+    data = Hash.new
+    Comment.cookie_keys.map do |key|
+      data[key] = cookies.signed[key]
+    end
+
+    data
+  end
+
+  def save_cookies
+    Comment.cookie_keys.each do |key|
+      cookies.signed[key] = {value: @comment[key], path: root_path, expires: 1.year.from_now}
+    end
   end
 end

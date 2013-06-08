@@ -50,4 +50,8 @@ module EntryExtend
   def split_to_words(input)
     input.split(/[#{Settings.foveon_bbs.spaces}]+/)
   end
+
+  def cookie_keys
+    [:author, :mail, :homepage]
+  end
 end

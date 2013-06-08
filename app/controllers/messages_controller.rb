@@ -1,9 +1,10 @@
 class MessagesController < ApplicationController
 
   before_action :find_message, only: [:show, :edit, :update, :thread, :delete_confirm, :destroy]
+  after_action :save_cookies, only: [:create, :update]
 
   def new
-    @message = Message.new()
+    @message = Message.new(load_cookies)
     @message.build_photos_up_to_max
   end
 
@@ -92,4 +93,20 @@ class MessagesController < ApplicationController
   def find_message
     @message = Message.find(params[:id])
   end
+
+  def load_cookies
+    data = Hash.new
+    Message.cookie_keys.map do |key|
+      data[key] = cookies.signed[key]
+    end
+
+    data
+  end
+
+  def save_cookies
+    Message.cookie_keys.each do |key|
+      cookies.signed[key] = {value: @message[key], path: root_path, expires: 1.year.from_now}
+    end
+  end
+
 end
