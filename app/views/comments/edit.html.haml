@@ -1,4 +1,9 @@
 .container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', thread_message_path(@message, anchor: @comment.id), class: 'icon-comment')
   .row-fluid.entry_form
     = form_for([@message, @comment], multipart: true) do |f|
       = render partial: 'form', object:f, as: :form, locals: {comment: @comment}

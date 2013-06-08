@@ -1,4 +1,9 @@
 .container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', thread_message_path(@message), class: 'icon-comment')
   = render partial: 'thread', object: @message, as: :entry, locals: {button_display: false, thumbnail_display: true}
   .row_fluid.delete_form
     = form_for(@message, method: :delete) do |f|
