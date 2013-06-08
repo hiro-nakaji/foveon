@@ -9,5 +9,4 @@
       = render partial: 'form', object:f, as: :form, locals: {comment: @comment}
       .row_fluid
         .span2.offset2
-          = link_to(t('buttons.back'), thread_message_path(@message), class: 'btn')
           = f.submit t('buttons.update'), disable_with: t('buttons.update'), class: 'btn btn-primary'
