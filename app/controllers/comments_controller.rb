@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
     @comment = @message.comments.build(comment_params)
 
     if @comment.save
-      redirect_to thread_message_path(@message)
+      redirect_to thread_message_path(@message, anchor: @comment.id)
     else
       @comment.build_photos_up_to_max
       render action: :new
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
     comment_params = params.require(:comment).permit(Comment.permitted_update_params)
 
     if @comment.update_attributes(comment_params)
-      redirect_to thread_message_path(@message)
+      redirect_to thread_message_path(@message, anchor: @comment.id)
     else
       @comment.build_photos_up_to_max
       render action: :edit
