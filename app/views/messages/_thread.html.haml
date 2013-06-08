@@ -6,6 +6,8 @@
         %a(name="#{entry.id}")
         - if entry.photos.present?
           = link_to('', message_path(entry), class: 'icon-camera')
+        - if entry.new_entry?
+          %i.icon-gift.new-entry
         .button_group.entry_headline_button
           - if button_display
             = button_to(t('buttons.respond'), new_message_comment_path(entry), method: 'get', class: 'btn btn-mini btn-link')
