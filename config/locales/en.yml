@@ -100,3 +100,11 @@ en:
           attributes:
             photo_data:
               invalid: "This content_type is not acceptable: %{content_type}."
+
+  views:
+    pagination:
+      first: "<<"
+      last: ">>"
+      previous: "<"
+      next: ">"
+      truncate: "..."
