@@ -27,6 +27,11 @@ module Entry
     return false
   end
 
+  # @param request ActionDispatch::Request
+  def log_request(request)
+    update_attributes(remote_addr: request.remote_addr, user_agent: request.user_agent)
+  end
+
   private
 
   def check_passwords

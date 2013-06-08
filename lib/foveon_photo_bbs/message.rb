@@ -36,7 +36,7 @@ class FoveonPhotoBbs::Message
       homepage:       homepage,
       title:          @title.present? ? @title : '無題',
       content:        @content.gsub(/<(br|BR)>/, "\n"),
-      remote_address: @remote_address,
+      remote_addr:    @remote_address,
       message_type:   'photo',
       password:       [*1..9, *'A'..'Z', *'a'..'z'].sample(8).join
     }

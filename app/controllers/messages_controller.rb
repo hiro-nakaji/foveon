@@ -12,6 +12,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
 
     if @message.save
+      @message.log_request(request)
       redirect_to thread_message_path(@message)
     else
       @message.build_photos_up_to_max
@@ -31,6 +32,7 @@ class MessagesController < ApplicationController
     message_params = params.require(:message).permit(Message.permitted_update_params)
 
     if @message.update_attributes(message_params)
+      @message.log_request(request)
       redirect_to thread_message_path(@message)
     else
       @message.build_photos_up_to_max
@@ -51,6 +53,7 @@ class MessagesController < ApplicationController
         @message.destroy
       else
         @message.update_attributes(content: 'Deleted.')
+        @message.log_request(request)
         @message.photos.destroy_all
       end
       redirect_to action: :trees

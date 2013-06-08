@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130530093430) do
+ActiveRecord::Schema.define(version: 20130608131310) do
 
   create_table "comments", force: true do |t|
-    t.string   "title",                      null: false
-    t.string   "author",                     null: false
+    t.string   "title",                    null: false
+    t.string   "author",                   null: false
     t.string   "password"
     t.string   "mail"
-    t.string   "homepage",       limit: 512
-    t.text     "content",                    null: false
-    t.string   "remote_address"
-    t.string   "browser"
-    t.integer  "old_id",         limit: 8
+    t.string   "homepage",     limit: 512
+    t.text     "content",                  null: false
+    t.string   "remote_addr"
+    t.string   "user_agent"
+    t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.integer  "message_id"
     t.datetime "created_at"
@@ -32,15 +32,15 @@ ActiveRecord::Schema.define(version: 20130530093430) do
   add_index "comments", ["message_id"], name: "index_comments_on_message_id", using: :btree
 
   create_table "messages", force: true do |t|
-    t.string   "title",                      null: false
-    t.string   "author",                     null: false
+    t.string   "title",                    null: false
+    t.string   "author",                   null: false
     t.string   "password"
     t.string   "mail"
-    t.string   "homepage",       limit: 512
-    t.text     "content",                    null: false
-    t.string   "remote_address"
-    t.string   "browser"
-    t.integer  "old_id",         limit: 8
+    t.string   "homepage",     limit: 512
+    t.text     "content",                  null: false
+    t.string   "remote_addr"
+    t.string   "user_agent"
+    t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.datetime "created_at"
     t.datetime "updated_at"

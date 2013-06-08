@@ -21,7 +21,8 @@ class OldMessage < ActiveRecord::Base
       homepage:       homepage,
       title:          self.title,
       content:        self.data,
-      remote_address: self.address,
+      remote_addr:    self.address,
+      user_agent:     self.browser,
       password:       ctypted_password,
       message_type:  'text'
     }
