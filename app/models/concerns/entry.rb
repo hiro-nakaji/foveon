@@ -10,10 +10,10 @@ module Entry
     end
   end
 
-  def reply(entry)
-    entry.title = self.title.gsub(/^/, "Re: ")
-    entry.content = I18n.t('entry.wrote', author: self.author) + "\n"
-    entry.content += self.content.gsub(/^/, "> ")
+  def reply_to(entry)
+    self.title = entry.title.gsub(/^/, "Re: ")
+    self.content = I18n.t('entry.wrote', author: entry.author) + "\n"
+    self.content += entry.content.gsub(/^/, "> ")
   end
 
   def new_entry?(current_time = Time.now)

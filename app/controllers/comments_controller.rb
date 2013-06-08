@@ -7,14 +7,14 @@ class CommentsController < ApplicationController
   def new
     @comment = @message.comments.build(load_cookies)
     @comment.build_photos_up_to_max
-    @message.reply(@comment)
+    @comment.reply_to(@message)
   end
 
   def reply
     target = @message.comments.find(params[:id])
     @comment = @message.comments.build(load_cookies)
-    target.reply(@comment)
     @comment.build_photos_up_to_max
+    @comment.reply_to(target)
 
     render action: :new
   end
