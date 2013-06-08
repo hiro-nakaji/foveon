@@ -60,6 +60,9 @@ en:
     back: 'Back'
     search: 'Search'
 
+  entry:
+    wrote: "%{author} wrote:"
+
   activerecord:
     attributes:
       message:

@@ -60,6 +60,9 @@ ja:
     back: '戻る'
     search: '検索'
 
+  entry:
+    wrote: "%{author}さん..."
+
   activerecord:
     attributes:
       message:
