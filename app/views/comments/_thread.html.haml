@@ -1,19 +1,19 @@
 .row-fluid.thread
   .row-fluid.thread_header
     .row-fluid
-      .span8.entry_headline
+      .span7.entry_headline
         = entry.title
         %a(name="#{entry.id}")
         - if entry.photos.present?
           = link_to('', message_comment_path(entry.message, entry), class: 'icon-camera')
         - if entry.new_entry?
           %i.icon-gift.new-entry
-        .button_group.entry_headline_button
+        .button_group
           - if button_display
-            = button_to(t('buttons.respond'), reply_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-            = button_to(t('buttons.edit'), edit_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-            = button_to(t('buttons.delete'), delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'btn btn-mini btn-link')
-      .span4.entry_headline
+            = link_to('', reply_message_comment_path(entry.message, entry), method: 'get', class: 'icon-share-alt')
+            = link_to('', edit_message_comment_path(entry.message, entry), method: 'get', class: 'icon-edit')
+            = link_to('', delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'icon-trash')
+      .span5.entry_headline
         = entry.author
         - if entry.homepage.present?
           = link_to('', entry.homepage, class: 'icon-home', target: '_blank')

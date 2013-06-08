@@ -31,12 +31,6 @@
   padding-right: 10px;
 }
 
-.entry_headline_button
-{
-  text-align: right;
-  float: right;
-}
-
 .entry_headline_date
 {
   text-align: right;
@@ -45,10 +39,6 @@
 
 .comment_base {
   margin-top: 5px;
-}
-
-.branch {
-
 }
 
 .thread {
@@ -79,14 +69,9 @@ nav.pagination {
 }
 
 .button_group {
-  padding-left: 10px;
-  padding-right: 10px;
-  form {
-    margin: 0px;
-    display: inline;
-    div {
-      display: inline;
-    }
+  float: right;
+  a {
+    margin-left: 10px;
   }
 }
 
