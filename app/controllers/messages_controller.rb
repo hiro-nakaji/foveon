@@ -81,9 +81,7 @@ class MessagesController < ApplicationController
     end
     @entries = entries.reverse.slice(0, 10)
 
-    respond_to do |format|
-      format.rss { render :layout => false }
-    end
+    render :layout => false
   end
 
   # get
