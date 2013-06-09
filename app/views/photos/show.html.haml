@@ -1,2 +1,11 @@
-.container-fluid.photo_base
+.container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        -case @photo.entry
+        -when Message
+          %li= link_to('', thread_message_path(@photo.entry), class: 'icon-comment')
+        -when Comment
+          %li= link_to('', thread_message_path(@photo.entry.message, anchor: @photo.entry.id), class: 'icon-comment')
   = render(partial: 'photo',  object: @photo)
