@@ -1,9 +1,9 @@
+%a(name="#{entry.id}")
 .row-fluid.thread
   .row-fluid.thread_header
     .row-fluid
       .span7.entry_headline
         = entry.title
-        %a(name="#{entry.id}")
         - if entry.photos.present?
           = link_to('', message_comment_path(entry.message, entry), class: 'icon-camera')
         - if entry.new_entry?
