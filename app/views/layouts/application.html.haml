@@ -6,5 +6,6 @@
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
     = auto_discovery_link_tag(:rss, {controller: :messages, action: :feed, format: :xml}, title: t('site.title'))
+    %meta(property="fb:app_id" content="#{Settings.foveon_bbs.facebook.app_id}")
   %body
     = yield
