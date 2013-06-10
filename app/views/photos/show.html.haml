@@ -9,3 +9,5 @@
         -when Comment
           %li= link_to('', thread_message_path(@photo.entry.message, anchor: @photo.entry.id), class: 'icon-comment')
   = render(partial: 'photo',  object: @photo)
+
+= render(partial: 'twitter_javascript')
