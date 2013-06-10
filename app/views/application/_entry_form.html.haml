@@ -12,7 +12,7 @@
 = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :password}
 .row-fluid
   .span2= form.label :content, class: 'required'
-  .span9= form.text_area :content, size: '300x10'
+  .span9= form.text_area :content, size: '300x15'
 = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :content}
 .row-fluid
   .span2= form.label :mail

@@ -1,5 +1,5 @@
 .container-fluid
   = render(partial: 'thread_buttons', locals: {current_page: @message.current_page})
-  = render(partial: 'thread', object: @message, as: :entry, locals: {button_display: true, thumbnail_display: true})
+  = render(partial: 'messages/thread', object: @message, as: :entry, locals: {button_display: true, thumbnail_display: true})
   = render(partial: 'comments/thread', collection: @message.comments, as: :entry, locals: {button_display: true, thumbnail_display: true})
   = render(partial: 'thread_buttons', locals: {current_page: @message.current_page})

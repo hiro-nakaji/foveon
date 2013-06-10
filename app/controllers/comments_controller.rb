@@ -5,14 +5,14 @@ class CommentsController < ApplicationController
   after_action :save_cookies, only: [:create, :update]
 
   def new
-    @comment = @message.comments.build(load_cookies)
+    @comment = Comment.new(load_cookies)
     @comment.build_photos_up_to_max
     @comment.reply_to(@message)
   end
 
   def reply
     target = @message.comments.find(params[:id])
-    @comment = @message.comments.build(load_cookies)
+    @comment = Comment.new(load_cookies)
     @comment.build_photos_up_to_max
     @comment.reply_to(target)
 
