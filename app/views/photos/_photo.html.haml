@@ -6,7 +6,6 @@
         %br
         = render(partial: 'facebook_like_button', object: photo_url(photo), as: :href)
         = render(partial: 'twitter_share_button', object: photo_url(photo), as: :href, locals: {comment: "> #{photo.title}"})
-        = render(partial: 'google_plus_button', object: photo_url(photo), as: :href)
       .media-body
         %h5.media-heading
         %table.table
