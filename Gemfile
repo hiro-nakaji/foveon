@@ -45,7 +45,6 @@ group :doc do
 end
 
 gem 'acts_as_tree'
-gem 'jpmobile'
 gem 'rails_config'
 
 # for file upload
