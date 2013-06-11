@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.datetime "updated_at"
   end
 
+  enable_extension "hstore"
+
   create_table "photos", force: true do |t|
     t.integer  "entry_id"
     t.string   "entry_type"
