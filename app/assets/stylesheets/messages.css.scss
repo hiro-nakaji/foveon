@@ -1,0 +1,138 @@
+// Place all the styles related to the messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+a {
+  color: rgb(66, 169, 238);
+}
+
+.tree {
+  background-color: #FBFBFB;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.tree_root {
+  background-color: #DBDBDB;
+  line-height: 40px;
+  display: block;
+}
+
+.message_headline_base_with_any_branch {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  @extend .tree_root;
+}
+
+.message_headline_base_with_no_branch {
+  border-radius: 5px;
+  @extend .tree_root;
+}
+
+.entry_headline {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.entry_headline_date
+{
+  text-align: right;
+  float: right;
+}
+
+.comment_base {
+  margin-top: 5px;
+}
+
+.thread {
+  background-color: #FBFBFB;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.thread_header {
+  background-color: #DBDBDB;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  line-height: 40px;
+  display: block;
+}
+
+.thread_body {
+  padding: 10px;
+}
+
+.thread_photo {
+  margin: 10px;
+}
+
+nav.pagination {
+  display: inline;
+}
+
+.button_group {
+  float: right;
+  a {
+    margin-left: 10px;
+  }
+}
+
+.entry_form {
+  margin: 10px;
+  label {
+    text-align: right;
+    display: inline;
+  }
+  label.required {
+    font-weight: bold;
+  }
+  input[type = 'text'] {
+    display: inline;
+    width: 98%;
+  }
+  textarea {
+    width: 98%;
+  }
+  input[type = 'checkbox'] {
+    display: inline;
+  }
+}
+
+.delete_form {
+  text-align: center;
+}
+
+.page_header {
+  margin-top: 10px;
+}
+
+.icon_base {
+  float: left;
+  margin-right: 10px;
+}
+
+.pager_base {
+  float: left;
+}
+
+.pagination_base {
+  display: inline;
+  margin: 0px;
+}
+
+.search_base {
+  float: right;
+  form {
+    display: inline;
+  }
+}
+
+.search-hit {
+  color: rgb(116, 226, 116);
+}
+
+.new-entry {
+  color: rgb(240, 139, 123);
+}

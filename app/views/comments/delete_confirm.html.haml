@@ -1,0 +1,13 @@
+.container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', thread_message_path(@message, anchor: @comment.id), class: 'icon-comment')
+  = render partial: 'thread', object: @comment, as: :entry, locals: {button_display: false, thumbnail_display: true}
+  .row_fluid.delete_form
+    = form_for([@message, @comment], method: :delete) do |f|
+      = render partial: 'delete_form', object: f, as: :form
+      .row_fluid
+        .span12
+          = f.submit t('buttons.delete'), disable_with: t('buttons.delete'), class: 'btn btn-danger'

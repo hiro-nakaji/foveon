@@ -1,0 +1,117 @@
+ja:
+  site:
+    title: 'The Foveon BBS'
+    description: 'シグマ製カメラ、レンズを話題にした掲示板'
+
+  exif:
+    attributes:
+      Make: 'メーカー'
+      Model: 'モデル'
+      DateTimeOriginal: '撮影日時'
+      ExposureBiasValue: '露出補正値'
+      ExposureMode: '露出モード'
+      ExposureProgram: '露出プログラム'
+      ExposureTime: '露出時間'
+      FNumber: 'Fナンバー'
+      FocalLength: 'レンズ焦点距離'
+      ISOSpeedRatings: 'ISOスピードレート'
+      Flash: 'フラッシュ'
+    ExposureMode:
+      '0': '自動'
+      '1': 'マニュアル'
+      '2': 'オートブラケット'
+    ExposureProgram:
+      '0': 'Not defined'
+      '1': 'マニュアル'
+      '2': '自動'
+      '3': '絞り優先'
+      '4': '速度優先'
+      '5': 'クリエイティブ'
+      '6': 'アクション'
+      '7': 'ポートレイト'
+      '8': '風景'
+    Flash:
+      '0': '非発光'
+      '1': '発光'
+      '5': '発光、リターン未検出'
+      '7': '発光、リターン検出'
+      '9': '強制発光'
+      '13': '強制発光、リターン未検出'
+      '15': '強制発光、リターン検出'
+      '16': '発光禁止'
+      '24': '非発光、自動'
+      '25': '発光、自動'
+      '29': '発光、自動、リターン未検出'
+      '31': '発光、自動、リターン検出'
+      '32': 'フラッシュ機能なし'
+      '65': '発光、赤目軽減'
+      '69': '発光、赤目軽減、リターン未検出'
+      '71': '発光、赤目軽減、リターン検出'
+      '73': '強制発光、赤目軽減'
+      '77': '強制発光、赤目軽減、リターン未検出'
+      '79': '強制発光、赤目軽減、リターン検出'
+      '89': '発光、自動、赤目軽減'
+      '93': '発光、自動、赤目軽減、リターン未検出'
+      '95': '発光、自動、赤目軽減、リターン検出'
+
+  buttons:
+    new: '新規'
+    create: '作成'
+    respond: '返信'
+    edit: '編集'
+    update: '更新'
+    delete: '削除'
+    back: '戻る'
+    search: '検索'
+
+  entry:
+    wrote: "%{author}さん..."
+
+  activerecord:
+    attributes:
+      message:
+        title: '件名'
+        author: '投稿者'
+        password: 'パスワード'
+        mail: 'メールアドレス'
+        homepage: 'ホームページ'
+        content: '記事'
+        remote_address: 'アクセス元'
+        browser: 'ブラウザ'
+        created_at: '投稿日時'
+        updated_at: '更新日時'
+      comment:
+        title: '件名'
+        author: '投稿者'
+        password: 'パスワード'
+        mail: 'メールアドレス'
+        homepage: 'ホームページ'
+        content: '記事'
+        remote_address: 'アクセス元'
+        browser: 'ブラウザ'
+        created_at: '投稿日時'
+        updated_at: '更新日時'
+      photo:
+        photo_data: '画像ファイル'
+    errors:
+      models:
+        message:
+          attributes:
+            password:
+              invalid: "が一致しません"
+        comment:
+          attributes:
+            password:
+              invalid: "が一致しません"
+        photo:
+          attributes:
+            photo_data:
+              invalid: "このファイルはアップロード不可です: %{content_type}"
+
+  views:
+    pagination:
+      first: "<<"
+      last: ">>"
+      previous: "<"
+      next: ">"
+      truncate: "..."

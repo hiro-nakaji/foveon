@@ -1,0 +1,30 @@
+.row-fluid.thread
+  .row-fluid.thread_header
+    .row-fluid
+      .span7.entry_headline
+        = entry.title
+        %a(name="#{entry.id}")
+        - if entry.photos.present?
+          = link_to('', message_path(entry), class: 'icon-camera')
+        - if entry.new_entry?
+          %i.icon-gift.new-entry
+        .button_group
+          - if button_display
+            = link_to('', new_message_comment_path(entry), method: 'get', class: 'icon-share-alt')
+            = link_to('', edit_message_path(entry), method: 'get', class: 'icon-edit')
+            = link_to('', delete_confirm_message_path(entry), method: 'get', class: 'icon-trash')
+      .span5.entry_headline
+        = entry.author
+        - if entry.homepage.present?
+          = link_to('', entry.homepage, class: 'icon-home', target: '_blank')
+        - if entry.mail.present?
+          = mail_to(entry.mail, '', class: 'icon-envelope')
+        .entry_headline_date
+          = I18n.localize(entry.created_at, :format => :short)
+  .row-fluid
+    .span12.thread_body
+      = raw Rinku.auto_link(simple_format(entry.content), mode=:all, 'target="_blank"')
+  - if thumbnail_display && entry.photos.present?
+    .row-fluid.thread_photo
+      - entry.photos.each do |photo|
+        = link_to(image_tag(photo.photo_data.thumb.to_s, class: 'img-polaroid', alt: photo.title), photo_path(photo), title: photo.title)

@@ -1,0 +1,12 @@
+.container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', thread_message_path(@message), class: 'icon-comment')
+  .row-fluid.entry_form
+    = form_for(@message, multipart: true) do |f|
+      = render partial: 'form', object:f, as: :form, locals: {message: @message}
+      .row_fluid
+        .span2.offset2
+          = f.submit t('buttons.update'), disable_with: t('buttons.update'), class: 'btn btn-primary'

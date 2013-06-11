@@ -1,0 +1,13 @@
+.row-fluid.page_header
+  %span.icon_base
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', new_message_path, class: 'icon-file')
+  %span.pager_base
+    = paginate messages
+  %span.search_base
+    = form_tag(trees_messages_path, method: :get, class: 'form-search') do
+      .input-append
+        = text_field_tag :words, params['words'], class: 'input-medium search-query'
+        = submit_tag(t('buttons.search'), name: nil, class: 'btn')

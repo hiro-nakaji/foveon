@@ -1,0 +1,5 @@
+- if entry.errors[attribute].present?
+  .row-fluid
+    .span9.offset2.alert.alert-error
+      - entry.errors.full_messages_for(attribute).each do |error|
+        .row-fluid= error

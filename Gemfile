@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0.rc1'
+gem 'rails-i18n'
+gem 'validates_email_format_of'
+gem "validate_url"
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -9,7 +12,14 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0.rc1'
 
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+
 gem 'haml-rails'
+group :development do
+  gem 'erb2haml'
+end
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -38,12 +48,16 @@ gem 'acts_as_tree'
 gem 'jpmobile'
 gem 'rails_config'
 
+# for file upload
+gem 'carrierwave'
 # For exif analyze
 gem 'exifr'
 # for image edit
 gem 'rmagick'
 # for pagination
 gem 'kaminari'
+# for auto link
+gem 'rinku'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -56,7 +70,3 @@ gem 'kaminari'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-
-group :development do
-  gem 'erb2haml'
-end

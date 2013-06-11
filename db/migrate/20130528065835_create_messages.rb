@@ -1,7 +1,6 @@
 class CreateMessages < ActiveRecord::Migration
   def change
     create_table :messages do |t|
-      t.integer :parent_id, limit: 8
       t.string :title, null: false
       t.string :author, null: false
       t.string :password

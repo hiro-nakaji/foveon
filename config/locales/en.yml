@@ -1,23 +1,117 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  site:
+    title: 'The Foveon BBS'
+    description: "BBS about Sigma cameras and lenses."
+
+  exif:
+    attributes:
+      Make: 'Maker'
+      Model: 'Model'
+      DateTimeOriginal: 'DateTimeOriginal'
+      ExposureBiasValue: 'ExposureBiasValue'
+      ExposureMode: 'ExposureMode'
+      ExposureProgram: 'ExposureProgram'
+      ExposureTime: 'ExposureTime'
+      FNumber: 'FNumber'
+      FocalLength: 'FocalLength'
+      ISOSpeedRatings: 'ISOSpeedRatings'
+      Flash: 'Flash'
+    ExposureMode:
+      '0': 'Auto'
+      '1': 'Manual'
+      '2': 'Auto Bracket'
+    ExposureProgram:
+      '0': 'Not defined'
+      '1': 'Manual'
+      '2': 'Normal program'
+      '3': 'Aperture priority'
+      '4': 'Shutter priority'
+      '5': 'Creative program'
+      '6': 'Action program'
+      '7': 'Portrait mode'
+      '8': 'Landscape mode'
+    Flash:
+      '0': 'Flash did not fire'
+      '1': 'Flash fired'
+      '5': 'Strobe return light not detected'
+      '7': 'Strobe return light detected'
+      '9': 'Flash fired, compulsory flash mode'
+      '13': 'Flash fired, compulsory flash mode, return light not detected'
+      '15': 'Flash fired, compulsory flash mode, return light detected'
+      '16': 'Flash did not fire, compulsory flash mode'
+      '24': 'Flash did not fire, auto mode'
+      '25': 'Flash fired, auto mode'
+      '29': 'Flash fired, auto mode, return light not detected'
+      '31': 'Flash fired, auto mode, return light detected'
+      '32': 'No flash function'
+      '65': 'Flash fired, red-eye reduction mode'
+      '69': 'Flash fired, red-eye reduction mode, return light not detected'
+      '71': 'Flash fired, red-eye reduction mode, return light detected'
+      '73': 'Flash fired, compulsory flash mode, red-eye reduction mode'
+      '77': 'Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected'
+      '79': 'Flash fired, compulsory flash mode, red-eye reduction mode, return light detected'
+      '89': 'Flash fired, auto mode, red-eye reduction mode'
+      '93': 'Flash fired, auto mode, return light not detected, red-eye reduction mode'
+      '95': 'Flash fired, auto mode, return light detected, red-eye reduction mode'
+
+  buttons:
+    new: 'New'
+    create: 'Create'
+    respond: 'Repond'
+    edit: 'Edit'
+    update: 'Update'
+    delete: 'Delete'
+    back: 'Back'
+    search: 'Search'
+
+  entry:
+    wrote: "%{author} wrote:"
+
+  activerecord:
+    attributes:
+      message:
+        title: 'Title'
+        author: 'Name'
+        password: 'Password'
+        mail: 'E-Mail'
+        homepage: 'Homepage'
+        content: 'Content'
+        remote_address: 'Remote Address'
+        browser: 'User Agent'
+        created_at: 'Post time'
+        updated_at: 'Updated time'
+      comment:
+        title: 'Title'
+        author: 'Name'
+        password: 'Password'
+        mail: 'E-Mail'
+        homepage: 'Homepage'
+        content: 'Content'
+        remote_address: 'Remote Address'
+        browser: 'User Agent'
+        created_at: 'Post time'
+        updated_at: 'Updated time'
+      photo:
+        photo_data: 'Image file'
+    errors:
+      models:
+        message:
+          attributes:
+            password:
+              invalid: "not matched"
+        comment:
+          attributes:
+            password:
+              invalid: "not matched"
+        photo:
+          attributes:
+            photo_data:
+              invalid: "This content_type is not acceptable: %{content_type}."
+
+  views:
+    pagination:
+      first: "<<"
+      last: ">>"
+      previous: "<"
+      next: ">"
+      truncate: "..."

@@ -1,0 +1,13 @@
+.container-fluid
+  .row-fluid.page_header
+    .pagination.pagination_base
+      %ul
+        %li= link_to('', root_path, class: 'icon-home')
+        %li= link_to('', thread_message_path(@message, anchor: @comment.id), class: 'icon-comment')
+  = render partial: 'thread', object: @comment, as: :entry,
+    locals: {button_display: false, thumbnail_display: false}
+  .row-fluid.photo_base
+    - @comment.photos.each do |photo|
+      = render(partial: 'photos/photo', object: photo)
+
+= render(partial: 'social_javascript')

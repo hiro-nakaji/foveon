@@ -11,36 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130528065920) do
+ActiveRecord::Schema.define(version: 20130608131310) do
 
-  create_table "messages", force: true do |t|
-    t.integer  "parent_id",      limit: 8
-    t.string   "title",                      null: false
-    t.string   "author",                     null: false
+  create_table "comments", force: true do |t|
+    t.string   "title",                    null: false
+    t.string   "author",                   null: false
     t.string   "password"
     t.string   "mail"
-    t.string   "homepage",       limit: 512
-    t.text     "content",                    null: false
-    t.string   "remote_address"
-    t.string   "browser"
-    t.integer  "old_id",         limit: 8
+    t.string   "homepage",     limit: 512
+    t.text     "content",                  null: false
+    t.string   "remote_addr"
+    t.string   "user_agent"
+    t.integer  "old_id",       limit: 8
+    t.string   "message_type"
+    t.integer  "message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["message_id"], name: "index_comments_on_message_id", using: :btree
+
+  create_table "messages", force: true do |t|
+    t.string   "title",                    null: false
+    t.string   "author",                   null: false
+    t.string   "password"
+    t.string   "mail"
+    t.string   "homepage",     limit: 512
+    t.text     "content",                  null: false
+    t.string   "remote_addr"
+    t.string   "user_agent"
+    t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "photos", force: true do |t|
-    t.integer  "message_id"
+    t.integer  "entry_id"
+    t.string   "entry_type"
     t.string   "title"
     t.integer  "no"
-    t.string   "file_path"
-    t.string   "thumbnail_file_path"
-    t.integer  "thumbnail_width"
-    t.integer  "thumbnail_height"
+    t.string   "photo_data"
+    t.hstore   "exif"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "photos", ["message_id"], name: "index_photos_on_message_id", using: :btree
 
 end

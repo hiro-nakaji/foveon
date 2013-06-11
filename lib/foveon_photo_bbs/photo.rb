@@ -75,10 +75,6 @@ class FoveonPhotoBbs::Photo
     {
       title: @title,
       no: @no,
-      file_path: filename,
-      thumbnail_file_path: thumbnail_filename,
-      thumbnail_width: @width,
-      thumbnail_height: @height
     }
   end
 end
