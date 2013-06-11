@@ -8,7 +8,7 @@ class CreateComments < ActiveRecord::Migration
       t.string :homepage, limit: 512
       t.text :content, null: false
       t.string :remote_address
-      t.string :browser
+      t.string :browser, limit: 512
       t.integer :old_id, limit: 8
       t.string :message_type, default: nil
       t.references :message, index: true

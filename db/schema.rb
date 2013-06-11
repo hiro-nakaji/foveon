@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.string   "homepage",     limit: 512
     t.text     "content",                  null: false
     t.string   "remote_addr"
-    t.string   "user_agent"
+    t.string   "user_agent",   limit: 512
     t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.integer  "message_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.string   "homepage",     limit: 512
     t.text     "content",                  null: false
     t.string   "remote_addr"
-    t.string   "user_agent"
+    t.string   "user_agent",   limit: 512
     t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.datetime "created_at"
