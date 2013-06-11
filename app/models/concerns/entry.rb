@@ -1,7 +1,7 @@
 module Entry
   def build_photos_up_to_max
-    if self.photos.size < Settings.foveon_bbs.max_photo_count
-      (Settings.foveon_bbs.max_photo_count - self.photos.size).
+    if self.photos.size < Settings.max_photo_count
+      (Settings.max_photo_count - self.photos.size).
         times do |index|
         photo = self.photos.max{|a,b| a.no <=> b.no}
         no = photo ? photo.no + 1 : 0
