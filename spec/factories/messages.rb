@@ -14,4 +14,11 @@ FactoryGirl.define do
       message.comments << FactoryGirl.create(:comment2)
     end
   end
+
+  factory :invalid_message, class: Message do
+    title ''
+    author ''
+    password ''
+    content ''
+  end
 end

@@ -14,6 +14,43 @@ describe MessagesController do
     it { flash[:error].should be_nil }
   end
 
+  describe "create" do
+    context "with valid parameters" do
+      let!(:params) { FactoryGirl.attributes_for(:message) }
+
+      before do
+        params[:photos_attributes] = [
+          FactoryGirl.attributes_for(:photo1),
+          FactoryGirl.attributes_for(:photo2)
+        ]
+        post :create, message: params
+      end
+
+      it { assigns[:message].should be_persisted }
+      it { assigns[:message].should have(2).photos }
+      it { response.should redirect_to(thread_message_path(assigns[:message])) }
+      it "Make in exif == 'SIGMA'" do
+        assigns[:message].photos[0].exif["Make"].should == 'SIGMA'
+      end
+      it "Model in exif == 'SIGMA SD1 Merrill'" do
+        assigns[:message].photos[1].exif["Model"].should == 'SIGMA SD1 Merrill'
+      end
+    end
+
+    context "with invalid parameters" do
+      let!(:params) { FactoryGirl.attributes_for(:invalid_message) }
+
+      before do
+        post :create, message: params
+      end
+
+      it { assigns[:message].should be_new_record }
+      it { assigns[:message].should have(4).photos }
+      it { response.should be_success }
+      it { response.should render_template("new") }
+    end
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
