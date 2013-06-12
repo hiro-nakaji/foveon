@@ -1,6 +1,19 @@
 require 'spec_helper'
 
 describe MessagesController do
+  describe "new" do
+    before do
+      get :new
+    end
+
+    it { assigns[:message].should be_an_instance_of Message }
+    it { assigns[:message].should have(4).photos }
+    it { response.should be_success }
+    it { response.should render_template("new") }
+    it { flash[:notice].should be_nil }
+    it { flash[:error].should be_nil }
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
