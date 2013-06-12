@@ -6,12 +6,10 @@ describe MessagesController do
       get :new
     end
 
-    it { assigns[:message].should be_an_instance_of Message }
+    it { assigns[:message].should be_new_record }
     it { assigns[:message].should have(4).photos }
     it { response.should be_success }
     it { response.should render_template("new") }
-    it { flash[:notice].should be_nil }
-    it { flash[:error].should be_nil }
   end
 
   describe "create" do
@@ -80,8 +78,6 @@ describe MessagesController do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
       it { response.should render_template("trees") }
-      it { flash[:notice].should be_nil }
-      it { flash[:error].should be_nil }
     end
 
     context "with no parameter" do
