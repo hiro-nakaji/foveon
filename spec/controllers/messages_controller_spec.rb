@@ -74,6 +74,48 @@ describe MessagesController do
     it { response.should render_template("edit") }
   end
 
+  describe "update" do
+    let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
+    let!(:message) { FactoryGirl.create(:message) }
+
+    context "with valid parameters" do
+      let!(:params) { message.attributes }
+
+      before do
+        params["title"] = "#{message.title} updated"
+        params["password"] = original_attrs["password"]
+        put :update, id: message.id, message: params
+      end
+
+      it { assigns[:message].title.should == params["title"] }
+      it { response.should redirect_to(thread_message_path(message)) }
+    end
+
+    context "password does not match" do
+      let!(:params) { message.attributes }
+
+      before do
+        params["password"] = original_attrs["password"] + "1"
+        put :update, id: message.id, message: params
+      end
+
+      it { response.should be_success }
+      it { response.should render_template("edit") }
+    end
+
+    context "with invalid parameters" do
+      let!(:invalid_params) { FactoryGirl.attributes_for(:invalid_message).stringify_keys }
+      let!(:params) { message.attributes.dup.merge(invalid_params) }
+
+      before do
+        put :update, id: message.id, message: params
+      end
+
+      it { response.should be_success }
+      it { response.should render_template("edit") }
+    end
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
