@@ -63,6 +63,19 @@ describe MessagesController do
     it { response.should render_template("show") }
   end
 
+  describe "edit" do
+    let!(:message) { FactoryGirl.create(:message) }
+
+    before do
+      get :edit, id: message.id
+    end
+
+    it { assigns[:message].should_not be_nil }
+    it { assigns[:message].should have(4).photos }
+    it { response.should be_success }
+    it { response.should render_template("edit") }
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
