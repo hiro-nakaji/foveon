@@ -236,4 +236,51 @@ describe CommentsController do
     it { response.should be_success }
     it { response.should render_template("delete_confirm") }
   end
+
+  describe "destroy" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:params) { FactoryGirl.attributes_for(:comment) }
+
+    context "with valid password" do
+      context "expect" do
+        it "should be destroyed" do
+          expect {
+            delete :destroy, message_id: message.id, id: comment.id, comment: params
+          }.to change(message.comments, :count).by(-1)
+        end
+      end
+
+      context "should" do
+        before do
+          delete :destroy, message_id: message.id, id: comment.id, comment: params
+        end
+
+        it { response.should redirect_to(thread_message_path(message)) }
+      end
+    end
+
+    context "with invalid password" do
+      before do
+        params[:password] = params[:password] + '1'
+      end
+
+      context "expect" do
+        it "should not be destroyed" do
+          expect {
+            delete :destroy, message_id: message.id, id: comment.id, comment: params
+          }.not_to change(message.comments, :count)
+        end
+      end
+
+      context "should" do
+        before do
+          delete :destroy, message_id: message.id, id: comment.id, comment: params
+        end
+
+        it { response.should be_success }
+        it { response.should render_template("delete_confirm") }
+      end
+    end
+  end
 end
