@@ -399,6 +399,8 @@ describe MessagesController do
       Message.cookie_keys.each do | key |
         it { cookies.signed[key].should ==  params[key]}
       end
+      it { assigns[:message].should be_persisted }
+      it { response.should redirect_to(thread_message_path(assigns[:message])) }
     end
 
     context "a message has not been created" do
