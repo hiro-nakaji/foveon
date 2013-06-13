@@ -358,4 +358,16 @@ describe MessagesController do
     it {assigns[:entries].count.should == 10}
     it {assigns[:entries].should == entries.reverse}
   end
+
+  describe "thread" do
+    let!(:message) { FactoryGirl.create(:message) }
+
+    before do
+      get :thread, id: message.id
+    end
+
+    it { assigns[:message].should == message }
+    it { response.should be_success }
+    it { response.should render_template("thread") }
+  end
 end
