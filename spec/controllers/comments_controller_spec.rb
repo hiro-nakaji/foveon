@@ -99,4 +99,18 @@ describe CommentsController do
       end
     end
   end
+
+  describe "show" do
+    let!(:message) { FactoryGirl.create(:message) }
+    let!(:comment) { message.comments.first }
+
+    before do
+      get :show, message_id: message.id, id: comment.id
+    end
+
+    it { assigns[:message].should == message }
+    it { assigns[:comment].should == comment }
+    it { response.should be_success }
+    it { response.should render_template("show") }
+  end
 end
