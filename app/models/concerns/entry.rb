@@ -35,15 +35,14 @@ module Entry
   private
 
   def check_passwords
-    unless self.password.crypt(self.password_was) == self.password_was
+    unless self.password.blank? || Digest::SHA1.hexdigest(self.password) == self.password_was
       errors.add(:password, :invalid)
     end
   end
 
   def crypt_password
     if self.password_changed?
-      salt = [rand(64), rand(64)].pack("C*").tr("\x00-\x3f", "A-Za-z0-9./")
-      self.password  = self.password.crypt(salt)
+      self.password = Digest::SHA1.hexdigest(self.password)
     end
   end
 end
