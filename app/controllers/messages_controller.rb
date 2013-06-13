@@ -88,6 +88,8 @@ class MessagesController < ApplicationController
   def thread
   end
 
+  private
+
   def find_message
     @message = Message.find(params[:id])
   end
@@ -102,9 +104,10 @@ class MessagesController < ApplicationController
   end
 
   def save_cookies
+    return unless response.status == Rack::Utils.status_code(:found)
+    
     Message.cookie_keys.each do |key|
       cookies.signed[key] = {value: @message[key], path: root_path, expires: 1.year.from_now}
     end
   end
-
 end
