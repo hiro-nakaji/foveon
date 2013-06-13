@@ -160,6 +160,77 @@ describe MessagesController do
     it { response.should render_template("delete_confirm") }
   end
 
+  describe "destroy" do
+    context "with valid password" do
+      context "with comments" do
+        let!(:params) { FactoryGirl.attributes_for(:message) }
+        let!(:message) { FactoryGirl.create(:message) }
+
+        context "expect" do
+          it "should be destroyed" do
+            expect {
+              delete :destroy, id: message.id, message: params
+            }.not_to change(Message, :count)
+          end
+        end
+
+        context "should" do
+          before do
+            delete :destroy, id: message.id, message: params
+          end
+          it { assigns[:message].content.should == 'Deleted.' }
+          it { response.should redirect_to(trees_messages_path) }
+        end
+      end
+
+      context "with no comment" do
+        let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
+        let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+
+        context "expect" do
+          it "should be destroyed" do
+            expect {
+              delete :destroy, id: message.id, message: params
+            }.to change(Message, :count).by(-1)
+          end
+        end
+
+        context "should" do
+          before do
+            delete :destroy, id: message.id, message: params
+          end
+          it { response.should redirect_to(trees_messages_path) }
+        end
+      end
+    end
+
+    context "with invalid password" do
+      let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
+      let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+
+      before do
+        params[:password] = params[:password] + '1'
+      end
+
+      context "expect" do
+        it "should not be destroyed" do
+          expect {
+            delete :destroy, id: message.id, message: params
+          }.not_to change(Message, :count)
+        end
+      end
+
+      context "should" do
+        before do
+          delete :destroy, id: message.id, message: params
+        end
+
+        it { response.should be_success }
+        it { response.should render_template("delete_confirm") }
+      end
+    end
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
