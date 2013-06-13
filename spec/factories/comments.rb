@@ -1,4 +1,18 @@
 FactoryGirl.define do
+  factory :valid_comment, class: Comment do
+    title 'Re: メッセージタイトル'
+    password 'password'
+    author 'さばりょうりにんß'
+    content "おめでとうございます！\n> フォビオン掲示板と画像掲示板を統合し、装いを新たにオープンいたします。"
+  end
+
+  factory :invalid_comment, class: Comment do
+    title nil
+    author nil
+    password nil
+    content nil
+  end
+
   factory :comment1, class: Comment do
     title 'Re: メッセージタイトル'
     author '鯖料理人'
