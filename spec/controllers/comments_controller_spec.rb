@@ -9,13 +9,13 @@ describe CommentsController do
 
     it { assigns[:message].should == message }
     it { assigns[:comment].should be_new_record }
+    it { assigns[:comment].should have(4).photos }
     it { assigns[:comment].title.should == message.title.gsub(/^/, "Re: ") }
     it {
       content = I18n.t('entry.wrote', author: message.author) + "\n"
       content += message.content.gsub(/^/, "> ")
       assigns[:comment].content.should == content
     }
-
     it { response.should be_success }
     it { response.should render_template("new") }
   end
@@ -294,8 +294,11 @@ describe CommentsController do
     end
 
     it { assigns[:comment].should be_new_record }
+    it { assigns[:comment].should have(4).photos }
     Comment.cookie_keys.each do |key|
       it { assigns[:comment][key].should == message[key] }
     end
+    it { response.should be_success }
+    it { response.should render_template("new") }
   end
 end
