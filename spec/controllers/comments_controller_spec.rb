@@ -101,8 +101,8 @@ describe CommentsController do
   end
 
   describe "show" do
-    let!(:message) { FactoryGirl.create(:message) }
-    let!(:comment) { message.comments.first }
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
 
     before do
       get :show, message_id: message.id, id: comment.id
@@ -115,8 +115,8 @@ describe CommentsController do
   end
 
   describe "edit" do
-    let!(:comment) { FactoryGirl.create(:comment) }
-    let!(:message) { comment.message }
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
 
     before do
       get :edit, message_id: message.id, id: comment.id
@@ -143,6 +143,8 @@ describe CommentsController do
         put :update, message_id: message.id, id: comment.id, comment: params
       end
 
+      it { assigns[:message].should == message }
+      it { assigns[:comment].should == comment }
       it { assigns[:comment].title.should == params["title"] }
       it {
         redirect_path = thread_message_path(message, anchor: comment.id)
@@ -159,6 +161,8 @@ describe CommentsController do
         put :update, message_id: message.id, id: comment.id, comment: params
       end
 
+      it { assigns[:message].should == message }
+      it { assigns[:comment].should == comment }
       it { assigns[:comment].errors["password"].should be_present }
       it { response.should be_success }
       it { response.should render_template("edit") }
@@ -172,6 +176,8 @@ describe CommentsController do
         put :update, message_id: message.id, id: comment.id, comment: params
       end
 
+      it { assigns[:message].should == message }
+      it { assigns[:comment].should == comment }
       it { assigns[:comment].errors.should be_present }
       it { response.should be_success }
       it { response.should render_template("edit") }
@@ -206,6 +212,8 @@ describe CommentsController do
           put :update, message_id: message.id, id: comment.id, comment: params
         end
 
+        it { assigns[:message].should == message }
+        it { assigns[:comment].should == comment }
         it { assigns[:comment].photos.first.title.should == "Title updated." }
         it {
           redirect_path = thread_message_path(message, anchor: comment.id)
