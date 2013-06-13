@@ -148,6 +148,18 @@ describe MessagesController do
     end
   end
 
+  describe "delete_confirm" do
+    let!(:message) { FactoryGirl.create(:message) }
+
+    before do
+      get :delete_confirm, id: message.id
+    end
+
+    it { assigns[:message].should_not be_nil }
+    it { response.should be_success }
+    it { response.should render_template("delete_confirm") }
+  end
+
   describe "trees" do
     shared_examples_for "get trees action with no error" do
       it { response.should be_success }
