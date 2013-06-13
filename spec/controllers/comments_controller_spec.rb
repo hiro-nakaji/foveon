@@ -222,4 +222,18 @@ describe CommentsController do
       end
     end
   end
+
+  describe "delete_confirm" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+
+    before do
+      get :delete_confirm, message_id: message.id, id: comment.id
+    end
+
+    it { assigns[:message].should == message }
+    it { assigns[:comment].should == comment }
+    it { response.should be_success }
+    it { response.should render_template("delete_confirm") }
+  end
 end
