@@ -91,14 +91,16 @@ describe MessagesController do
       it { response.should redirect_to(thread_message_path(message)) }
     end
 
-    context "password does not match" do
+    context "with invalid password" do
       let!(:params) { message.attributes }
 
       before do
+        params["title"] = "#{message.title} updated"
         params["password"] = original_attrs["password"] + "1"
         put :update, id: message.id, message: params
       end
 
+      it { assigns[:message].title.should_not == params["title"] }
       it { response.should be_success }
       it { response.should render_template("edit") }
     end
@@ -130,20 +132,21 @@ describe MessagesController do
         params[:photos_attributes][1]["title"] = "Title updated."
       end
 
-      it "photos count should change from 2 to 1" do
-        expect {
+      context "expect" do
+        it "photos count should change from 2 to 1" do
+          expect {
+            put :update, id: message.id, message: params
+          }.to change(message.photos,:count).from(2).to(1)
+        end
+      end
+
+      context "should" do
+        before do
           put :update, id: message.id, message: params
-        }.to change(message.photos,:count).from(2).to(1)
-      end
+        end
 
-      it "should redirect to thread_message_path" do
-        put :update, id: message.id, message: params
-        response.should redirect_to(thread_message_path(assigns[:message]))
-      end
-
-      it "photo2 title should change" do
-        put :update, id: message.id, message: params
-        assigns[:message].photos.first.title.should == "Title updated."
+        it { response.should redirect_to(thread_message_path(assigns[:message])) }
+        it { assigns[:message].photos.first.title.should == "Title updated." }
       end
     end
   end
