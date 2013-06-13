@@ -342,4 +342,20 @@ describe MessagesController do
       it_behaves_like "get trees action with no error"
     end
   end
+
+  describe "feed" do
+    let!(:entries) {
+      FactoryGirl.create_list(:message, 50).concat(Comment.all).sample(10)
+    }
+
+    before do
+      entries.each_with_index do |entry, index|
+        entry.update_attribute(:created_at, Time.now + (index + 1).hours)
+      end
+      get :feed, format: :xml
+    end
+
+    it {assigns[:entries].count.should == 10}
+    it {assigns[:entries].should == entries.reverse}
+  end
 end
