@@ -21,17 +21,36 @@ describe MessagesController do
           FactoryGirl.attributes_for(:photo1),
           FactoryGirl.attributes_for(:photo2)
         ]
-        post :create, message: params
       end
 
-      it { assigns[:message].should be_persisted }
-      it { assigns[:message].should have(2).photos }
-      it { response.should redirect_to(thread_message_path(assigns[:message])) }
-      it "Make in exif == 'SIGMA'" do
-        assigns[:message].photos[0].exif["Make"].should == 'SIGMA'
+      context "expect" do
+        it "message count should change by +1" do
+          expect {
+            post :create, message: params
+          }.to change(Message, :count).by(1)
+        end
+
+        it "photo count should change by +2" do
+          expect {
+            post :create, message: params
+          }.to change(Photo, :count).by(2)
+        end
       end
-      it "Model in exif == 'SIGMA SD1 Merrill'" do
-        assigns[:message].photos[1].exif["Model"].should == 'SIGMA SD1 Merrill'
+
+      context "should" do
+        before do
+          post :create, message: params
+        end
+
+        it { assigns[:message].should be_persisted }
+        it { assigns[:message].should have(2).photos }
+        it { response.should redirect_to(thread_message_path(assigns[:message])) }
+        it "Make in exif == 'SIGMA'" do
+          assigns[:message].photos[0].exif["Make"].should == 'SIGMA'
+        end
+        it "Model in exif == 'SIGMA SD1 Merrill'" do
+          assigns[:message].photos[1].exif["Model"].should == 'SIGMA SD1 Merrill'
+        end
       end
     end
 
@@ -39,13 +58,36 @@ describe MessagesController do
       let!(:params) { FactoryGirl.attributes_for(:invalid_message) }
 
       before do
-        post :create, message: params
+        params[:photos_attributes] = [
+          FactoryGirl.attributes_for(:photo1),
+          FactoryGirl.attributes_for(:photo2)
+        ]
       end
 
-      it { assigns[:message].should be_new_record }
-      it { assigns[:message].should have(4).photos }
-      it { response.should be_success }
-      it { response.should render_template("new") }
+      context "expect" do
+        it "message count should not change" do
+          expect {
+            post :create, message: params
+          }.not_to change(Message, :count)
+        end
+
+        it "photo count should not change" do
+          expect {
+            post :create, message: params
+          }.not_to change(Photo, :count)
+        end
+      end
+
+      context "should" do
+        before do
+          post :create, message: params
+        end
+
+        it { assigns[:message].should be_new_record }
+        it { assigns[:message].should have(4).photos }
+        it { response.should be_success }
+        it { response.should render_template("new") }
+      end
     end
   end
 
@@ -56,7 +98,7 @@ describe MessagesController do
       get :show, id: message.id
     end
 
-    it { assigns[:message].should_not be_nil }
+    it { assigns[:message].should == message }
     it { response.should be_success }
     it { response.should render_template("show") }
   end
@@ -68,18 +110,18 @@ describe MessagesController do
       get :edit, id: message.id
     end
 
-    it { assigns[:message].should_not be_nil }
+    it { assigns[:message].should == message }
     it { assigns[:message].should have(4).photos }
     it { response.should be_success }
     it { response.should render_template("edit") }
   end
 
   describe "update" do
-    let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
     let!(:message) { FactoryGirl.create(:message) }
+    let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
 
     context "with valid parameters" do
-      let!(:params) { message.attributes }
+      let!(:params) { message.attributes.dup }
 
       before do
         params["title"] = "#{message.title} updated"
@@ -87,12 +129,13 @@ describe MessagesController do
         put :update, id: message.id, message: params
       end
 
+      it { assigns[:message].should == message }
       it { assigns[:message].title.should == params["title"] }
       it { response.should redirect_to(thread_message_path(message)) }
     end
 
     context "with invalid password" do
-      let!(:params) { message.attributes }
+      let!(:params) { message.attributes.dup }
 
       before do
         params["title"] = "#{message.title} updated"
@@ -100,7 +143,8 @@ describe MessagesController do
         put :update, id: message.id, message: params
       end
 
-      it { assigns[:message].errors["password"].should_not be_empty }
+      it { assigns[:message].should == message }
+      it { assigns[:message].errors["password"].should be_present }
       it { response.should be_success }
       it { response.should render_template("edit") }
     end
@@ -113,14 +157,16 @@ describe MessagesController do
         put :update, id: message.id, message: params
       end
 
+      it { assigns[:message].should == message }
+      it { assigns[:message].errors.should be_present }
       it { response.should be_success }
       it { response.should render_template("edit") }
     end
 
     context "update photo" do
-      let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
       let!(:message) { FactoryGirl.create(:message) }
-      let!(:params) { message.attributes }
+      let!(:params) { message.attributes.dup }
+      let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
       let!(:photo1) { FactoryGirl.create(:photo1) }
       let!(:photo2) { FactoryGirl.create(:photo2) }
 
@@ -145,8 +191,9 @@ describe MessagesController do
           put :update, id: message.id, message: params
         end
 
-        it { response.should redirect_to(thread_message_path(assigns[:message])) }
+        it { assigns[:message].should == message }
         it { assigns[:message].photos.first.title.should == "Title updated." }
+        it { response.should redirect_to(thread_message_path(message)) }
       end
     end
   end
@@ -158,7 +205,7 @@ describe MessagesController do
       get :delete_confirm, id: message.id
     end
 
-    it { assigns[:message].should_not be_nil }
+    it { assigns[:message].should == message }
     it { response.should be_success }
     it { response.should render_template("delete_confirm") }
   end
@@ -166,11 +213,11 @@ describe MessagesController do
   describe "destroy" do
     context "with valid password" do
       context "with comments" do
-        let!(:params) { FactoryGirl.attributes_for(:message) }
         let!(:message) { FactoryGirl.create(:message) }
+        let!(:params) { FactoryGirl.attributes_for(:message) }
 
         context "expect" do
-          it "should be destroyed" do
+          it "should not be destroyed" do
             expect {
               delete :destroy, id: message.id, message: params
             }.not_to change(Message, :count)
@@ -187,8 +234,8 @@ describe MessagesController do
       end
 
       context "with no comment" do
-        let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
         let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+        let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
 
         context "expect" do
           it "should be destroyed" do
@@ -208,8 +255,8 @@ describe MessagesController do
     end
 
     context "with invalid password" do
-      let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
       let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+      let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
 
       before do
         params[:password] = params[:password] + '1'
@@ -228,6 +275,7 @@ describe MessagesController do
           delete :destroy, id: message.id, message: params
         end
 
+        it { assigns[:message].errors.should be_present }
         it { response.should be_success }
         it { response.should render_template("delete_confirm") }
       end
@@ -372,40 +420,39 @@ describe MessagesController do
   end
 
   describe "load_cookies" do
-    context "" do
-      let!(:message) { FactoryGirl.create(:message) }
-      let!(:params) { FactoryGirl.attributes_for(:message) }
+    let!(:params) { FactoryGirl.attributes_for(:message) }
 
-      before do
-        post :create, message: params
-        get :new
-      end
+    before do
+      post :create, message: params
+      get :new
+    end
 
-      it { assigns[:message].should_not == message }
-      Message.cookie_keys.each do | key |
-        it {assigns[:message][key].should == message[key]}
-      end
+    it { assigns[:message].should be_new_record }
+    it { assigns[:message].should have(4).photos }
+    it { response.should be_success }
+    it { response.should render_template("new") }
+    Message.cookie_keys.each do | key |
+      it {assigns[:message][key].should == params[key]}
     end
   end
 
   describe "save_cookies" do
-    context "a message has been created" do
-      let!(:params) { FactoryGirl.attributes_for(:message) }
+    let!(:params) { FactoryGirl.attributes_for(:message) }
 
+    context "with valid parameters" do
       before do
         post :create, message: params
       end
 
+      it { assigns[:message].should be_persisted }
+      it { response.should redirect_to(thread_message_path(assigns[:message])) }
+
       Message.cookie_keys.each do | key |
         it { cookies.signed[key].should ==  params[key]}
       end
-      it { assigns[:message].should be_persisted }
-      it { response.should redirect_to(thread_message_path(assigns[:message])) }
     end
 
-    context "a message has not been created" do
-      let!(:params) { FactoryGirl.attributes_for(:message) }
-
+    context "with invalid parameters" do
       before do
         params[:password] = nil
         post :create, message: params

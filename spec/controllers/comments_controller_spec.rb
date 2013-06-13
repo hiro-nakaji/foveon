@@ -190,7 +190,7 @@ describe CommentsController do
     end
 
     context "with invalid parameters" do
-      let!(:invalid_params) { FactoryGirl.attributes_for(:invalid_message).stringify_keys }
+      let!(:invalid_params) { FactoryGirl.attributes_for(:invalid_comment).stringify_keys }
       let!(:params) { comment.attributes.dup.merge(invalid_params) }
 
       before do
@@ -299,6 +299,7 @@ describe CommentsController do
           delete :destroy, message_id: message.id, id: comment.id, comment: params
         end
 
+        it { assigns[:comment].errors.should be_present }
         it { response.should be_success }
         it { response.should render_template("delete_confirm") }
       end
@@ -316,11 +317,12 @@ describe CommentsController do
 
     it { assigns[:comment].should be_new_record }
     it { assigns[:comment].should have(4).photos }
+    it { response.should be_success }
+    it { response.should render_template("new") }
+
     Comment.cookie_keys.each do |key|
       it { assigns[:comment][key].should == message[key] }
     end
-    it { response.should be_success }
-    it { response.should render_template("new") }
   end
 
   describe "save_cookies" do
@@ -332,14 +334,15 @@ describe CommentsController do
         post :create, message_id: message.id, comment: params
       end
 
-      Comment.cookie_keys.each do | key |
-        it { cookies.signed[key].should ==  params[key]}
-      end
       it { assigns[:comment].should be_persisted }
       it {
         redirect_path = thread_message_path(message, anchor: assigns[:comment].id)
         response.should redirect_to(redirect_path)
       }
+
+      Comment.cookie_keys.each do | key |
+        it { cookies.signed[key].should ==  params[key]}
+      end
     end
 
     context "with invalid parameters" do
