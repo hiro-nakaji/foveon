@@ -20,6 +20,27 @@ describe CommentsController do
     it { response.should render_template("new") }
   end
 
+  describe "reply" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+
+    before do
+      get :reply, message_id: message.id, id: comment.id
+    end
+
+    it { assigns[:message].should == message }
+    it { assigns[:comment].should be_new_record }
+    it { assigns[:comment].should have(4).photos }
+    it { assigns[:comment].title.should == comment.title.gsub(/^/, "Re: ") }
+    it {
+      content = I18n.t('entry.wrote', author: comment.author) + "\n"
+      content += comment.content.gsub(/^/, "> ")
+      assigns[:comment].content.should == content
+    }
+    it { response.should be_success }
+    it { response.should render_template("new") }
+  end
+
   describe "create" do
     let!(:message) { FactoryGirl.create(:message_with_no_comment) }
 
