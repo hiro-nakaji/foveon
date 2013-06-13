@@ -192,18 +192,18 @@ describe CommentsController do
       let!(:photo2) { FactoryGirl.create(:photo2) }
 
       before do
-        comment.photos = [photo1, photo2]
-        params["password"] = original_attrs["password"]
-        params[:photos_attributes] = [photo1.attributes, photo2.attributes]
+        comment.photos                            = [photo1, photo2]
+        params["password"]                        = original_attrs["password"]
+        params[:photos_attributes]                = [photo1.attributes, photo2.attributes]
         params[:photos_attributes][0]["_destroy"] = true
-        params[:photos_attributes][1]["title"] = "Title updated."
+        params[:photos_attributes][1]["title"]    = "Title updated."
       end
 
       context "expect" do
         it "photos count should change from 2 to 1" do
           expect {
             put :update, message_id: message.id, id: comment.id, comment: params
-          }.to change(comment.photos,:count).from(2).to(1)
+          }.to change(comment.photos, :count).from(2).to(1)
         end
       end
 
@@ -281,6 +281,21 @@ describe CommentsController do
         it { response.should be_success }
         it { response.should render_template("delete_confirm") }
       end
+    end
+  end
+
+  describe "load_cookies" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:params) { FactoryGirl.attributes_for(:comment) }
+
+    before do
+      post :create, message_id: message.id, comment: params
+      get :new, message_id: message.id
+    end
+
+    it { assigns[:comment].should be_new_record }
+    Comment.cookie_keys.each do |key|
+      it { assigns[:comment][key].should == message[key] }
     end
   end
 end
