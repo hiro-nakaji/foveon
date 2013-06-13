@@ -100,7 +100,7 @@ describe MessagesController do
         put :update, id: message.id, message: params
       end
 
-      it { assigns[:message].title.should_not == params["title"] }
+      it { assigns[:message].errors["password"].should_not be_empty }
       it { response.should be_success }
       it { response.should render_template("edit") }
     end
