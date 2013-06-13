@@ -301,4 +301,40 @@ describe CommentsController do
     it { response.should be_success }
     it { response.should render_template("new") }
   end
+
+  describe "save_cookies" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:params) { FactoryGirl.attributes_for(:comment) }
+
+    context "with valid parameters" do
+      before do
+        post :create, message_id: message.id, comment: params
+      end
+
+      Comment.cookie_keys.each do | key |
+        it { cookies.signed[key].should ==  params[key]}
+      end
+      it { assigns[:comment].should be_persisted }
+      it {
+        redirect_path = thread_message_path(message, anchor: assigns[:comment].id)
+        response.should redirect_to(redirect_path)
+      }
+    end
+
+    context "with invalid parameters" do
+      before do
+        params[:password] = nil
+        post :create, message_id: message.id, comment: params
+      end
+
+      it { assigns[:comment].should be_new_record }
+      it { assigns[:comment].should have(4).photos }
+      it { response.should be_success }
+      it { response.should render_template("new") }
+
+      Comment.cookie_keys.each do | key |
+        it { cookies.signed[key].should be_nil}
+      end
+    end
+  end
 end
