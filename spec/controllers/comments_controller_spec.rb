@@ -113,4 +113,105 @@ describe CommentsController do
     it { response.should be_success }
     it { response.should render_template("show") }
   end
+
+  describe "edit" do
+    let!(:comment) { FactoryGirl.create(:comment) }
+    let!(:message) { comment.message }
+
+    before do
+      get :edit, message_id: message.id, id: comment.id
+    end
+
+    it { assigns[:message].should == message }
+    it { assigns[:comment].should == comment }
+    it { assigns[:comment].should have(4).photos }
+    it { response.should be_success }
+    it { response.should render_template("edit") }
+  end
+
+  describe "update" do
+    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:original_attrs) { FactoryGirl.attributes_for(:comment).stringify_keys }
+
+    context "with valid parameters" do
+      let!(:params) { comment.attributes.dup }
+
+      before do
+        params["title"]    = "#{comment.title} updated"
+        params["password"] = original_attrs["password"]
+        put :update, message_id: message.id, id: comment.id, comment: params
+      end
+
+      it { assigns[:comment].title.should == params["title"] }
+      it {
+        redirect_path = thread_message_path(message, anchor: comment.id)
+        response.should redirect_to(redirect_path)
+      }
+    end
+
+    context "with invalid password" do
+      let!(:params) { comment.attributes.dup }
+
+      before do
+        params["title"]    = "#{comment.title} updated"
+        params["password"] = original_attrs["password"] + "1"
+        put :update, message_id: message.id, id: comment.id, comment: params
+      end
+
+      it { assigns[:comment].errors["password"].should be_present }
+      it { response.should be_success }
+      it { response.should render_template("edit") }
+    end
+
+    context "with invalid parameters" do
+      let!(:invalid_params) { FactoryGirl.attributes_for(:invalid_message).stringify_keys }
+      let!(:params) { comment.attributes.dup.merge(invalid_params) }
+
+      before do
+        put :update, message_id: message.id, id: comment.id, comment: params
+      end
+
+      it { assigns[:comment].errors.should be_present }
+      it { response.should be_success }
+      it { response.should render_template("edit") }
+    end
+
+    context "update photo" do
+      let!(:message) { FactoryGirl.create(:message_with_no_comment) }
+      let!(:comment) { FactoryGirl.create(:comment, message: message) }
+      let!(:params) { comment.attributes.dup }
+      let!(:original_attrs) { FactoryGirl.attributes_for(:comment).stringify_keys }
+      let!(:photo1) { FactoryGirl.create(:photo1) }
+      let!(:photo2) { FactoryGirl.create(:photo2) }
+
+      before do
+        comment.photos = [photo1, photo2]
+        params["password"] = original_attrs["password"]
+        params[:photos_attributes] = [photo1.attributes, photo2.attributes]
+        params[:photos_attributes][0]["_destroy"] = true
+        params[:photos_attributes][1]["title"] = "Title updated."
+      end
+
+      context "expect" do
+        it "photos count should change from 2 to 1" do
+          expect {
+            put :update, message_id: message.id, id: comment.id, comment: params
+          }.to change(comment.photos,:count).from(2).to(1)
+        end
+      end
+
+      context "should" do
+        before do
+          put :update, message_id: message.id, id: comment.id, comment: params
+        end
+
+        it { assigns[:comment].photos.first.title.should == "Title updated." }
+        it {
+          redirect_path = thread_message_path(message, anchor: comment.id)
+          response.should redirect_to(redirect_path)
+        }
+      end
+    end
+  end
 end
