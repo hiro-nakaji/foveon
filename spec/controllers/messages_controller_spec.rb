@@ -114,6 +114,38 @@ describe MessagesController do
       it { response.should be_success }
       it { response.should render_template("edit") }
     end
+
+    context "update photo" do
+      let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
+      let!(:message) { FactoryGirl.create(:message) }
+      let!(:params) { message.attributes }
+      let!(:photo1) { FactoryGirl.create(:photo1) }
+      let!(:photo2) { FactoryGirl.create(:photo2) }
+
+      before do
+        message.photos = [photo1, photo2]
+        params["password"] = original_attrs["password"]
+        params[:photos_attributes] = [photo1.attributes, photo2.attributes]
+        params[:photos_attributes][0]["_destroy"] = true
+        params[:photos_attributes][1]["title"] = "Title updated."
+      end
+
+      it "photos count should change from 2 to 1" do
+        expect {
+          put :update, id: message.id, message: params
+        }.to change(message.photos,:count).from(2).to(1)
+      end
+
+      it "should redirect to thread_message_path" do
+        put :update, id: message.id, message: params
+        response.should redirect_to(thread_message_path(assigns[:message]))
+      end
+
+      it "photo2 title should change" do
+        put :update, id: message.id, message: params
+        assigns[:message].photos.first.title.should == "Title updated."
+      end
+    end
   end
 
   describe "trees" do
