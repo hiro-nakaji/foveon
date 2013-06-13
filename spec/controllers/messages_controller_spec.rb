@@ -370,4 +370,42 @@ describe MessagesController do
     it { response.should be_success }
     it { response.should render_template("thread") }
   end
+
+  describe "load_cookies" do
+    context "" do
+
+    end
+  end
+
+  describe "save_cookies" do
+    context "a message has been created" do
+      let!(:params) { FactoryGirl.attributes_for(:message) }
+
+      before do
+        post :create, message: params
+      end
+
+      Message.cookie_keys.each do | key |
+        it { cookies.signed[key].should ==  params[key]}
+      end
+    end
+
+    context "a message has not been created" do
+      let!(:params) { FactoryGirl.attributes_for(:message) }
+
+      before do
+        params[:password] = nil
+        post :create, message: params
+      end
+
+      it { assigns[:message].should be_new_record }
+      it { assigns[:message].should have(4).photos }
+      it { response.should be_success }
+      it { response.should render_template("new") }
+
+      Message.cookie_keys.each do | key |
+        it { cookies.signed[key].should be_nil}
+      end
+    end
+  end
 end
