@@ -373,7 +373,18 @@ describe MessagesController do
 
   describe "load_cookies" do
     context "" do
+      let!(:message) { FactoryGirl.create(:message) }
+      let!(:params) { FactoryGirl.attributes_for(:message) }
 
+      before do
+        post :create, message: params
+        get :new
+      end
+
+      it { assigns[:message].should_not == message }
+      Message.cookie_keys.each do | key |
+        it {assigns[:message][key].should == message[key]}
+      end
     end
   end
 
