@@ -66,9 +66,9 @@ describe Message do
   end
 
   describe "search_hit?" do
-    context "hit" do
-      let!(:message) { Message.new(title: "title", author: "author", content: "content") }
+    let!(:message) { Message.new(title: "title", author: "author", content: "content") }
 
+    context "hit" do
       it { message.search_hit?("title").should be_true }
       it { message.search_hit?(" title").should be_true }
       it { message.search_hit?("title ").should be_true }
@@ -81,8 +81,6 @@ describe Message do
     end
 
     context "not hit" do
-      let!(:message) { FactoryGirl.create(:message) }
-
       it { message.search_hit?("").should_not be_true }
       it { message.search_hit?("titles").should_not be_true }
       it { message.search_hit?("authors").should_not be_true }
