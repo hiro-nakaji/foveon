@@ -11,8 +11,8 @@ FactoryGirl.define do
 
     factory :message do
       after(:create) do |message|
-        message.comments << FactoryGirl.create(:comment1)
-        message.comments << FactoryGirl.create(:comment2)
+        message.comments << FactoryGirl.build(:comment1)
+        message.comments << FactoryGirl.build(:comment2)
       end
     end
   end
