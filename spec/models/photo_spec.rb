@@ -10,9 +10,9 @@ describe Photo do
     it { should_not validate_presence_of(:exif) }
   end
 
-  describe "extract_exif" do
+  context "EXIF" do
     let!(:photo) { Photo.new }
-    let!(:exif) {
+    let!(:exif_array) {
       [
         ["ColorSpace", "1"],
         ["ComponentsConfiguration", "1, 2, 3, 0"],
@@ -58,16 +58,48 @@ describe Photo do
         ["YResolution", "180/1"]
       ]
     }
+    let!(:exif) { Hash[*exif_array.flatten] }
 
     before do
       image = mock(Magick::Image)
-      image.should_receive(:get_exif_by_entry).and_return(Marshal.load(Marshal.dump(exif)))
+      image.should_receive(:get_exif_by_entry).and_return(Marshal.load(Marshal.dump(exif_array)))
       Magick::Image.stub_chain(:read, :first).and_return(image)
 
       photo.extract_exif
     end
 
-    it { photo.exif.count.should == exif.count }
-    it { photo.exif.should == Hash[*exif.flatten] }
+    describe "formatted_exif" do
+      subject { photo.formatted_exif }
+
+      it { should have_key(:Make) }
+      it { should have_key(:Model) }
+      it { should have_key(:DateTimeOriginal) }
+      it { should have_key(:ExposureBiasValue) }
+      it { should have_key(:ExposureMode) }
+      it { should have_key(:ExposureProgram) }
+      it { should have_key(:ExposureTime) }
+      it { should have_key(:FNumber) }
+      it { should have_key(:FocalLength) }
+      it { should have_key(:ISOSpeedRatings) }
+      it { should have_key(:Flash) }
+      its([:Make]) { should == exif["Make"] }
+      its([:Model]) { should == exif["Model"] }
+      its([:DateTimeOriginal]) { should == exif["DateTimeOriginal"] }
+      its([:ExposureBiasValue]) { should == exif["ExposureBiasValue"] }
+      its([:ExposureMode]) { should == I18n.t("exif.ExposureMode.#{exif['ExposureMode']}") }
+      its([:ExposureProgram]) { should == I18n.t("exif.ExposureProgram.#{self.exif['ExposureProgram']}") }
+      its([:ExposureTime]) { should == exif["ExposureTime"] }
+      its([:FNumber]) { should == exif["FNumber"] }
+      its([:FocalLength]) { should == exif["FocalLength"] }
+      its([:ISOSpeedRatings]) { should == exif["ISOSpeedRatings"] }
+      its([:Flash]) { should == I18n.t("exif.Flash.#{exif['Flash']}") }
+    end
+
+    describe "extract_exif" do
+      subject { photo.exif }
+
+      its(:count) { should == exif.count }
+      it { should == exif }
+    end
   end
 end
