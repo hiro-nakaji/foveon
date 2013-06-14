@@ -144,6 +144,8 @@ GEM
       json (>= 1.1.3)
       rdoc (~> 3.10)
     sexp_processor (4.2.1)
+    shoulda-matchers (2.2.0)
+      activesupport (>= 3.0.0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -204,6 +206,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0.rc1)
   sdoc
+  shoulda-matchers
   therubyracer
   turbolinks
   twitter-bootstrap-rails
