@@ -21,14 +21,13 @@ describe CommentsController do
   end
 
   describe "reply" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
 
     before do
-      get :reply, message_id: message.id, id: comment.id
+      get :reply, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == message }
+    it { assigns[:message].should == comment.message }
     it { assigns[:comment].should be_new_record }
     it { assigns[:comment].should have(4).photos }
     it { assigns[:comment].title.should == comment.title.gsub(/^/, "Re: ") }
@@ -122,28 +121,26 @@ describe CommentsController do
   end
 
   describe "show" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
 
     before do
-      get :show, message_id: message.id, id: comment.id
+      get :show, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == message }
+    it { assigns[:message].should == comment.message }
     it { assigns[:comment].should == comment }
     it { response.should be_success }
     it { response.should render_template("show") }
   end
 
   describe "edit" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
 
     before do
-      get :edit, message_id: message.id, id: comment.id
+      get :edit, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == message }
+    it { assigns[:message].should == comment.message }
     it { assigns[:comment].should == comment }
     it { assigns[:comment].should have(4).photos }
     it { response.should be_success }
@@ -151,8 +148,7 @@ describe CommentsController do
   end
 
   describe "update" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
     let!(:original_attrs) { FactoryGirl.attributes_for(:comment).stringify_keys }
 
     context "with valid parameters" do
@@ -161,14 +157,14 @@ describe CommentsController do
       before do
         params["title"]    = "#{comment.title} updated"
         params["password"] = original_attrs["password"]
-        put :update, message_id: message.id, id: comment.id, comment: params
+        put :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == message }
+      it { assigns[:message].should == comment.message }
       it { assigns[:comment].should == comment }
       it { assigns[:comment].title.should == params["title"] }
       it {
-        redirect_path = thread_message_path(message, anchor: comment.id)
+        redirect_path = thread_message_path(comment.message, anchor: comment.id)
         response.should redirect_to(redirect_path)
       }
     end
@@ -179,10 +175,10 @@ describe CommentsController do
       before do
         params["title"]    = "#{comment.title} updated"
         params["password"] = original_attrs["password"] + "1"
-        put :update, message_id: message.id, id: comment.id, comment: params
+        put :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == message }
+      it { assigns[:message].should == comment.message }
       it { assigns[:comment].should == comment }
       it { assigns[:comment].errors["password"].should be_present }
       it { response.should be_success }
@@ -194,10 +190,10 @@ describe CommentsController do
       let!(:params) { comment.attributes.dup.merge(invalid_params) }
 
       before do
-        put :update, message_id: message.id, id: comment.id, comment: params
+        put :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == message }
+      it { assigns[:message].should == comment.message }
       it { assigns[:comment].should == comment }
       it { assigns[:comment].errors.should be_present }
       it { response.should be_success }
@@ -205,15 +201,13 @@ describe CommentsController do
     end
 
     context "update photo" do
-      let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-      let!(:comment) { FactoryGirl.create(:comment, message: message) }
+      let!(:comment) { FactoryGirl.create(:comment) }
       let!(:params) { comment.attributes.dup }
       let!(:original_attrs) { FactoryGirl.attributes_for(:comment).stringify_keys }
-      let!(:photo1) { FactoryGirl.create(:photo1) }
-      let!(:photo2) { FactoryGirl.create(:photo2) }
+      let!(:photo1) { FactoryGirl.create(:photo1, entry: comment) }
+      let!(:photo2) { FactoryGirl.create(:photo2, entry: comment) }
 
       before do
-        comment.photos                            = [photo1, photo2]
         params["password"]                        = original_attrs["password"]
         params[:photos_attributes]                = [photo1.attributes, photo2.attributes]
         params[:photos_attributes][0]["_destroy"] = true
@@ -223,21 +217,21 @@ describe CommentsController do
       context "expect" do
         it "photos count should change from 2 to 1" do
           expect {
-            put :update, message_id: message.id, id: comment.id, comment: params
+            put :update, message_id: comment.message.id, id: comment.id, comment: params
           }.to change(comment.photos, :count).from(2).to(1)
         end
       end
 
       context "should" do
         before do
-          put :update, message_id: message.id, id: comment.id, comment: params
+          put :update, message_id: comment.message.id, id: comment.id, comment: params
         end
 
-        it { assigns[:message].should == message }
+        it { assigns[:message].should == comment.message }
         it { assigns[:comment].should == comment }
         it { assigns[:comment].photos.first.title.should == "Title updated." }
         it {
-          redirect_path = thread_message_path(message, anchor: comment.id)
+          redirect_path = thread_message_path(comment.message, anchor: comment.id)
           response.should redirect_to(redirect_path)
         }
       end
@@ -245,22 +239,21 @@ describe CommentsController do
   end
 
   describe "delete_confirm" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
 
     before do
-      get :delete_confirm, message_id: message.id, id: comment.id
+      get :delete_confirm, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == message }
+    it { assigns[:message].should == comment.message }
     it { assigns[:comment].should == comment }
     it { response.should be_success }
     it { response.should render_template("delete_confirm") }
   end
 
   describe "destroy" do
-    let!(:message) { FactoryGirl.create(:message_with_no_comment) }
-    let!(:comment) { FactoryGirl.create(:comment, message: message) }
+    let!(:comment) { FactoryGirl.create(:comment) }
+    let!(:message) { comment.message }
     let!(:params) { FactoryGirl.attributes_for(:comment) }
 
     context "with valid password" do

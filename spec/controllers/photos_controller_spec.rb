@@ -28,15 +28,5 @@ describe PhotosController do
 
       it_behaves_like "show photo"
     end
-
-    context "attached to none" do
-      let!(:photo) { FactoryGirl.create(:photo1) }
-
-      before do
-        get :show, id: photo.id
-      end
-
-      it_behaves_like "show photo"
-    end
   end
 end

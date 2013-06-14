@@ -167,11 +167,10 @@ describe MessagesController do
       let!(:message) { FactoryGirl.create(:message) }
       let!(:params) { message.attributes.dup }
       let!(:original_attrs) { FactoryGirl.attributes_for(:message).stringify_keys }
-      let!(:photo1) { FactoryGirl.create(:photo1) }
-      let!(:photo2) { FactoryGirl.create(:photo2) }
+      let!(:photo1) { FactoryGirl.create(:photo1, entry: message) }
+      let!(:photo2) { FactoryGirl.create(:photo2, entry: message) }
 
       before do
-        message.photos = [photo1, photo2]
         params["password"] = original_attrs["password"]
         params[:photos_attributes] = [photo1.attributes, photo2.attributes]
         params[:photos_attributes][0]["_destroy"] = true

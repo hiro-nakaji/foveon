@@ -8,6 +8,7 @@ FactoryGirl.define do
     content "フォビオン掲示板と画像掲示板を統合し、装いを新たにオープンいたします。"
     remote_addr 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31'
     user_agent '192.168.1.1'
+    association :message, :factory => :message_with_no_comment
   end
 
   factory :valid_comment, class: Comment do
