@@ -5,6 +5,9 @@ class Photo < ActiveRecord::Base
 
   before_save :extract_exif, if: :photo_data_changed?
 
+  validates :no, presence: true
+  validates :photo_data, presence: true
+
   def formatted_exif
     data = Hash.new
     data[:Make] = self.exif['Make'] if self.exif['Make']
@@ -35,17 +38,4 @@ class Photo < ActiveRecord::Base
       raise e
     end
   end
-
-
-  #Make
-  #Model
-  #DateTimeOriginal
-  #ExposureBiasValue
-  #ExposureMode  (0: 'オート', 1: 'マニュアル', 2: 'Auto Bracket')
-  #ExposureProgram 1: マニュアル 2: ノーマル 3: 絞り優先 4: シャッター優先
-  #ExposureTime
-  #FNumber 28/10 焦点/F値
-  #FocalLength, 242/10 焦点距離/F値
-  #ISOSpeedRatings
-  #Flash
 end

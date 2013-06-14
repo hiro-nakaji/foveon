@@ -11,7 +11,7 @@ class CreateComments < ActiveRecord::Migration
       t.string :browser, limit: 512
       t.integer :old_id, limit: 8
       t.string :message_type, default: nil
-      t.references :message, index: true
+      t.references :message, index: true, null: false
 
       t.timestamps
     end
