@@ -27,7 +27,7 @@ describe Message do
 
     before do
       Kaminari.config.default_per_page = 10
-      relation                         = mock(ActiveRecord::Relation)
+      relation = mock(ActiveRecord::Relation)
       relation.should_receive(:count).and_return(101)
       Message.should_receive(:newer).and_return(relation)
     end
@@ -62,6 +62,31 @@ describe Message do
       }
 
       it { should be_new_entry }
+    end
+  end
+
+  describe "search_hit?" do
+    context "hit" do
+      let!(:message) { Message.new(title: "title", author: "author", content: "content") }
+
+      it { message.search_hit?("title").should be_true }
+      it { message.search_hit?(" title").should be_true }
+      it { message.search_hit?("title ").should be_true }
+      it { message.search_hit?("t i t l e").should be_true }
+      it { message.search_hit?("hello  title  test").should be_true }
+      it { message.search_hit?("author").should be_true }
+      it { message.search_hit?("content").should be_true }
+      it { message.search_hit?("content ").should be_true }
+      it { message.search_hit?("title author content").should be_true }
+    end
+
+    context "not hit" do
+      let!(:message) { FactoryGirl.create(:message) }
+
+      it { message.search_hit?("").should_not be_true }
+      it { message.search_hit?("titles").should_not be_true }
+      it { message.search_hit?("authors").should_not be_true }
+      it { message.search_hit?("contents").should_not be_true }
     end
   end
 end
