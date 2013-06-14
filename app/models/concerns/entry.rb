@@ -10,12 +10,6 @@ module Entry
     end
   end
 
-  def reply_to(entry)
-    self.title = entry.title.gsub(/^/, "Re: ")
-    self.content = I18n.t('entry.wrote', author: entry.author) + "\n"
-    self.content += entry.content.gsub(/^/, "> ")
-  end
-
   def new_entry?(current_time = Time.now)
     self.updated_at > current_time - 24.hours
   end
