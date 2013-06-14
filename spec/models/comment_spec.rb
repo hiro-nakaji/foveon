@@ -73,6 +73,7 @@ describe Comment do
     context "not new entry" do
       let!(:comment) {
         FactoryGirl.create(:comment,
+                           message: FactoryGirl.create(:message_with_no_comment),
                            created_at: current_time - 24.hours,
                            updated_at: current_time - 24.hours)
       }
@@ -83,6 +84,7 @@ describe Comment do
     context "new entry" do
       let!(:comment) {
         FactoryGirl.create(:comment,
+                           message: FactoryGirl.create(:message_with_no_comment),
                            created_at: current_time - 24.hours + 1.second,
                            updated_at: current_time - 24.hours + 1.second)
       }
@@ -93,7 +95,7 @@ describe Comment do
 
   describe "search_hit?" do
     context "hit" do
-      let!(:comment) { Message.new(title: "title", author: "author", content: "content") }
+      let!(:comment) { Comment.new(title: "title", author: "author", content: "content") }
 
       it { comment.search_hit?("title").should be_true }
       it { comment.search_hit?(" title").should be_true }
@@ -107,7 +109,7 @@ describe Comment do
     end
 
     context "not hit" do
-      let!(:comment) { Message.new(title: "title", author: "author", content: "content") }
+      let!(:comment) { Comment.new(title: "title", author: "author", content: "content") }
 
       it { comment.search_hit?("").should_not be_true }
       it { comment.search_hit?("titles").should_not be_true }
@@ -118,7 +120,9 @@ describe Comment do
 
   describe "log_request" do
     let!(:updated_at) { Time.now - 1.minute }
-    let!(:comment) { FactoryGirl.create(:comment, updated_at: updated_at) }
+    let!(:comment) { FactoryGirl.create(:comment,
+                                        updated_at: updated_at,
+                                        message: FactoryGirl.create(:message_with_no_comment)) }
 
     before do
       request = mock(ActionDispatch::Request)
