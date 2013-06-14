@@ -89,4 +89,21 @@ describe Message do
       it { message.search_hit?("contents").should_not be_true }
     end
   end
+
+  describe "log_request" do
+    let!(:updated_at) { Time.now - 1.minute }
+    let!(:message) { FactoryGirl.create(:message, updated_at: updated_at) }
+
+    before do
+      request = mock(ActionDispatch::Request)
+      request.should_receive(:remote_addr).and_return('127.0.0.1')
+      request.should_receive(:user_agent).and_return('rspec')
+
+      message.log_request(request)
+    end
+
+    it { message.remote_addr.should == '127.0.0.1' }
+    it { message.user_agent.should == 'rspec' }
+    it { message.updated_at.should >  updated_at}
+  end
 end
