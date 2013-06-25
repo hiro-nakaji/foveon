@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-  
+
   enable_extension "hstore"
 
   create_table "photos", force: true do |t|

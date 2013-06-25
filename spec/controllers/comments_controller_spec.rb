@@ -157,7 +157,7 @@ describe CommentsController do
       before do
         params["title"]    = "#{comment.title} updated"
         params["password"] = original_attrs["password"]
-        put :update, message_id: comment.message.id, id: comment.id, comment: params
+        patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
       it { assigns[:message].should == comment.message }
@@ -175,7 +175,7 @@ describe CommentsController do
       before do
         params["title"]    = "#{comment.title} updated"
         params["password"] = original_attrs["password"] + "1"
-        put :update, message_id: comment.message.id, id: comment.id, comment: params
+        patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
       it { assigns[:message].should == comment.message }
@@ -190,7 +190,7 @@ describe CommentsController do
       let!(:params) { comment.attributes.dup.merge(invalid_params) }
 
       before do
-        put :update, message_id: comment.message.id, id: comment.id, comment: params
+        patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
       it { assigns[:message].should == comment.message }
@@ -217,14 +217,14 @@ describe CommentsController do
       context "expect" do
         it "photos count should change from 2 to 1" do
           expect {
-            put :update, message_id: comment.message.id, id: comment.id, comment: params
+            patch :update, message_id: comment.message.id, id: comment.id, comment: params
           }.to change(comment.photos, :count).from(2).to(1)
         end
       end
 
       context "should" do
         before do
-          put :update, message_id: comment.message.id, id: comment.id, comment: params
+          patch :update, message_id: comment.message.id, id: comment.id, comment: params
         end
 
         it { assigns[:message].should == comment.message }
