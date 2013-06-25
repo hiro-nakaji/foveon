@@ -126,7 +126,7 @@ describe MessagesController do
       before do
         params["title"] = "#{message.title} updated"
         params["password"] = original_attrs["password"]
-        put :update, id: message.id, message: params
+        patch :update, id: message.id, message: params
       end
 
       it { assigns[:message].should == message }
@@ -140,7 +140,7 @@ describe MessagesController do
       before do
         params["title"] = "#{message.title} updated"
         params["password"] = original_attrs["password"] + "1"
-        put :update, id: message.id, message: params
+        patch :update, id: message.id, message: params
       end
 
       it { assigns[:message].should == message }
@@ -154,7 +154,7 @@ describe MessagesController do
       let!(:params) { message.attributes.dup.merge(invalid_params) }
 
       before do
-        put :update, id: message.id, message: params
+        patch :update, id: message.id, message: params
       end
 
       it { assigns[:message].should == message }
@@ -180,14 +180,14 @@ describe MessagesController do
       context "expect" do
         it "photos count should change from 2 to 1" do
           expect {
-            put :update, id: message.id, message: params
+            patch :update, id: message.id, message: params
           }.to change(message.photos,:count).from(2).to(1)
         end
       end
 
       context "should" do
         before do
-          put :update, id: message.id, message: params
+          patch :update, id: message.id, message: params
         end
 
         it { assigns[:message].should == message }
