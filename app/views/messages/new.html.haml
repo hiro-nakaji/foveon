@@ -4,8 +4,8 @@
       %ul
         %li= link_to('', root_path, class: 'icon-home')
   .row-fluid.entry_form
-    = form_for(@message, multipart: true) do |f|
+    = form_for(@message, multipart: true, html: { class: 'form-horizontal' }) do |f|
       = render partial: 'form', object:f, as: :form, locals: {message: @message}
-      .row_fluid
-        .span2.offset2
+      .control-group
+        .controls
           = f.submit t('buttons.create'), disable_with: t('buttons.create'), class: 'btn btn-primary'
