@@ -1,9 +1,7 @@
-.row_fluid
-  .span12
-    = form.label :password
-    = form.password_field :password
+= form.label :password
+= form.password_field :password, class: 'input-small'
+= form.submit t('buttons.delete'), disable_with: t('buttons.delete'), class: 'btn btn-danger'
 - if form.object.errors[:password].present?
-  .row-fluid
-    .span12.alert.alert-error
-      - form.object.errors.full_messages_for(:password).each do |error|
-        .row-fluid= error
+  .alert.alert-error
+    - form.object.errors.full_messages_for(:password).each do |error|
+      = error

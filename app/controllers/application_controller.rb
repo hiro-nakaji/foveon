@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  include Jpmobile::ViewSelector
+
   # Set locale in response to client's browser setting.
   def set_locale
     accept_language = request.headers['Accept-Language']

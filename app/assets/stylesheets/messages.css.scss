@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$smartphone-size: 767px;
+
 a {
   color: rgb(66, 169, 238);
 }
@@ -11,12 +13,19 @@ a {
   border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
+  @media (max-width: $smartphone-size) {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
 }
 
 .tree_root {
   background-color: #DBDBDB;
   line-height: 40px;
   display: block;
+  @media (max-width: $smartphone-size) {
+    line-height: 26px;
+  }
 }
 
 .message_headline_base_with_any_branch {
@@ -53,11 +62,9 @@ a {
 }
 
 .thread_header {
-  background-color: #DBDBDB;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  line-height: 40px;
-  display: block;
+  @extend .tree_root;
 }
 
 .thread_body {
@@ -65,7 +72,19 @@ a {
 }
 
 .thread_photo {
+  @media (max-width: $smartphone-size) {
+    margin-bottom: 5px;
+  }
+}
+
+.thread_photo_group {
   margin: 10px;
+  @media (max-width: $smartphone-size) {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 nav.pagination {
@@ -80,28 +99,24 @@ nav.pagination {
 }
 
 .entry_form {
-  margin: 10px;
-  label {
-    text-align: right;
-    display: inline;
-  }
   label.required {
     font-weight: bold;
   }
-  input[type = 'text'] {
-    display: inline;
-    width: 98%;
-  }
-  textarea {
-    width: 98%;
-  }
-  input[type = 'checkbox'] {
-    display: inline;
+  .alert {
+    margin-bottom: 0px;
+    margin-top: 5px;
+    display: table;
   }
 }
 
 .delete_form {
   text-align: center;
+  .alert {
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    display: block;
+  }
 }
 
 .page_header {

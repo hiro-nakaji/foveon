@@ -62,7 +62,7 @@ en:
     update: 'Update'
     delete: 'Delete'
     back: 'Back'
-    search: 'Search'
+    search: 'Go'
 
   entry:
     wrote: "%{author} wrote:"

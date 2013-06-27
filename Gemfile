@@ -20,6 +20,7 @@ gem 'haml-rails'
 group :development do
   gem 'erb2haml'
 end
+gem 'jpmobile', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

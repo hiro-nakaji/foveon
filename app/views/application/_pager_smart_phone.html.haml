@@ -1,0 +1,17 @@
+.row-fluid.page_header
+  .row-fluid
+    %span.icon_base
+      .pagination.pagination_base
+        %ul
+          %li= link_to('', root_path, class: 'icon-home')
+          %li= link_to('', new_message_path, class: 'icon-file')
+    %span.pager_base
+      .btn-group
+        %a(class="btn dropdown-toggle" data-toggle="dropdown" href="#")
+          No.
+          %span.caret
+        = paginate messages, window: 3
+    %span.search_base
+      = form_tag(trees_messages_path, method: :get, class: 'form-search') do
+        = text_field_tag :words, params['words'], class: 'input-mini'
+        = submit_tag(t('buttons.search'), name: nil, class: 'btn')

@@ -1,0 +1,10 @@
+.container-fluid
+  = render(partial: 'pager', object: @messages, as: :messages, locals:{params: params})
+
+  - @messages.each do |message|
+    .row-fluid.tree
+      - style = message.comments.present? ? 'message_headline_base_with_any_branch' : 'message_headline_base_with_no_branch'
+      .row-fluid(class=style)
+        = render(partial: 'headline',  object: message, as: :entry, locals:{params: params})
+      .row-fluid
+        = render(partial: 'comments/headline', collection: message.comments, as: :entry, locals:{params: params})
