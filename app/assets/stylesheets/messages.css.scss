@@ -62,11 +62,9 @@ a {
 }
 
 .thread_header {
-  background-color: #DBDBDB;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  line-height: 40px;
-  display: block;
+  @extend .tree_root;
 }
 
 .thread_body {
@@ -74,7 +72,19 @@ a {
 }
 
 .thread_photo {
+  @media (max-width: $smartphone-size) {
+    margin-bottom: 5px;
+  }
+}
+
+.thread_photo_group {
   margin: 10px;
+  @media (max-width: $smartphone-size) {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 nav.pagination {

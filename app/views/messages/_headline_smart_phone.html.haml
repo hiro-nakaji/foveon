@@ -1,5 +1,5 @@
 .row-fluid
-  .span12.entry_headline
+  .entry_headline
     = link_to(entry.title, thread_message_path(entry))
     - if entry.photos.present?
       = link_to('', message_path(entry), class: 'icon-camera')
@@ -8,7 +8,7 @@
     - if params[:words].present? && entry.search_hit?(params[:words])
       %i.icon-star.search-hit
 .row-fluid
-  .span12.entry_headline
+  .entry_headline
     = entry.author
     - if entry.homepage.present?
       = link_to('', entry.homepage, class: 'icon-home', target: '_blank')
