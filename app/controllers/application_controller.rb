@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
 
   include Jpmobile::ViewSelector
 
-  before_action :set_locale, :disable_mobile_view_if_tablet
+  before_action :set_locale
+  before_action :disable_mobile_view!, if: :tablet?
+
+  helper_method :tablet?
 
   # Set locale in response to client's browser setting.
   def set_locale
@@ -22,9 +25,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def disable_mobile_view_if_tablet
-    if request.mobile && request.mobile.tablet?
-      disable_mobile_view!
-    end
+  def tablet?
+    request.mobile && request.mobile.tablet?
   end
 end
