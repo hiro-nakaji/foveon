@@ -14,8 +14,8 @@ a {
   margin-top: 5px;
   margin-bottom: 5px;
   @media (max-width: $smartphone-size) {
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 0px;
+    margin-bottom: 1px;
   }
 }
 
@@ -28,15 +28,23 @@ a {
   }
 }
 
+@mixin border-radius-for-smartphone {
+  @media (max-width: $smartphone-size) {
+    border-radius: 0px;
+  }
+}
+
 .message_headline_base_with_any_branch {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   @extend .tree_root;
+  @include border-radius-for-smartphone;
 }
 
 .message_headline_base_with_no_branch {
   border-radius: 5px;
   @extend .tree_root;
+  @include border-radius-for-smartphone;
 }
 
 .entry_headline {
@@ -59,12 +67,18 @@ a {
   border-radius: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
+  @include border-radius-for-smartphone;
+  @media (max-width: $smartphone-size) {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 }
 
 .thread_header {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   @extend .tree_root;
+  @include border-radius-for-smartphone;
 }
 
 .thread_body {
@@ -96,6 +110,12 @@ nav.pagination {
   a {
     margin-left: 10px;
   }
+  @media (max-width: $smartphone-size) {
+    float: none;
+    a {
+      margin-left: 2px;
+    }
+  }
 }
 
 .entry_form {
@@ -106,6 +126,9 @@ nav.pagination {
     margin-bottom: 0px;
     margin-top: 5px;
     display: table;
+  }
+  @media (max-width: $smartphone-size) {
+    margin:5px;
   }
 }
 
@@ -121,6 +144,10 @@ nav.pagination {
 
 .page_header {
   margin-top: 10px;
+  @media (max-width: $smartphone-size) {
+    margin: 5px;
+    margin-bottom: 0px;
+  }
 }
 
 .icon_base {
