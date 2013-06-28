@@ -119,6 +119,9 @@ nav.pagination {
 }
 
 .entry_form {
+  label {
+    display: inline;
+  }
   label.required {
     font-weight: bold;
   }
@@ -126,6 +129,10 @@ nav.pagination {
     margin-bottom: 0px;
     margin-top: 5px;
     display: table;
+  }
+  input[type = 'checkbox'] {
+    display: inline;
+    margin: auto;
   }
   @media (max-width: $smartphone-size) {
     margin:5px;

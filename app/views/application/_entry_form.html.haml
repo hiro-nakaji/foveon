@@ -39,7 +39,7 @@
       = photo_form.hidden_field :photo_data_cache
       - if photo_form.object.persisted?
         = photo_form.check_box :_destroy
-        = photo_form.label :_destroy, class: 'control-label'
+        = photo_form.label :_destroy
       - if photo_form.object.errors.present?
         .alert.alert-error
           - photo_form.object.errors.full_messages.each do |msg|
