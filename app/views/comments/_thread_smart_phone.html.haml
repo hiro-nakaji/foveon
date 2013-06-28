@@ -17,13 +17,10 @@
           = mail_to(entry.mail, '', class: 'icon-envelope')
         .entry_headline_date
           - if button_display
-            .btn-group
-              %a(class="btn dropdown-toggle" data-toggle="dropdown" href="#")
-                %span.caret
-              %ul.dropdown-menu
-                %li= link_to('', reply_message_comment_path(entry.message, entry), method: 'get', class: 'icon-share-alt')
-                %li= link_to('', edit_message_comment_path(entry.message, entry), method: 'get', class: 'icon-edit')
-                %li= link_to('', delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'icon-trash')
+            %span.button_group
+              = link_to('', reply_message_comment_path(entry.message, entry), method: 'get', class: 'icon-share-alt')
+              = link_to('', edit_message_comment_path(entry.message, entry), method: 'get', class: 'icon-edit')
+              = link_to('', delete_confirm_message_comment_path(entry.message, entry), method: 'get', class: 'icon-trash')
           = I18n.localize(entry.created_at, :format => :short)
   .row-fluid
     .span12.thread_body
