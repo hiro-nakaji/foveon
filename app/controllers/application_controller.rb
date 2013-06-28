@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :set_locale
-
   include Jpmobile::ViewSelector
+
+  before_action :set_locale, :disable_mobile_view_if_tablet
 
   # Set locale in response to client's browser setting.
   def set_locale
@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
         I18n.locale = locale
         break
       end
+    end
+  end
+
+  def disable_mobile_view_if_tablet
+    if request.mobile && request.mobile.tablet?
+      disable_mobile_view!
     end
   end
 end
