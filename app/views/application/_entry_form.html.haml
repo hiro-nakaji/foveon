@@ -1,22 +1,22 @@
 .control-group
-  = form.label :title, class: 'control-label required'
+  = form.label :title, class: 'control-label required', id: 'title_label'
   .controls
-    = form.text_field :title, class: 'input-xlarge'
+    = form.text_field :title, class: 'input-xlarge', id: 'title'
     = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :title}
 .control-group
-  = form.label :author, class: 'control-label required'
+  = form.label :author, class: 'control-label required', id: 'author_label'
   .controls
-    = form.text_field :author, class: 'input-xlarge'
+    = form.text_field :author, class: 'input-xlarge', id: 'author'
     = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :author}
 .control-group
-  = form.label :password, class: 'control-label required'
+  = form.label :password, class: 'control-label required', id: 'password_label'
   .controls
-    = form.password_field :password, class: 'input-xlarge'
+    = form.password_field :password, class: 'input-xlarge', id: 'password'
     = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :password}
 .control-group
-  = form.label :content, class: 'control-label required'
+  = form.label :content, class: 'control-label required', id: 'content_label'
   .controls
-    = form.text_area :content, class: 'input-xxlarge', size: '300x15'
+    = form.text_area :content, class: 'input-xxlarge', size: '300x15', id: 'content'
     = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :content}
 .control-group
   = form.label :mail, class: 'control-label'
@@ -39,7 +39,7 @@
       = photo_form.hidden_field :photo_data_cache
       - if photo_form.object.persisted?
         = photo_form.check_box :_destroy
-        = photo_form.label :_destroy, class: 'control-label'
+        = photo_form.label :_destroy
       - if photo_form.object.errors.present?
         .alert.alert-error
           - photo_form.object.errors.full_messages.each do |msg|

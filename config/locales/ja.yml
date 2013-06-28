@@ -93,6 +93,7 @@ ja:
         updated_at: '更新日時'
       photo:
         photo_data: '画像ファイル'
+        _destroy: 'ファイルを削除'
     errors:
       models:
         message:

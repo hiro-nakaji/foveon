@@ -93,6 +93,7 @@ en:
         updated_at: 'Updated time'
       photo:
         photo_data: 'Image file'
+        _destroy: 'Delete this image'
     errors:
       models:
         message:

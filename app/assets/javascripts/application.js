@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
-//= require_tree .
+//= require bootstrap.js.coffee
+//= require comments.js.coffee
+//= require messages.js.coffee
+//= require photos.js.coffee
