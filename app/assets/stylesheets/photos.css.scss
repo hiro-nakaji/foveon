@@ -6,13 +6,13 @@ $smartphone-size: 767px;
 
 .photo_vga {
   float: left;
+  img {
+    max-width: -webkit-calc(100% - 5px * 2);
+  }
   @media (max-width: $smartphone-size) {
     padding-left: 3px;
     padding-right: 3px;
     float: none;
-    img {
-      max-width: -webkit-calc(100% - 5px * 2);
-    }
   }
 }
 
