@@ -1,16 +1,18 @@
-.row-fluid.photo_base
-  .photo_vga
-    = link_to(image_tag(photo.photo_data.vga.to_s, class: 'img-polaroid'), photo.photo_data.url.to_s, target: '_blank')
-    %br
-    = render(partial: 'facebook_like_button', object: photo_url(photo), as: :href)
-    = render(partial: 'twitter_share_button', object: photo_url(photo), as: :href, locals: {comment: "> #{photo.title}"})
-.row-fluid.exif_base
-  %table.table
-    %thead
-      %tr
-        %th(colspan=2)= photo.title
-    %tbody
-      - photo.formatted_exif.each do |key, value|
+.row-fluid
+  .photo_base
+    .photo_vga
+      = link_to(image_tag(photo.photo_data.vga.to_s, class: 'img-polaroid'), photo.photo_data.url.to_s, target: '_blank')
+      %br
+      = render(partial: 'facebook_like_button', object: photo_url(photo), as: :href)
+      = render(partial: 'twitter_share_button', object: photo_url(photo), as: :href, locals: {comment: "> #{photo.title}"})
+.row-fluid
+  .exif_base
+    %table.table
+      %thead
         %tr
-          %td= t('exif.attributes')[key]
-          %td= value
+          %th(colspan=2)= photo.title
+      %tbody
+        - photo.formatted_exif.each do |key, value|
+          %tr
+            %td= t('exif.attributes')[key]
+            %td= value
