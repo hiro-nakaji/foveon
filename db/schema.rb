@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.string   "homepage",     limit: 512
     t.text     "content",                  null: false
     t.string   "remote_addr"
-    t.string   "user_agent"
+    t.string   "user_agent",   limit: 512
     t.integer  "old_id",       limit: 8
     t.string   "message_type"
-    t.integer  "message_id"
+    t.integer  "message_id",               null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,19 +39,21 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.string   "homepage",     limit: 512
     t.text     "content",                  null: false
     t.string   "remote_addr"
-    t.string   "user_agent"
+    t.string   "user_agent",   limit: 512
     t.integer  "old_id",       limit: 8
     t.string   "message_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  enable_extension "hstore"
+
   create_table "photos", force: true do |t|
-    t.integer  "entry_id"
-    t.string   "entry_type"
+    t.integer  "entry_id",   null: false
+    t.string   "entry_type", null: false
     t.string   "title"
-    t.integer  "no"
-    t.string   "photo_data"
+    t.integer  "no",         null: false
+    t.string   "photo_data", null: false
     t.hstore   "exif"
     t.datetime "created_at"
     t.datetime "updated_at"

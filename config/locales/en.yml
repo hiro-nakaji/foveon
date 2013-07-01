@@ -62,7 +62,7 @@ en:
     update: 'Update'
     delete: 'Delete'
     back: 'Back'
-    search: 'Search'
+    search: 'Go'
 
   entry:
     wrote: "%{author} wrote:"
@@ -93,6 +93,7 @@ en:
         updated_at: 'Updated time'
       photo:
         photo_data: 'Image file'
+        _destroy: 'Delete this image'
     errors:
       models:
         message:

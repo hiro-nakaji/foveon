@@ -7,11 +7,8 @@ class OldMessage < ActiveRecord::Base
   #
   # @return Hash
   def message_hash
-    salt = [rand(64), rand(64)].pack("C*").tr("\x00-\x3f", "A-Za-z0-9./")
-    pswd = self.password.present? ?  self.password : ''
     homepage = self.url
     homepage = "http://" + homepage unless homepage.blank? || homepage.start_with?('http')
-    ctypted_password = pswd.crypt(salt)
     {
       old_id:         self.id,
       created_at:     self.lastupdate,
@@ -23,7 +20,7 @@ class OldMessage < ActiveRecord::Base
       content:        self.data,
       remote_addr:    self.address,
       user_agent:     self.browser,
-      password:       ctypted_password,
+      password:       self.password.present? ? self.password : SecureRandom.hex,
       message_type:  'text'
     }
   end

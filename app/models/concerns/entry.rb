@@ -1,19 +1,13 @@
 module Entry
   def build_photos_up_to_max
-    if self.photos.size < Settings.foveon_bbs.max_photo_count
-      (Settings.foveon_bbs.max_photo_count - self.photos.size).
+    if self.photos.size < Settings.max_photo_count
+      (Settings.max_photo_count - self.photos.size).
         times do |index|
         photo = self.photos.max{|a,b| a.no <=> b.no}
         no = photo ? photo.no + 1 : 0
         self.photos.build(no: no)
       end
     end
-  end
-
-  def reply_to(entry)
-    self.title = entry.title.gsub(/^/, "Re: ")
-    self.content = I18n.t('entry.wrote', author: entry.author) + "\n"
-    self.content += entry.content.gsub(/^/, "> ")
   end
 
   def new_entry?(current_time = Time.now)
@@ -35,15 +29,14 @@ module Entry
   private
 
   def check_passwords
-    unless self.password.crypt(self.password_was) == self.password_was
+    unless self.password.blank? || Digest::SHA1.hexdigest(self.password) == self.password_was
       errors.add(:password, :invalid)
     end
   end
 
   def crypt_password
     if self.password_changed?
-      salt = [rand(64), rand(64)].pack("C*").tr("\x00-\x3f", "A-Za-z0-9./")
-      self.password  = self.password.crypt(salt)
+      self.password = Digest::SHA1.hexdigest(self.password)
     end
   end
 end

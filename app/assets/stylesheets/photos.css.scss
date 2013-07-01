@@ -2,11 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$smartphone-size: 767px;
+
 .photo_vga {
   float: left;
+  img {
+    max-width: -webkit-calc(100% - 5px * 2);
+  }
+  @media (max-width: $smartphone-size) {
+    padding-left: 3px;
+    padding-right: 3px;
+    float: none;
+  }
 }
 
 .photo_base {
+  margin-top: 5px;
+}
+
+.exif_base {
   margin-top: 5px;
 }
 

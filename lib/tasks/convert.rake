@@ -54,11 +54,9 @@ namespace :convert do
     return if message
 
     params = photo_message.message_hash
-    message = Message.new(params)
+    message = Message.create(params)
 
     add_photos(photo_message, message)
-
-    message.save!
   end
 
   def create_comment_from_photo_message(photo_message)
@@ -68,11 +66,9 @@ namespace :convert do
     params = photo_message.message_hash
     message = Message.find_by(message_type: 'photo', old_id: photo_message.parent_id)
     params[:message] = message
-    comment = Comment.new(params)
+    comment = Comment.create(params)
 
     add_photos(photo_message, comment)
-
-    comment.save!
   end
 
   def add_photos(photo_message, entry)

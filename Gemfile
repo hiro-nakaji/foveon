@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0.rc1'
+gem 'rails', '4.0.0'
 gem 'rails-i18n'
 gem 'validates_email_format_of'
 gem "validate_url"
@@ -10,7 +10,7 @@ gem "validate_url"
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'sass-rails', '~> 4.0.0'
 
 gem "therubyracer"
 gem "less-rails"
@@ -20,6 +20,7 @@ gem 'haml-rails'
 group :development do
   gem 'erb2haml'
 end
+gem 'jpmobile', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -37,7 +38,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.0.1'
+gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -45,7 +46,6 @@ group :doc do
 end
 
 gem 'acts_as_tree'
-gem 'jpmobile'
 gem 'rails_config'
 
 # for file upload
@@ -58,6 +58,17 @@ gem 'rmagick'
 gem 'kaminari'
 # for auto link
 gem 'rinku'
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem "shoulda-matchers"
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

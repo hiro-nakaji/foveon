@@ -87,6 +87,8 @@ class CommentsController < ApplicationController
   end
 
   def save_cookies
+    return unless response.status == Rack::Utils.status_code(:found)
+
     Comment.cookie_keys.each do |key|
       cookies.signed[key] = {value: @comment[key], path: root_path, expires: 1.year.from_now}
     end

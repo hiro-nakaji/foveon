@@ -48,7 +48,7 @@ module EntryExtend
   end
 
   def split_to_words(input)
-    input.split(/[#{Settings.foveon_bbs.spaces}]+/)
+    input.split(/[#{Settings.spaces}]+/)
   end
 
   def cookie_keys

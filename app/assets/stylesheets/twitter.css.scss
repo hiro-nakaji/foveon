@@ -1,0 +1,7 @@
+$smartphone-size: 767px;
+
+@media (max-width: $smartphone-size) {
+  body{
+    padding-left:0px;padding-right:0px;
+  }
+}

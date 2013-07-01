@@ -1,13 +1,9 @@
-foveon_bbs:
-  photo_storage_type: :local
-  photo_local_directory: '/Users/hiro/Documents/foveon/storage'
-  photo_top: 'foveon/storage'
-  max_photo_count: 4
-  spaces: " 　"
-  facebook:
-    app_id: '261336187341371'
+max_photo_count: 4
+spaces: " 　"
+facebook:
+  app_id: '261336187341371'
 photo_bbs:
-  top_directory: '/Users/hiro/Documents/foveon/photo'
-  data_path: '/Users/hiro/Documents/foveon/photo/bbs-utf8.txt'
+  top_directory: '/home/hiro/foveon'
+  data_path: '/home/hiro/foveon/bbs-utf8.txt'
   separator: '<>'
   photos: 4
