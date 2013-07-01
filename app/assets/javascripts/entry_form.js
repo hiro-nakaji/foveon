@@ -1,0 +1,1 @@
+//= require entry_form.js.coffee
