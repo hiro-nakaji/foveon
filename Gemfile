@@ -6,6 +6,8 @@ gem 'rails-i18n'
 gem 'validates_email_format_of'
 gem "validate_url"
 
+gem 'unicorn'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
