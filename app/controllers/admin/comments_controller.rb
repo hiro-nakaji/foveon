@@ -8,6 +8,6 @@ class Admin::CommentsController < Admin::ApplicationController
       Comment.where(id: params[:comments]).destroy_all
     end
 
-    redirect_to admin_comments_path
+    redirect_to admin_comments_path(page: params[:page])
   end
 end
