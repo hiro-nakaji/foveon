@@ -62,7 +62,7 @@ gem 'kaminari'
 gem 'rinku'
 
 group :development, :test do
-  gem 'rspec'
+  gem 'rspec', '~> 2.99'
   gem 'rspec-rails'
   gem 'factory_girl'
   gem 'factory_girl_rails'
@@ -70,6 +70,7 @@ end
 
 group :test do
   gem "shoulda-matchers"
+  gem "rspec-collection_matchers"
 end
 
 # Use ActiveModel has_secure_password

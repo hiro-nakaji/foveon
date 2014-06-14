@@ -13,6 +13,10 @@
 
 ActiveRecord::Schema.define(version: 20130608131310) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
+
   create_table "comments", force: true do |t|
     t.string   "title",                    null: false
     t.string   "author",                   null: false
@@ -45,8 +49,6 @@ ActiveRecord::Schema.define(version: 20130608131310) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  enable_extension "hstore"
 
   create_table "photos", force: true do |t|
     t.integer  "entry_id",   null: false
