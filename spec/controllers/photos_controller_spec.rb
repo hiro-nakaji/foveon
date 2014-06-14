@@ -3,9 +3,9 @@ require 'spec_helper'
 describe PhotosController do
   describe "show" do
     shared_examples_for "show photo" do
-      it { assigns[:photo].should == photo }
-      it { response.should be_success }
-      it { response.should render_template("show") }
+      it { expect(assigns[:photo]).to eq photo }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("show") }
     end
 
     context "attached to Message" do

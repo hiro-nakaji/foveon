@@ -7,3 +7,6 @@ photo_bbs:
   data_path: '/home/hiro/foveon/bbs-utf8.txt'
   separator: '<>'
   photos: 4
+admin:
+  messages:
+    per_page: 30

@@ -1,0 +1,10 @@
+.container-fluid
+  .row-fluid
+    .span12
+      = paginate @messages
+  .row-fluid
+    .span12
+      = form_tag(bulk_destroy_admin_messages_path, method: 'delete') do
+        %table.table-striped{style: 'width: 100%;'}
+          = render partial: 'message', collection: @messages
+        = submit_tag 'destroy', data: { confirm: 'Are you sure?' }
