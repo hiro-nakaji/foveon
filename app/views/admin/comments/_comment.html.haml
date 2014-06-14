@@ -1,8 +1,9 @@
 %tr
   %td
-    = check_box_tag("comments[]", comment.id)
+    = check_box_tag("comments[]", comment.id, false, id: comment.id)
   %td
-    = comment.title
+    %label{for: comment.id}
+      = comment.title
   %td
     = comment.author
   %td

@@ -5,6 +5,7 @@
   .row-fluid
     .span12
       = form_tag(bulk_destroy_admin_messages_path, method: 'delete') do
+        = hidden_field_tag 'page', params[:page]
         %table.table-striped{style: 'width: 100%;'}
           = render partial: 'message', collection: @messages
         = submit_tag 'destroy', data: { confirm: 'Are you sure?' }
