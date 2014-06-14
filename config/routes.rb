@@ -1,4 +1,12 @@
 TheFoveonBbs::Application.routes.draw do
+  namespace :admin do
+    resources :messages, only: [:index, :destroy] do
+      collection do
+        delete :bulk_destroy
+      end
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
