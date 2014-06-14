@@ -1,6 +1,6 @@
 TheFoveonBbs::Application.routes.draw do
   namespace :admin do
-    resources :messages, only: [:index, :destroy] do
+    resources :messages, only: [:index] do
       collection do
         delete :bulk_destroy
       end
