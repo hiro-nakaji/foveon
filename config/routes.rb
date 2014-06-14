@@ -5,6 +5,11 @@ TheFoveonBbs::Application.routes.draw do
         delete :bulk_destroy
       end
     end
+    resources :comments, only: [:index] do
+      collection do
+        delete :bulk_destroy
+      end
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

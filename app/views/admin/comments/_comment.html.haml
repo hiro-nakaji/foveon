@@ -1,0 +1,11 @@
+%tr
+  %td
+    = check_box_tag("comments[]", comment.id)
+  %td
+    = comment.title
+  %td
+    = comment.author
+  %td
+    = I18n.localize(comment.created_at, :format => :short)
+  %td
+    = I18n.localize(comment.updated_at, :format => :short)
