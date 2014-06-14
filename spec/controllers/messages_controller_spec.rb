@@ -6,10 +6,10 @@ describe MessagesController do
       get :new
     end
 
-    it { assigns[:message].should be_new_record }
-    it { assigns[:message].should have(4).photos }
-    it { response.should be_success }
-    it { response.should render_template("new") }
+    it { expect(assigns[:message]).to be_new_record }
+    it { expect(assigns[:message]).to have(4).photos }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("new") }
   end
 
   describe "create" do
@@ -23,7 +23,7 @@ describe MessagesController do
         ]
       end
 
-      context "expect" do
+      describe "Transition" do
         it "message count should change by +1" do
           expect {
             post :create, message: params
@@ -37,19 +37,19 @@ describe MessagesController do
         end
       end
 
-      context "should" do
+      context "State" do
         before do
           post :create, message: params
         end
 
-        it { assigns[:message].should be_persisted }
-        it { assigns[:message].should have(2).photos }
-        it { response.should redirect_to(thread_message_path(assigns[:message])) }
-        it "Make in exif == 'SIGMA'" do
-          assigns[:message].photos[0].exif["Make"].should == 'SIGMA'
+        it { expect(assigns[:message]).to be_persisted }
+        it { expect(assigns[:message]).to have(2).photos }
+        it { expect(response).to redirect_to(thread_message_path(assigns[:message])) }
+        specify "Make in exif == 'SIGMA'" do
+          expect(assigns[:message].photos[0].exif["Make"]).to eq 'SIGMA'
         end
-        it "Model in exif == 'SIGMA SD1 Merrill'" do
-          assigns[:message].photos[1].exif["Model"].should == 'SIGMA SD1 Merrill'
+        specify "Model in exif == 'SIGMA SD1 Merrill'" do
+          expect(assigns[:message].photos[1].exif["Model"]).to eq 'SIGMA SD1 Merrill'
         end
       end
     end
@@ -64,7 +64,7 @@ describe MessagesController do
         ]
       end
 
-      context "expect" do
+      describe "Transition" do
         it "message count should not change" do
           expect {
             post :create, message: params
@@ -78,15 +78,15 @@ describe MessagesController do
         end
       end
 
-      context "should" do
+      describe "State" do
         before do
           post :create, message: params
         end
 
-        it { assigns[:message].should be_new_record }
-        it { assigns[:message].should have(4).photos }
-        it { response.should be_success }
-        it { response.should render_template("new") }
+        it { expect(assigns[:message]).to be_new_record }
+        it { expect(assigns[:message]).to have(4).photos }
+        it { expect(response).to be_success }
+        it { expect(response).to render_template("new") }
       end
     end
   end
@@ -98,9 +98,9 @@ describe MessagesController do
       get :show, id: message.id
     end
 
-    it { assigns[:message].should == message }
-    it { response.should be_success }
-    it { response.should render_template("show") }
+    it { expect(assigns[:message]).to eq message }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("show") }
   end
 
   describe "edit" do
@@ -110,10 +110,10 @@ describe MessagesController do
       get :edit, id: message.id
     end
 
-    it { assigns[:message].should == message }
-    it { assigns[:message].should have(4).photos }
-    it { response.should be_success }
-    it { response.should render_template("edit") }
+    it { expect(assigns[:message]).to eq message }
+    it { expect(assigns[:message]).to have(4).photos }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("edit") }
   end
 
   describe "update" do
@@ -129,9 +129,9 @@ describe MessagesController do
         patch :update, id: message.id, message: params
       end
 
-      it { assigns[:message].should == message }
-      it { assigns[:message].title.should == params["title"] }
-      it { response.should redirect_to(thread_message_path(message)) }
+      it { expect(assigns[:message]).to eq message }
+      it { expect(assigns[:message].title).to eq params["title"] }
+      it { expect(response).to redirect_to(thread_message_path(message)) }
     end
 
     context "with invalid password" do
@@ -143,10 +143,10 @@ describe MessagesController do
         patch :update, id: message.id, message: params
       end
 
-      it { assigns[:message].should == message }
-      it { assigns[:message].errors["password"].should be_present }
-      it { response.should be_success }
-      it { response.should render_template("edit") }
+      it { expect(assigns[:message]).to eq message }
+      it { expect(assigns[:message].errors["password"]).to be_present }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("edit") }
     end
 
     context "with invalid parameters" do
@@ -157,10 +157,10 @@ describe MessagesController do
         patch :update, id: message.id, message: params
       end
 
-      it { assigns[:message].should == message }
-      it { assigns[:message].errors.should be_present }
-      it { response.should be_success }
-      it { response.should render_template("edit") }
+      it { expect(assigns[:message]).to eq message }
+      it { expect(assigns[:message].errors).to be_present }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("edit") }
     end
 
     context "update photo" do
@@ -177,7 +177,7 @@ describe MessagesController do
         params[:photos_attributes][1]["title"] = "Title updated."
       end
 
-      context "expect" do
+      describe "Transition" do
         it "photos count should change from 2 to 1" do
           expect {
             patch :update, id: message.id, message: params
@@ -185,14 +185,14 @@ describe MessagesController do
         end
       end
 
-      context "should" do
+      describe "State" do
         before do
           patch :update, id: message.id, message: params
         end
 
-        it { assigns[:message].should == message }
-        it { assigns[:message].photos.first.title.should == "Title updated." }
-        it { response.should redirect_to(thread_message_path(message)) }
+        it { expect(assigns[:message]).to eq message }
+        it { expect(assigns[:message].photos.first.title).to eq "Title updated." }
+        it { expect(response).to redirect_to(thread_message_path(message)) }
       end
     end
   end
@@ -204,9 +204,9 @@ describe MessagesController do
       get :delete_confirm, id: message.id
     end
 
-    it { assigns[:message].should == message }
-    it { response.should be_success }
-    it { response.should render_template("delete_confirm") }
+    it { expect(assigns[:message]).to eq message }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("delete_confirm") }
   end
 
   describe "destroy" do
@@ -215,7 +215,7 @@ describe MessagesController do
         let!(:message) { FactoryGirl.create(:message) }
         let!(:params) { FactoryGirl.attributes_for(:message) }
 
-        context "expect" do
+        describe "Transition" do
           it "should not be destroyed" do
             expect {
               delete :destroy, id: message.id, message: params
@@ -223,12 +223,13 @@ describe MessagesController do
           end
         end
 
-        context "should" do
+        describe "State" do
           before do
             delete :destroy, id: message.id, message: params
           end
-          it { assigns[:message].content.should == 'Deleted.' }
-          it { response.should redirect_to(trees_messages_path) }
+
+          it { expect(assigns[:message].content).to eq 'Deleted.' }
+          it { expect(response).to redirect_to(trees_messages_path) }
         end
       end
 
@@ -236,7 +237,7 @@ describe MessagesController do
         let!(:message) { FactoryGirl.create(:message_with_no_comment) }
         let!(:params) { FactoryGirl.attributes_for(:message_with_no_comment) }
 
-        context "expect" do
+        describe "Transition" do
           it "should be destroyed" do
             expect {
               delete :destroy, id: message.id, message: params
@@ -244,11 +245,11 @@ describe MessagesController do
           end
         end
 
-        context "should" do
+        describe "State" do
           before do
             delete :destroy, id: message.id, message: params
           end
-          it { response.should redirect_to(trees_messages_path) }
+          it { expect(response).to redirect_to(trees_messages_path) }
         end
       end
     end
@@ -261,7 +262,7 @@ describe MessagesController do
         params[:password] = params[:password] + '1'
       end
 
-      context "expect" do
+      describe "Transition" do
         it "should not be destroyed" do
           expect {
             delete :destroy, id: message.id, message: params
@@ -269,22 +270,22 @@ describe MessagesController do
         end
       end
 
-      context "should" do
+      context "State" do
         before do
           delete :destroy, id: message.id, message: params
         end
 
-        it { assigns[:message].errors.should be_present }
-        it { response.should be_success }
-        it { response.should render_template("delete_confirm") }
+        it { expect(assigns[:message].errors).to be_present }
+        it { expect(response).to be_success }
+        it { expect(response).to render_template("delete_confirm") }
       end
     end
   end
 
   describe "trees" do
     shared_examples_for "get trees action with no error" do
-      it { response.should be_success }
-      it { response.should render_template("trees") }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("trees") }
     end
 
     context "with no parameter" do
@@ -297,7 +298,7 @@ describe MessagesController do
       end
 
       it "has #{Kaminari.config.default_per_page} messages" do
-        assigns[:messages].count.should == Kaminari.config.default_per_page
+        expect(assigns[:messages].count).to eq Kaminari.config.default_per_page
       end
       it_behaves_like "get trees action with no error"
     end
@@ -309,7 +310,7 @@ describe MessagesController do
       end
 
       it "has one message" do
-        assigns[:messages].count.should == 1
+        expect(assigns[:messages].count).to eq 1
       end
       it_behaves_like "get trees action with no error"
     end
@@ -327,7 +328,7 @@ describe MessagesController do
         end
 
         it "has three messages" do
-          assigns[:messages].count.should == 3
+          expect(assigns[:messages].count).to eq 3
         end
         it_behaves_like "get trees action with no error"
       end
@@ -343,7 +344,7 @@ describe MessagesController do
         end
 
         it "has three messages" do
-          assigns[:messages].count.should == 3
+          expect(assigns[:messages].count).to eq 3
         end
         it_behaves_like "get trees action with no error"
       end
@@ -366,7 +367,7 @@ describe MessagesController do
         end
 
         it "has nine messages" do
-          assigns[:messages].count.should == 9
+          expect(assigns[:messages].count).to eq 9
         end
         it_behaves_like "get trees action with no error"
       end
@@ -384,7 +385,7 @@ describe MessagesController do
       end
 
       it "has #{message_count} messages" do
-        assigns[:messages].count.should == message_count
+        expect(assigns[:messages].count).to eq message_count
       end
       it_behaves_like "get trees action with no error"
     end
@@ -402,8 +403,8 @@ describe MessagesController do
       get :feed, format: :xml
     end
 
-    it {assigns[:entries].count.should == 10}
-    it {assigns[:entries].should == entries.reverse}
+    it { expect(assigns[:entries].count).to eq 10 }
+    it { expect(assigns[:entries]).to eq entries.reverse}
   end
 
   describe "thread" do
@@ -413,9 +414,9 @@ describe MessagesController do
       get :thread, id: message.id
     end
 
-    it { assigns[:message].should == message }
-    it { response.should be_success }
-    it { response.should render_template("thread") }
+    it { expect(assigns[:message]).to eq message }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("thread") }
   end
 
   describe "load_cookies" do
@@ -426,12 +427,12 @@ describe MessagesController do
       get :new
     end
 
-    it { assigns[:message].should be_new_record }
-    it { assigns[:message].should have(4).photos }
-    it { response.should be_success }
-    it { response.should render_template("new") }
+    it { expect(assigns[:message]).to be_new_record }
+    it { expect(assigns[:message]).to have(4).photos }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("new") }
     Message.cookie_keys.each do | key |
-      it {assigns[:message][key].should == params[key]}
+      it { expect(assigns[:message][key]).to eq params[key] }
     end
   end
 
@@ -443,11 +444,11 @@ describe MessagesController do
         post :create, message: params
       end
 
-      it { assigns[:message].should be_persisted }
-      it { response.should redirect_to(thread_message_path(assigns[:message])) }
+      it { expect(assigns[:message]).to be_persisted }
+      it { expect(response).to redirect_to(thread_message_path(assigns[:message])) }
 
       Message.cookie_keys.each do | key |
-        it { cookies.signed[key].should ==  params[key]}
+        it { expect(cookies.signed[key]).to eq params[key] }
       end
     end
 
@@ -457,13 +458,13 @@ describe MessagesController do
         post :create, message: params
       end
 
-      it { assigns[:message].should be_new_record }
-      it { assigns[:message].should have(4).photos }
-      it { response.should be_success }
-      it { response.should render_template("new") }
+      it { expect(assigns[:message]).to be_new_record }
+      it { expect(assigns[:message]).to have(4).photos }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("new") }
 
       Message.cookie_keys.each do | key |
-        it { cookies.signed[key].should be_nil}
+        it { expect(cookies.signed[key]).to be_nil}
       end
     end
   end

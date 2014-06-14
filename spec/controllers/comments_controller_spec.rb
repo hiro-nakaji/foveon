@@ -7,17 +7,17 @@ describe CommentsController do
       get :new, message_id: message.id
     end
 
-    it { assigns[:message].should == message }
-    it { assigns[:comment].should be_new_record }
-    it { assigns[:comment].should have(4).photos }
-    it { assigns[:comment].title.should == message.title.gsub(/^/, "Re: ") }
+    it { expect(assigns[:message]).to eq message }
+    it { expect(assigns[:comment]).to be_new_record }
+    it { expect(assigns[:comment]).to have(4).photos }
+    it { expect(assigns[:comment].title).to eq message.title.gsub(/^/, "Re: ") }
     it {
       content = I18n.t('entry.wrote', author: message.author) + "\n"
       content += message.content.gsub(/^/, "> ")
-      assigns[:comment].content.should == content
+      expect(assigns[:comment].content).to eq content
     }
-    it { response.should be_success }
-    it { response.should render_template("new") }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("new") }
   end
 
   describe "reply" do
@@ -27,17 +27,17 @@ describe CommentsController do
       get :reply, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == comment.message }
-    it { assigns[:comment].should be_new_record }
-    it { assigns[:comment].should have(4).photos }
-    it { assigns[:comment].title.should == comment.title.gsub(/^/, "Re: ") }
+    it { expect(assigns[:message]).to eq comment.message }
+    it { expect(assigns[:comment]).to be_new_record }
+    it { expect(assigns[:comment]).to have(4).photos }
+    it { expect(assigns[:comment].title).to eq comment.title.gsub(/^/, "Re: ") }
     it {
       content = I18n.t('entry.wrote', author: comment.author) + "\n"
       content += comment.content.gsub(/^/, "> ")
-      assigns[:comment].content.should == content
+      expect(assigns[:comment].content).to eq content
     }
-    it { response.should be_success }
-    it { response.should render_template("new") }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("new") }
   end
 
   describe "create" do
@@ -52,7 +52,7 @@ describe CommentsController do
         ]
       end
 
-      context "expect" do
+      describe "Transition" do
         it "comments count should change by +1" do
           expect {
             post :create, message_id: message.id, comment: params
@@ -66,17 +66,17 @@ describe CommentsController do
         end
       end
 
-      context "should" do
+      describe "State" do
         before do
           post :create, message_id: message.id, comment: params
         end
 
-        it { assigns[:message].should == message }
-        it { assigns[:comment].should be_persisted }
-        it { assigns[:comment].should have(2).photos }
+        it { expect(assigns[:message]).to eq message }
+        it { expect(assigns[:comment]).to be_persisted }
+        it { expect(assigns[:comment]).to have(2).photos }
         it {
           redirect_path = thread_message_path(message, anchor: assigns[:comment].id)
-          response.should redirect_to(redirect_path)
+          expect(response).to redirect_to(redirect_path)
         }
       end
     end
@@ -92,7 +92,7 @@ describe CommentsController do
         ]
       end
 
-      context "expect" do
+      describe "Transition" do
         it "comments count should not change" do
           expect {
             post :create, message_id: message.id, comment: params
@@ -106,16 +106,16 @@ describe CommentsController do
         end
       end
 
-      context "should" do
+      describe "State" do
         before do
           post :create, message_id: message.id, comment: params
         end
 
-        it { assigns[:message].should == message }
-        it { assigns[:comment].should be_new_record }
-        it { assigns[:comment].should have(4).photos }
-        it { response.should be_success }
-        it { response.should render_template("new") }
+        it { expect(assigns[:message]).to eq message }
+        it { expect(assigns[:comment]).to be_new_record }
+        it { expect(assigns[:comment]).to have(4).photos }
+        it { expect(response).to be_success }
+        it { expect(response).to render_template("new") }
       end
     end
   end
@@ -127,10 +127,10 @@ describe CommentsController do
       get :show, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == comment.message }
-    it { assigns[:comment].should == comment }
-    it { response.should be_success }
-    it { response.should render_template("show") }
+    it { expect(assigns[:message]).to eq comment.message }
+    it { expect(assigns[:comment]).to eq comment }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("show") }
   end
 
   describe "edit" do
@@ -140,11 +140,11 @@ describe CommentsController do
       get :edit, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == comment.message }
-    it { assigns[:comment].should == comment }
-    it { assigns[:comment].should have(4).photos }
-    it { response.should be_success }
-    it { response.should render_template("edit") }
+    it { expect(assigns[:message]).to eq comment.message }
+    it { expect(assigns[:comment]).to eq comment }
+    it { expect(assigns[:comment]).to have(4).photos }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("edit") }
   end
 
   describe "update" do
@@ -160,12 +160,11 @@ describe CommentsController do
         patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == comment.message }
-      it { assigns[:comment].should == comment }
-      it { assigns[:comment].title.should == params["title"] }
+      it { expect(assigns[:message]).to eq comment.message }
+      it { expect(assigns[:comment]).to eq comment }
+      it { expect(assigns[:comment].title).to eq params["title"] }
       it {
-        redirect_path = thread_message_path(comment.message, anchor: comment.id)
-        response.should redirect_to(redirect_path)
+        expect(response).to redirect_to(thread_message_path(comment.message, anchor: comment.id))
       }
     end
 
@@ -178,11 +177,11 @@ describe CommentsController do
         patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == comment.message }
-      it { assigns[:comment].should == comment }
-      it { assigns[:comment].errors["password"].should be_present }
-      it { response.should be_success }
-      it { response.should render_template("edit") }
+      it { expect(assigns[:message]).to eq comment.message }
+      it { expect(assigns[:comment]).to eq comment }
+      it { expect(assigns[:comment].errors["password"]).to be_present }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("edit") }
     end
 
     context "with invalid parameters" do
@@ -193,11 +192,11 @@ describe CommentsController do
         patch :update, message_id: comment.message.id, id: comment.id, comment: params
       end
 
-      it { assigns[:message].should == comment.message }
-      it { assigns[:comment].should == comment }
-      it { assigns[:comment].errors.should be_present }
-      it { response.should be_success }
-      it { response.should render_template("edit") }
+      it { expect(assigns[:message]).to eq comment.message }
+      it { expect(assigns[:comment]).to eq comment }
+      it { expect(assigns[:comment].errors).to be_present }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("edit") }
     end
 
     context "update photo" do
@@ -214,7 +213,7 @@ describe CommentsController do
         params[:photos_attributes][1]["title"]    = "Title updated."
       end
 
-      context "expect" do
+      describe "Transition" do
         it "photos count should change from 2 to 1" do
           expect {
             patch :update, message_id: comment.message.id, id: comment.id, comment: params
@@ -222,17 +221,16 @@ describe CommentsController do
         end
       end
 
-      context "should" do
+      context "State" do
         before do
           patch :update, message_id: comment.message.id, id: comment.id, comment: params
         end
 
-        it { assigns[:message].should == comment.message }
-        it { assigns[:comment].should == comment }
-        it { assigns[:comment].photos.first.title.should == "Title updated." }
+        it { expect(assigns[:message]).to eq comment.message }
+        it { expect(assigns[:comment]).to eq comment }
+        it { expect(assigns[:comment].photos.first.title).to eq "Title updated." }
         it {
-          redirect_path = thread_message_path(comment.message, anchor: comment.id)
-          response.should redirect_to(redirect_path)
+          expect(response).to redirect_to(thread_message_path(comment.message, anchor: comment.id))
         }
       end
     end
@@ -245,10 +243,10 @@ describe CommentsController do
       get :delete_confirm, message_id: comment.message.id, id: comment.id
     end
 
-    it { assigns[:message].should == comment.message }
-    it { assigns[:comment].should == comment }
-    it { response.should be_success }
-    it { response.should render_template("delete_confirm") }
+    it { expect(assigns[:message]).to eq comment.message }
+    it { expect(assigns[:comment]).to eq comment }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("delete_confirm") }
   end
 
   describe "destroy" do
@@ -257,7 +255,7 @@ describe CommentsController do
     let!(:params) { FactoryGirl.attributes_for(:comment) }
 
     context "with valid password" do
-      context "expect" do
+      context "Transition" do
         it "should be destroyed" do
           expect {
             delete :destroy, message_id: message.id, id: comment.id, comment: params
@@ -265,12 +263,12 @@ describe CommentsController do
         end
       end
 
-      context "should" do
+      context "State" do
         before do
           delete :destroy, message_id: message.id, id: comment.id, comment: params
         end
 
-        it { response.should redirect_to(thread_message_path(message)) }
+        it { expect(response).to redirect_to(thread_message_path(message)) }
       end
     end
 
@@ -279,7 +277,7 @@ describe CommentsController do
         params[:password] = params[:password] + '1'
       end
 
-      context "expect" do
+      describe "Transition" do
         it "should not be destroyed" do
           expect {
             delete :destroy, message_id: message.id, id: comment.id, comment: params
@@ -287,14 +285,14 @@ describe CommentsController do
         end
       end
 
-      context "should" do
+      describe "State" do
         before do
           delete :destroy, message_id: message.id, id: comment.id, comment: params
         end
 
-        it { assigns[:comment].errors.should be_present }
-        it { response.should be_success }
-        it { response.should render_template("delete_confirm") }
+        it { expect(assigns[:comment].errors).to be_present }
+        it { expect(response).to be_success }
+        it { expect(response).to render_template("delete_confirm") }
       end
     end
   end
@@ -308,13 +306,13 @@ describe CommentsController do
       get :new, message_id: message.id
     end
 
-    it { assigns[:comment].should be_new_record }
-    it { assigns[:comment].should have(4).photos }
-    it { response.should be_success }
-    it { response.should render_template("new") }
+    it { expect(assigns[:comment]).to be_new_record }
+    it { expect(assigns[:comment]).to have(4).photos }
+    it { expect(response).to be_success }
+    it { expect(response).to render_template("new") }
 
     Comment.cookie_keys.each do |key|
-      it { assigns[:comment][key].should == message[key] }
+      it { expect(assigns[:comment][key]).to eq message[key] }
     end
   end
 
@@ -327,14 +325,13 @@ describe CommentsController do
         post :create, message_id: message.id, comment: params
       end
 
-      it { assigns[:comment].should be_persisted }
+      it { expect(assigns[:comment]).to be_persisted }
       it {
-        redirect_path = thread_message_path(message, anchor: assigns[:comment].id)
-        response.should redirect_to(redirect_path)
+        expect(response).to redirect_to(thread_message_path(message, anchor: assigns[:comment].id))
       }
 
       Comment.cookie_keys.each do | key |
-        it { cookies.signed[key].should ==  params[key]}
+        it { expect(cookies.signed[key]).to eq params[key]}
       end
     end
 
@@ -344,13 +341,13 @@ describe CommentsController do
         post :create, message_id: message.id, comment: params
       end
 
-      it { assigns[:comment].should be_new_record }
-      it { assigns[:comment].should have(4).photos }
-      it { response.should be_success }
-      it { response.should render_template("new") }
+      it { expect(assigns[:comment]).to be_new_record }
+      it { expect(assigns[:comment]).to have(4).photos }
+      it { expect(response).to be_success }
+      it { expect(response).to render_template("new") }
 
       Comment.cookie_keys.each do | key |
-        it { cookies.signed[key].should be_nil}
+        it { expect(cookies.signed[key]).to be_nil}
       end
     end
   end

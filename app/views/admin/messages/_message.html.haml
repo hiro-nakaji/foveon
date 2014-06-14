@@ -1,0 +1,11 @@
+%tr
+  %td
+    = check_box_tag("messages[]", message.id)
+  %td
+    = message.title
+  %td
+    = message.author
+  %td
+    = I18n.localize(message.created_at, :format => :short)
+  %td
+    = I18n.localize(message.updated_at, :format => :short)

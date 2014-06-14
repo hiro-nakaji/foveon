@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Photo do
   describe "validations" do
-    it { should_not validate_presence_of(:title) }
-    it { should validate_presence_of(:no) }
-    it { should validate_presence_of(:photo_data) }
-    it { should_not validate_presence_of(:exif) }
+    it { expect(subject).not_to validate_presence_of(:title) }
+    it { expect(subject).to validate_presence_of(:no) }
+    it { expect(subject).to validate_presence_of(:photo_data) }
+    it { expect(subject).not_to validate_presence_of(:exif) }
   end
 
   context "EXIF" do
@@ -59,7 +59,7 @@ describe Photo do
     let!(:exif) { Hash[*exif_array.flatten] }
 
     before do
-      image = mock(Magick::Image)
+      image = double(Magick::Image)
       image.should_receive(:get_exif_by_entry).and_return(Marshal.load(Marshal.dump(exif_array)))
       Magick::Image.stub_chain(:read, :first).and_return(image)
 
@@ -69,35 +69,36 @@ describe Photo do
     describe "formatted_exif" do
       subject { photo.formatted_exif }
 
-      it { should have_key(:Make) }
-      it { should have_key(:Model) }
-      it { should have_key(:DateTimeOriginal) }
-      it { should have_key(:ExposureBiasValue) }
-      it { should have_key(:ExposureMode) }
-      it { should have_key(:ExposureProgram) }
-      it { should have_key(:ExposureTime) }
-      it { should have_key(:FNumber) }
-      it { should have_key(:FocalLength) }
-      it { should have_key(:ISOSpeedRatings) }
-      it { should have_key(:Flash) }
-      its([:Make]) { should == exif["Make"] }
-      its([:Model]) { should == exif["Model"] }
-      its([:DateTimeOriginal]) { should == exif["DateTimeOriginal"] }
-      its([:ExposureBiasValue]) { should == exif["ExposureBiasValue"] }
-      its([:ExposureMode]) { should == I18n.t("exif.ExposureMode.#{exif['ExposureMode']}") }
-      its([:ExposureProgram]) { should == I18n.t("exif.ExposureProgram.#{self.exif['ExposureProgram']}") }
-      its([:ExposureTime]) { should == exif["ExposureTime"] }
-      its([:FNumber]) { should == exif["FNumber"] }
-      its([:FocalLength]) { should == exif["FocalLength"] }
-      its([:ISOSpeedRatings]) { should == exif["ISOSpeedRatings"] }
-      its([:Flash]) { should == I18n.t("exif.Flash.#{exif['Flash']}") }
+      it { expect(subject).to have_key(:Make) }
+      it { expect(subject).to have_key(:Model) }
+      it { expect(subject).to have_key(:DateTimeOriginal) }
+      it { expect(subject).to have_key(:ExposureBiasValue) }
+      it { expect(subject).to have_key(:ExposureMode) }
+      it { expect(subject).to have_key(:ExposureProgram) }
+      it { expect(subject).to have_key(:ExposureTime) }
+      it { expect(subject).to have_key(:FNumber) }
+      it { expect(subject).to have_key(:FocalLength) }
+      it { expect(subject).to have_key(:ISOSpeedRatings) }
+      it { expect(subject).to have_key(:Flash) }
+
+      it { expect(subject[:Make]).to eq exif["Make"] }
+      it { expect(subject[:Model]).to eq exif["Model"] }
+      it { expect(subject[:DateTimeOriginal]).to eq exif["DateTimeOriginal"] }
+      it { expect(subject[:ExposureBiasValue]).to eq exif["ExposureBiasValue"] }
+      it { expect(subject[:ExposureMode]).to eq I18n.t("exif.ExposureMode.#{exif['ExposureMode']}") }
+      it { expect(subject[:ExposureProgram]).to eq I18n.t("exif.ExposureProgram.#{self.exif['ExposureProgram']}") }
+      it { expect(subject[:ExposureTime]).to eq exif["ExposureTime"] }
+      it { expect(subject[:FNumber]).to eq exif["FNumber"] }
+      it { expect(subject[:FocalLength]).to eq exif["FocalLength"] }
+      it { expect(subject[:ISOSpeedRatings]).to eq exif["ISOSpeedRatings"] }
+      it { expect(subject[:Flash]).to eq I18n.t("exif.Flash.#{exif['Flash']}") }
     end
 
     describe "extract_exif" do
       subject { photo.exif }
 
-      its(:count) { should == exif.count }
-      it { should == exif }
+      it { expect(subject).to have(exif.count).items }
+      it { expect(subject).to eq exif }
     end
   end
 end
