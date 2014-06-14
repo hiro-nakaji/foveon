@@ -8,6 +8,6 @@ class Admin::MessagesController < Admin::ApplicationController
       Message.where(id: params[:messages]).destroy_all
     end
 
-    redirect_to admin_comments_path(page: params[:page])
+    redirect_to admin_messages_path(page: params[:page])
   end
 end
