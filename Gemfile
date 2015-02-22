@@ -16,7 +16,7 @@ gem 'sass-rails'
 
 gem "therubyracer"
 gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '~> 2'
 
 gem 'haml-rails'
 group :development do
