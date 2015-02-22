@@ -1,4 +1,7 @@
 .control-group
+  .controls
+    = render partial: "entry_form_error", object: entry, as: :entry, locals: {attribute: :base}
+.control-group
   = form.label :title, class: 'control-label required', id: 'title_label'
   .controls
     = form.text_field :title, class: 'input-xlarge', id: 'title'

@@ -100,14 +100,19 @@ en:
           attributes:
             password:
               invalid: "not matched"
+            base:
+              multibyte: "Japanese Only"
         comment:
           attributes:
             password:
               invalid: "not matched"
+            base:
+              multibyte: "Japanese Only"
         photo:
           attributes:
             photo_data:
               invalid: "This content_type is not acceptable: %{content_type}."
+            base:
 
   views:
     pagination:

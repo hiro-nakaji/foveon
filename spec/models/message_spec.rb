@@ -1,24 +1,24 @@
 require 'spec_helper'
 
 describe Message do
-  describe "validations" do
-    it { expect(subject).to validate_presence_of(:title) }
-    it { expect(subject).to validate_presence_of(:author) }
-    it { expect(subject).to validate_presence_of(:password) }
-    it { expect(subject).not_to validate_presence_of(:mail) }
-    it { expect(subject).to allow_value('mackerel-chef@example.com').for(:mail) }
-    it { expect(subject).not_to allow_value('mackerel-chef.@example.com').for(:mail) }
-    it { expect(subject).not_to validate_presence_of(:homepage) }
-    it { expect(subject).to allow_value('http://www.asahi.com').for(:homepage) }
-    it { expect(subject).to allow_value('https://www.asahi.com').for(:homepage) }
-    it { expect(subject).not_to allow_value('www.asahi.com').for(:homepage) }
-    it { expect(subject).to validate_presence_of(:content) }
-    it { expect(subject).not_to validate_presence_of(:remote_addr) }
-    it { expect(subject).not_to validate_presence_of(:user_agent) }
-
-    it { expect(subject).not_to validate_presence_of(:old_id) }
-    it { expect(subject).not_to validate_presence_of(:message_type) }
-  end
+  # describe "validations" do
+  #   it { expect(subject).to validate_presence_of(:title) }
+  #   it { expect(subject).to validate_presence_of(:author) }
+  #   it { expect(subject).to validate_presence_of(:password) }
+  #   it { expect(subject).not_to validate_presence_of(:mail) }
+  #   it { expect(subject).to allow_value('mackerel-chef@example.com').for(:mail) }
+  #   it { expect(subject).not_to allow_value('mackerel-chef.@example.com').for(:mail) }
+  #   it { expect(subject).not_to validate_presence_of(:homepage) }
+  #   it { expect(subject).to allow_value('http://www.asahi.com').for(:homepage) }
+  #   it { expect(subject).to allow_value('https://www.asahi.com').for(:homepage) }
+  #   it { expect(subject).not_to allow_value('www.asahi.com').for(:homepage) }
+  #   it { expect(subject).to validate_presence_of(:content) }
+  #   it { expect(subject).not_to validate_presence_of(:remote_addr) }
+  #   it { expect(subject).not_to validate_presence_of(:user_agent) }
+  #
+  #   it { expect(subject).not_to validate_presence_of(:old_id) }
+  #   it { expect(subject).not_to validate_presence_of(:message_type) }
+  # end
 
   describe "current_page" do
     let!(:message) { FactoryGirl.create(:message) }

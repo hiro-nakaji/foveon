@@ -100,10 +100,14 @@ ja:
           attributes:
             password:
               invalid: "が一致しません"
+            base:
+              multibyte: "Japanese Only"
         comment:
           attributes:
             password:
               invalid: "が一致しません"
+            base:
+              multibyte: "Japanese Only"
         photo:
           attributes:
             photo_data:

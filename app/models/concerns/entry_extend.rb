@@ -16,6 +16,7 @@ module EntryExtend
     base.validates :homepage, url: {allow_blank: true}
 
     base.validate :check_passwords, on: :update, if: :password_changed?
+    base.validate :check_multibyte, if: -> { title? && author? && content? }
 
     base.before_save :crypt_password
 
