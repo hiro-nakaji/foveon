@@ -28,6 +28,13 @@ module Entry
 
   private
 
+  def check_multibyte
+    if self.title.size == self.title.bytesize &&
+      self.author.size == self.author.bytesize && self.content.size == self.content.bytesize
+      errors.add(:base, :multibyte)
+    end
+  end
+
   def check_passwords
     unless self.password.blank? || Digest::SHA1.hexdigest(self.password) == self.password_was
       errors.add(:password, :invalid)
