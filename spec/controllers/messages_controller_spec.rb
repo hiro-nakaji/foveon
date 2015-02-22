@@ -320,11 +320,11 @@ describe MessagesController do
 
       context "three messages including 'message'" do
         before do
-          messages[0].update_attribute(:title, 'message')
-          messages[1].update_attribute(:author, 'message')
-          messages[2].update_attribute(:content, 'message')
+          messages[0].update_attribute(:title, 'めっせーじ')
+          messages[1].update_attribute(:author, 'めっせーじ')
+          messages[2].update_attribute(:content, 'めっせーじ')
 
-          get :trees, words: 'message'
+          get :trees, words: 'めっせーじ'
         end
 
         it "has three messages" do
@@ -335,12 +335,12 @@ describe MessagesController do
 
       context "four comments including 'comment'" do
         before do
-          messages[0].comments[0].update_attribute(:title, 'comment')
-          messages[1].comments[1].update_attribute(:author, 'comment')
-          messages[2].comments[0].update_attribute(:content, 'comment')
-          messages[2].comments[1].update_attribute(:title, 'comment')
+          messages[0].comments[0].update_attribute(:title, 'こめんと')
+          messages[1].comments[1].update_attribute(:author, 'こめんと')
+          messages[2].comments[0].update_attribute(:content, 'こめんと')
+          messages[2].comments[1].update_attribute(:title, 'こめんと')
 
-          get :trees, words: 'comment'
+          get :trees, words: 'こめんと'
         end
 
         it "has three messages" do
@@ -351,19 +351,19 @@ describe MessagesController do
 
       context "five messages and six comments including 'message/comment' " do
         before do
-          messages[0].update_attribute(:title, 'message')
-          messages[1].update_attribute(:author, 'comment')
-          messages[2].update_attribute(:content, 'comment')
-          messages[3].update_attributes(title: 'message', author: 'comment', content: "message\ncomment")
-          messages[4].comments[0].update_attribute(:title, 'message')
-          messages[5].comments[0].update_attribute(:author, 'comment')
-          messages[6].comments[0].update_attributes(title: 'message', author: 'comment', content: "message\ncomment")
-          messages[7].comments[0].update_attribute(:title, 'message')
-          messages[7].comments[1].update_attribute(:author, 'comment')
-          messages[8].update_attribute(:content, 'message comment')
-          messages[8].comments[1].update_attribute(:content, 'message comment')
+          messages[0].update_attribute(:title, 'めっせーじ')
+          messages[1].update_attribute(:author, 'こめんと')
+          messages[2].update_attribute(:content, 'こめんと')
+          messages[3].update_attributes(title: 'めっせーじ', author: 'こめんと', content: "めっせーじ\nコメント")
+          messages[4].comments[0].update_attribute(:title, 'めっせーじ')
+          messages[5].comments[0].update_attribute(:author, 'こめんと')
+          messages[6].comments[0].update_attributes(title: 'めっせーじ', author: 'こめんと', content: "めっせーじ\nコメント")
+          messages[7].comments[0].update_attribute(:title, 'めっせーじ')
+          messages[7].comments[1].update_attribute(:author, 'こめんと')
+          messages[8].update_attribute(:content, 'めっせーじ こめんと')
+          messages[8].comments[1].update_attribute(:content, ' めっせーじ こめんと')
 
-          get :trees, words: 'message comment'
+          get :trees, words: 'めっせーじ こめんと'
         end
 
         it "has nine messages" do
